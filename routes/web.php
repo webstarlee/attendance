@@ -25,12 +25,18 @@ Route::post('password/email', 'User\Auth\ForgotPasswordController@sendResetLinkE
 Route::get('password/reset/{token}', 'User\Auth\ResetPasswordController@showResetForm')->name('password.reset');
 Route::post('password/reset', 'User\Auth\ResetPasswordController@reset');
 
+// Route::middleware(['auth'])->group(function () {
+//     Route::get('/dashboard', 'User\UserController@index')->name('dashboard');
+// });
+
 Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', 'User\UserController@index')->name('dashboard');
 });
 
 Route::prefix('admin')->group(function () {
-    Route::get('/', 'Admin\AdminController@index')->name('dashboard');
+    Route::middleware(['auth:admin'])->group(function () {
+        Route::get('/', 'Admin\AdminController@index')->name('admin.dashboard');
+    });
     Route::get('login', 'Admin\Auth\AdminLoginController@showLoginForm')->name('admin.login');
     Route::post('login', 'Admin\Auth\AdminLoginController@login');
     Route::post('logout', 'Admin\Auth\AdminLoginController@logout')->name('admin.logout');

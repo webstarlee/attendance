@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
+namespace App\Http\Controllers\Admin\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
 
-class ForgotPasswordController extends Controller
+class AdminForgotPasswordController extends Controller
 {
     /*
     |--------------------------------------------------------------------------

@@ -1,8 +1,8 @@
 <?php
 
 use App\Admin;
-use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Seeder;
 
 class AdminsTableSeeder extends Seeder
 {
@@ -18,9 +18,15 @@ class AdminsTableSeeder extends Seeder
 
         $admins = [
             [
-                'name' => 'Top',
+                'first_name' => 'Top',
+                'last_name' => 'Admin',
+                'username' => 'Super',
+                'unique_id' => str_random(10),
+                'name_title' => 'TA',
                 'email' => 'admin@mail.com',
                 'password' => bcrypt('secret'),
+                'role' => '3',
+                'nation' => '157',
                 'remember_token' => str_random(10),
             ],
         ];

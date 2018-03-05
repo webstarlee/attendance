@@ -1,0 +1,90 @@
+.m-brand .m-brand__logo .m-brand__logo-wrapper img {
+    width: 60px!important;
+}
+.modal.m-custom-modal {
+    padding-right: 0!important;
+}
+.m-card-user.m-card-user--skin-dark .m-card-user__details .m-card-user__email {
+    color: #ffffff!important;
+    background-color: rgba(0, 0, 0, 0.63);
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    padding: 0 3px;
+    margin: 5px;
+}
+.m-card-user.m-card-user--skin-dark .m-card-user__details .m-card-user__name {
+    display: inline-block;
+    padding: 2px 5px;
+    background-color: #0000008c;
+    border-radius: 5px;
+    margin: 5px;
+}
+.m-dropdown.m-dropdown--header-bg-fill .m-masked-dropdown .m-dropdown__header {
+    -webkit-mask-image: url("/uploads/mask.png");
+    -webkit-mask-size: 100%;
+    -webkit-mask-repeat: no-repeat;
+    position: absolute;
+    height: 140px;
+    top: -9px;
+}
+.m-dropdown .m-dropdown__wrapper.m-masked-dropdown .m-dropdown__body {
+    padding-top: 140px;
+}
+.m-masked-dropdown .m-card-user {
+    padding-top: 15px;
+}
+.m-dropdown__wrapper.m-masked-dropdown {
+    padding-top: 12px!important;
+}
+.m-dropdown__wrapper.m-masked-dropdown>.m-dropdown__inner {
+    position: relative;
+}
+.m-card-user .m-card-user__pic {
+    border-radius: 50%;
+    box-shadow: 0px 0px 15px 0 rgba(206, 206, 206, 0.79);
+    width: 70px;
+    height: 70px;
+    padding: 0;
+}
+.add-new-user-avatar-slim {
+    max-width: 150px;
+    margin: 40px auto 10px auto;
+    border-radius: 50%;
+    background-image: url(/uploads/avatars/default.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    color: #ffffff;
+    font-weight: 600;
+    overflow: hidden;
+    box-shadow: 0px 3px 20px 0px rgba(113, 106, 202, 0.11);
+    transition: all .3s ease-out;
+    text-shadow: 0 0 10px rgb(0, 0, 0);
+}
+.add-new-user-avatar-slim:hover {
+    box-shadow: 0px 5px 20px 0px rgba(113, 106, 201, 0.39);
+}
+
+@keyframes overlayup {
+    from {bottom: -100%}
+    to {bottom: 0;}
+}
+
+@-webkit-keyframes overlayup {
+    from {bottom: -100%}
+    to {bottom: 0;}
+}
+
+@-moz-keyframes overlayup {
+    from {bottom: -100%}
+    to {bottom: 0;}
+}
+
+@-o-keyframes overlayup {
+    from {bottom: -100%}
+    to {bottom: 0;}
+}
+.tab-content.add-new-user-tap-content{
+    padding-top: 30px;
+}

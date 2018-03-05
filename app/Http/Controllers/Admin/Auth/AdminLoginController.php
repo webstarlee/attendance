@@ -55,13 +55,12 @@ class AdminLoginController extends Controller
         $availablecheck = Auth::guard('admin')->attempt($getAdmininfo, $remember);
 
         if ($availablecheck) {
-            return redirect('admin');
-            // $result_array = array('result' => 'success', 'url' => route('admin.dashboard'));
-            // return response()->json($result_array);
+            $result_array = array('result' => 'success', 'url' => route('admin.dashboard'));
+            return response()->json($result_array);
         }
-        return back();
-        // $result_array = array('result' => 'fail');
-        // return response()->json($result_array);
+
+        $result_array = array('result' => 'fail');
+        return response()->json($result_array);
     }
 
     public function logout(Request $request)

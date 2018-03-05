@@ -4,10 +4,10 @@
     <div class="m-login__forget-password">
         <div class="m-login__head">
             <h3 class="m-login__title">
-                Forgotten Password ?
+                Forgotten Client Id ?
             </h3>
             <div class="m-login__desc">
-                Enter your email to reset your password:
+                Enter your email to get your Client Id:
             </div>
         </div>
         <form class="m-login__form m-form" action="">

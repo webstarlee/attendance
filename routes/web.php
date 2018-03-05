@@ -27,9 +27,11 @@ Route::post('logout', 'User\Auth\LoginController@logout')->name('logout');
 
 // Password Reset Routes...
 Route::get('password/reset', 'User\Auth\ForgotPasswordController@showLinkRequestForm')->name('password.request');
+Route::get('clientid/get', 'User\Auth\LoginController@showClientRequestForm')->name('clientid.get');
 Route::post('password/email', 'User\Auth\ForgotPasswordController@sendResetLinkEmail')->name('password.email');
 Route::get('password/reset/{token}', 'User\Auth\ResetPasswordController@showResetForm')->name('password.reset');
 Route::post('password/reset', 'User\Auth\ResetPasswordController@reset');
+Route::get('check-client-id/{id}', 'User\Auth\LoginController@checkClientId');
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', 'User\UserController@index')->name('dashboard');

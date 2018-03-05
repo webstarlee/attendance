@@ -88,3 +88,12 @@
 .tab-content.add-new-user-tap-content{
     padding-top: 30px;
 }
+
+@media(max-width: 767px) {
+    .m-dropdown__wrapper.m-masked-dropdown {
+        padding-top: 20px!important;
+    }
+    .m-dropdown.m-dropdown--header-bg-fill .m-masked-dropdown .m-dropdown__header {
+        top: -20px;
+    }
+}

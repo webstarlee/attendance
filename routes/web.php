@@ -93,6 +93,9 @@ Route::prefix('admin')->group(function () {
         Route::post('manage/contract/update', 'Admin\AdminManageController@updateContract')->name('admin.manage.contract.update');
         Route::get('manage/contract/getsingle_data/{id}', 'Admin\AdminManageController@getSingleContract');
         Route::get('manage/contract/delete/{id}', 'Admin\AdminManageController@destroySingleContract');
+        //end
+        //setting
+        Route::get('setting/appearance', 'Admin\AdminManageController@viewContract')->name('admin.setting.appearance');
     });
 
     Route::get('login', 'Admin\Auth\AdminLoginController@showLoginForm')->name('admin.login');

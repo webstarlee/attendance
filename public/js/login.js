@@ -109,7 +109,7 @@ var SnippetLogin = function() {
                             clientIdDiv.css({'background-color': '#89fbf080'});
                             form.find('#sigin-form-container-after-client-id').fadeIn();
                         } else {
-                            showErrorMsg(form, 'danger', 'Incorrect email or password. Please try again.');
+                            showErrorMsg(form, 'danger', 'Incorrect client id. Please try again.');
                         }
                     }, 1000);
                 },

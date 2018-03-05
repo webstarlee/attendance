@@ -17,6 +17,9 @@ Route::get('/', function () {
 Route::get('/404', function () {
     return view('404');
 })->name('404');
+Route::get('/405', function () {
+    return view('405');
+})->name('405');
 
 Route::get('login', 'User\Auth\LoginController@showLoginForm')->name('login');
 Route::post('login', 'User\Auth\LoginController@login');

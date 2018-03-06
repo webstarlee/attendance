@@ -15,7 +15,9 @@ class CreateSettingsTable extends Migration
     {
         Schema::create('settings', function (Blueprint $table) {
             $table->increments('id');
-            $table->timestamps();
+            $table->string('app_name')->default('HR');
+            $table->string('logo_img')->default('default.jpg');
+            $table->string('logo_fav')->default('default.jpg');
         });
     }
 

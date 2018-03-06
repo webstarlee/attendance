@@ -95,7 +95,10 @@ Route::prefix('admin')->group(function () {
         Route::get('manage/contract/delete/{id}', 'Admin\AdminManageController@destroySingleContract');
         //end
         //setting
-        Route::get('setting/appearance', 'Admin\AdminManageController@viewContract')->name('admin.setting.appearance');
+        Route::get('setting/appearance', 'Admin\SettingController@index')->name('admin.setting.appearance');
+        Route::post('setting/update/name', 'Admin\SettingController@update_name')->name('admin.setting.update.name');
+        Route::post('setting/update/logo', 'Admin\SettingController@update_logo')->name('admin.setting.update.logo');
+        Route::post('setting/update/fav', 'Admin\SettingController@update_fav')->name('admin.setting.update.fav');
     });
 
     Route::get('login', 'Admin\Auth\AdminLoginController@showLoginForm')->name('admin.login');

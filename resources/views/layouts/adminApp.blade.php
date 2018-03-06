@@ -3,7 +3,13 @@
 	<!-- begin::Head -->
 	<head>
 		<meta charset="utf-8" />
-		<title>HR | @yield('title')</title>
+		<?php
+			$setting_count = \App\Setting::where('id', 1)->count();
+			if ($setting_count > 0) {
+				$setting = \App\Setting::where('id', 1)->first();
+			}
+		?>
+		<title>@if ($setting_count > 0 ) {{$setting->app_name}} @else HR @endif | @yield('title')</title>
 		<meta name="description" content="Latest updates and statistic charts">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -29,7 +35,7 @@
 		{{-- begine::custom style --}}
 		@yield('customStyle')
 		{{-- end::custom style --}}
-		<link rel="shortcut icon" href="/assets/images/logo/favicon.ico" />
+		<link rel="shortcut icon" href="/assets/images/logo/logo_compact.png" />
 	</head>
     <!-- end::Head -->
     <!-- begin::Body -->
@@ -58,7 +64,15 @@
 								<div class="m-stack m-stack--ver m-stack--general m-stack--inline">
 									<div class="m-stack__item m-stack__item--middle m-brand__logo">
 										<a href="{{route('admin.dashboard')}}" class="m-brand__logo-wrapper">
-											<img alt="" src="/assets/images/logo/logo.png"/>
+											@if ($setting_count > 0)
+				                                @if (file_exists('uploads/logos/'.$setting->logo_img))
+				                                    <img src="{{asset('uploads/logos/'.$setting->logo_img)}}" class="company-main-logo-img" alt="author">
+				                                @else
+				                                    <img alt="" src="/assets/images/logo/logo.png" class="company-main-logo-img" />
+				                                @endif
+				                            @else
+												<img alt="" src="/assets/images/logo/logo.png" class="company-main-logo-img" />
+				                            @endif
 										</a>
 									</div>
 									<div class="m-stack__item m-stack__item--middle m-brand__tools">
@@ -563,7 +577,7 @@
 												<span class="m-menu__arrow m-menu__arrow--adjust"></span>
 												<ul class="m-menu__subnav">
 													<li class="m-menu__item "  aria-haspopup="true">
-														<a  href="{{route('admin.manage.admins')}}" class="m-menu__link ">
+														<a  href="{{route('admin.setting.appearance')}}" class="m-menu__link ">
 															<i class="m-menu__link-icon flaticon-confetti"></i>
 															<span class="m-menu__link-title">
 																<span class="m-menu__link-wrap">

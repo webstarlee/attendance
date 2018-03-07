@@ -32,8 +32,8 @@ $('#company-logo__pic-change-form').on('submit', function(e) {
                         company_logo_cropper.destroy();
                         company_logo_cropper = new Slim(document.getElementById('company-logo__pic-slim'), {
                             minSize: {
-                                width: 40,
-                                height: 40,
+                                width: 10,
+                                height: 10,
                             },
                             download: false,
                             label: 'Choose Logo.',
@@ -87,8 +87,8 @@ $('#company-fav__pic-change-form').on('submit', function(e) {
                         company_fav_cropper.destroy();
                         company_fav_cropper = new Slim(document.getElementById('company-fav__pic-slim'), {
                             minSize: {
-                                width: 40,
-                                height: 40,
+                                width: 10,
+                                height: 10,
                             },
                             download: false,
                             label: 'Choose Logo.',

@@ -180,8 +180,8 @@ Setting Appearance
     <script type="text/javascript">
         var company_logo_cropper = new Slim(document.getElementById('company-logo__pic-slim'), {
             minSize: {
-                width: 40,
-                height: 40,
+                width: 10,
+                height: 10,
             },
             download: false,
             label: 'Choose Logo.',

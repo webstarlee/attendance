@@ -35,7 +35,15 @@
 		{{-- begine::custom style --}}
 		@yield('customStyle')
 		{{-- end::custom style --}}
-		<link rel="shortcut icon" href="/assets/images/logo/logo_compact.png" />
+		@if ($setting_count > 0)
+			@if (file_exists('uploads/logos/'.$setting->logo_fav))
+				<link rel="shortcut icon" href="{{asset('uploads/logos/'.$setting->logo_fav)}}" />
+			@else
+				<link rel="shortcut icon" href="/assets/images/logo/logo_compact.png" />
+			@endif
+		@else
+			<link rel="shortcut icon" href="/assets/images/logo/logo_compact.png" />
+		@endif
 	</head>
     <!-- end::Head -->
     <!-- begin::Body -->
@@ -96,7 +104,7 @@
 									<div class="m-stack__item m-topbar__nav-wrapper">
 										<ul class="m-topbar__nav m-nav m-nav--inline">
 											<li class="m-nav__item m-topbar__notifications m-topbar__notifications--img m-dropdown m-dropdown--large m-dropdown--header-bg-fill m-dropdown--arrow m-dropdown--align-center 	m-dropdown--mobile-full-width" data-dropdown-toggle="click" data-dropdown-persistent="true">
-												<a href="javascript:;" class="m-nav__link m-dropdown__toggle" id="m_topbar_notification_icon">
+												<a href="javascript:;" class="m-nav__link m-dropdown__toggle" id="">
 													<span class="m-nav__link-badge m-badge m-badge--dot m-badge--dot-small m-badge--danger"></span>
 													<span class="m-nav__link-icon">
 														<span class="m-nav__link-icon-wrapper">

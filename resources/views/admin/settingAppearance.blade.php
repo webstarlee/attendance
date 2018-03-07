@@ -29,9 +29,10 @@ Setting Appearance
                 $setting = \App\Setting::where('id', 1)->first();
             }
         ?>
-        <form class="m-form m-form--fit m-form--label-align-right m-form--group-seperator" action="{{route('admin.setting.update.name')}}">
+        <form class="m-form m-form--fit m-form--label-align-right m-form--group-seperator" action="{{route('admin.setting.update.name')}}" method="post">
 			<div class="m-portlet__body">
 				<div class="form-group m-form__group row">
+                    {{csrf_field()}}
 					<label class="col-lg-2 col-form-label">
 						Company Name:
 					</label>
@@ -87,13 +88,13 @@ Setting Appearance
 					<div class="col-lg-6">
                         <div class="company-fav-container-div">
                             @if ($setting_count > 0)
-                                @if (file_exists('uploads/logos/'.$setting->logo_img))
-                                    <img src="{{asset('uploads/logos/'.$setting->logo_img)}}" class="m--marginless" alt="author">
+                                @if (file_exists('uploads/logos/'.$setting->logo_fav))
+                                    <img src="{{asset('uploads/logos/'.$setting->logo_fav)}}" class="m--marginless company-fav-logo-img" alt="author">
                                 @else
-                                    <img src="/assets/images/logo/logo.png" class="m--marginless" alt="">
+                                    <img src="/assets/images/logo/logo.png" class="m--marginless company-fav-logo-img" alt="">
                                 @endif
                             @else
-                                <img src="/assets/images/logo/logo.png" class="m--marginless" alt="">
+                                <img src="/assets/images/logo/logo.png" class="m--marginless company-fav-logo-img" alt="">
                             @endif
                         </div>
 					</div>
@@ -189,8 +190,8 @@ Setting Appearance
 
         var company_fav_cropper = new Slim(document.getElementById('company-fav__pic-slim'), {
             minSize: {
-                width: 40,
-                height: 40,
+                width: 10,
+                height: 10,
             },
             download: false,
             label: 'Choose Logo.',

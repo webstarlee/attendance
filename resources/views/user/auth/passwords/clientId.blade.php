@@ -1,5 +1,7 @@
 @extends('layouts.appAuth')
-
+@section('title')
+forget client id
+@endsection
 @section('content')
     <div class="m-login__forget-password">
         <div class="m-login__head">

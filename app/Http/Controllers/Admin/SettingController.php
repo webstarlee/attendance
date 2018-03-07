@@ -111,7 +111,7 @@ class SettingController extends Controller
                 $setting = new Setting;
             }
 
-            // if ($request->slim != "") {
+            if ($request->slim != "") {
                 $imageRand = rand(1000, 9999);
                 $random_name = $imageRand."_".time();
                 $dst = public_path('uploads/logos/');
@@ -130,8 +130,44 @@ class SettingController extends Controller
 
                     return $logo_url;
                 }
-            // }
-            // return "fail";
+            }
+            return "fail";
+        }
+        return "role_fail";
+    }
+
+    public function update_fav(Request $request)
+    {
+        if (Auth::guard('admin')->user()->role == 3) {
+            $setting_exist = Setting::find(1);
+            $setting = "";
+            if ($setting_exist) {
+                $setting = $setting_exist;
+            } else {
+                $setting = new Setting;
+            }
+
+            if ($request->slim != "") {
+                $imageRand = rand(1000, 9999);
+                $random_name = $imageRand."_".time();
+                $dst = public_path('uploads/logos/');
+
+                $finish_image = $this->uploadImagetoServer($request, $random_name, $dst);
+
+                if ($finish_image['result'] == "fail") {
+                    return $finish_image['reason'];
+                }
+
+                if ($finish_image['result'] == "success") {
+                    $setting->logo_fav = $finish_image['image'][0]['name'];
+                    $setting->save();
+
+                    $logo_url = asset('/uploads/logos/'.$setting->logo_fav);
+
+                    return $logo_url;
+                }
+            }
+            return "fail";
         }
         return "role_fail";
     }

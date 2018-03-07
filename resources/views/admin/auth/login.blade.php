@@ -1,5 +1,7 @@
 @extends('layouts.adminAppAuth')
-
+@section('title')
+Login
+@endsection
 @section('content')
     <div class="m-login__signin">
         <div class="m-login__head">

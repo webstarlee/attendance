@@ -3,9 +3,13 @@
 	<!-- begin::Head -->
 	<head>
 		<meta charset="utf-8" />
-		<title>
-			Metronic | Login Page - 1
-		</title>
+		<?php
+			$setting_count = \App\Setting::where('id', 1)->count();
+			if ($setting_count > 0) {
+				$setting = \App\Setting::where('id', 1)->first();
+			}
+		?>
+		<title>@if ($setting_count > 0 ) {{$setting->app_name}} @else HR @endif | @yield('title')</title>
 		<meta name="description" content="Latest updates and statistic charts">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">

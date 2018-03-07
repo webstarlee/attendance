@@ -572,7 +572,7 @@
 												</ul>
 											</div>
 										</li>
-										<li class="m-menu__item  m-menu__item--submenu m-menu__item--rel"  data-menu-submenu-toggle="click" aria-haspopup="true">
+										<li class="@if(Route::currentRouteName()=='admin.setting.appearance') m-menu__item--active @endif m-menu__item  m-menu__item--submenu m-menu__item--rel"  data-menu-submenu-toggle="click" aria-haspopup="true">
 											<a  href="javascript:;" class="m-menu__link m-menu__toggle">
 												<span class="m-menu__item-here"></span>
 												<span class="m-menu__link-text">

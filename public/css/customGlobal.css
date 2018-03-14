@@ -103,7 +103,22 @@
 .company-fav-container-div>img {
     max-width: 50px;
 }
-
+.holiday-calendar-title-div {
+    width: 100%;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100;
+    background-color: transparent!important;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+}
+.holiday-calendar-custom-h3 {
+    color: #fff!important;
+    font-size: 14px!important;
+}
 @media(max-width: 767px) {
     .m-dropdown__wrapper.m-masked-dropdown {
         padding-top: 20px!important;

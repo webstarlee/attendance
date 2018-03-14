@@ -20,26 +20,17 @@ var CalendarBasic = function() {
                 navLinks: true,
                 events: '/admin/manage/holiday/getAlldays/',
 
-                // eventRender: function(event, element) {
-                //     if (element.hasClass('fc-day-grid-event')) {
-                //         element.data('content', event.description);
-                //         element.data('placement', 'top');
-                //         mApp.initPopover(element);
-                //     } else if (element.hasClass('fc-time-grid-event')) {
-                //         element.find('.fc-title').append('<div class="fc-description">' + event.description + '</div>');
-                //     } else if (element.find('.fc-list-item-title').lenght !== 0) {
-                //         element.find('.fc-list-item-title').append('<div class="fc-description">' + event.description + '</div>');
-                //     }
-                //     if (event.rendering == 'background') {
-                //         var bgEventTitle = document.createElement('div');
-                //         bgEventTitle.style.position = 'absolute';
-                //         bgEventTitle.style.bottom = '0';
-                //         bgEventTitle.classList.add('fc-event');
-                //         bgEventTitle.classList.add('custom-title-div');
-                //         bgEventTitle.innerHTML = '<h3 class="fc-title custom-h3">' + event.start + '</h3>' ;
-                //         element.css('position', 'relative').html(bgEventTitle);
-                //     }
-                // },
+                eventRender: function(event, element) {
+                    if (event.rendering == 'background') {
+                        var bgEventTitle = document.createElement('div');
+                        bgEventTitle.style.position = 'absolute';
+                        bgEventTitle.style.bottom = '0';
+                        bgEventTitle.classList.add('fc-event');
+                        bgEventTitle.classList.add('holiday-calendar-title-div');
+                        bgEventTitle.innerHTML = '<h3 class="fc-title holiday-calendar-custom-h3">' + event.title + '</h3>' ;
+                        element.css('position', 'relative').html(bgEventTitle);
+                    }
+                },
 
                 dayClick: function(date, jsEvent, view) {
                     var eventDate = date.format();

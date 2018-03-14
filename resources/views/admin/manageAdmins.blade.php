@@ -504,6 +504,7 @@ Admin Management
 
         $('.input_mask_date').datepicker({
             todayHighlight: true,
+            autoclose: true,
             orientation: "bottom left",
             templates: {
                 leftArrow: '<i class="la la-angle-left"></i>',

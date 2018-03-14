@@ -94,6 +94,14 @@ Route::prefix('admin')->group(function () {
         Route::get('manage/contract/getsingle_data/{id}', 'Admin\AdminManageController@getSingleContract');
         Route::get('manage/contract/delete/{id}', 'Admin\AdminManageController@destroySingleContract');
         //end
+        //manage holiday
+        Route::get('manage/holiday', 'Admin\adminController@viewHoliday')->name('admin.manage.holiday');
+        Route::get('manage/holiday/getAlldays', 'Admin\adminController@getAllHoliday');
+        Route::get('manage/holiday/checkDate/{date}', 'Admin\adminController@checkholiday');
+        Route::post('manage/holiday/store', 'Admin\adminController@storeHoliday')->name('admin.manage.holiday.store');
+        Route::post('manage/holiday/update', 'Admin\adminController@updateHoliday')->name('admin.manage.holiday.update');
+        Route::get('manage/holiday/destroy/{id}', 'Admin\adminController@destroyHoliday');
+        //end
         //setting
         Route::get('setting/appearance', 'Admin\SettingController@index')->name('admin.setting.appearance');
         Route::post('setting/update/name', 'Admin\SettingController@update_name')->name('admin.setting.update.name');

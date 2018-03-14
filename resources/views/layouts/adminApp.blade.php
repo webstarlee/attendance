@@ -28,6 +28,7 @@
         <!--begin::Base Styles -->
         <link href="/assets/plugins/base/vendors.bundle.css" rel="stylesheet" type="text/css" />
 		<link href="/assets/plugins/baseApp/style.bundle.css" rel="stylesheet" type="text/css" />
+		@yield('plugin_style')
         <link href="/css/loader.css" rel="stylesheet" type="text/css" />
 		<link href="/assets/plugins/slim/slim.min.css" rel="stylesheet" type="text/css" />
 		<link href="/css/customGlobal.css" rel="stylesheet" type="text/css" />
@@ -63,7 +64,7 @@
         <!-- begin:: Page -->
 		<div class="m-grid m-grid--hor m-grid--root m-page">
 			<!-- begin::Header -->
-			<header class="m-grid__item	m-header "  data-minimize="minimize" data-minimize-offset="200" data-minimize-mobile-offset="200" >
+			<header class="m-grid__item	m-header" data-minimize="minimize" data-minimize-offset="200" data-minimize-mobile-offset="200" >
 				<div class="m-header__top">
 					<div class="m-container m-container--responsive m-container--xxl m-container--full-height m-page__container">
 						<div class="m-stack m-stack--ver m-stack--desktop">
@@ -521,11 +522,11 @@
 												</span>
 											</a>
 										</li>
-										<li class="@if(Route::currentRouteName()=='admin.manage.admins' || Route::currentRouteName()=='admin.manage.contract' || Route::currentRouteName()=='admin.manage.employee') m-menu__item--active @endif m-menu__item  m-menu__item--submenu m-menu__item--rel"  data-menu-submenu-toggle="click" aria-haspopup="true">
+										<li class="@if(Route::currentRouteName()=='admin.manage.admins' || Route::currentRouteName()=='admin.manage.employee' || Route::currentRouteName()=='admin.manage.holiday') m-menu__item--active @endif m-menu__item  m-menu__item--submenu m-menu__item--rel"  data-menu-submenu-toggle="click" aria-haspopup="true">
 											<a  href="javascript:;" class="m-menu__link m-menu__toggle">
 												<span class="m-menu__item-here"></span>
 												<span class="m-menu__link-text">
-													Manage
+													Employee
 												</span>
 												<i class="m-menu__hor-arrow la la-angle-down"></i>
 												<i class="m-menu__ver-arrow la la-angle-right"></i>
@@ -534,36 +535,24 @@
 												<span class="m-menu__arrow m-menu__arrow--adjust"></span>
 												<ul class="m-menu__subnav">
 													<li class="m-menu__item "  aria-haspopup="true">
-														<a  href="{{route('admin.manage.admins')}}" class="m-menu__link ">
-															<i class="m-menu__link-icon la la-user-secret"></i>
-															<span class="m-menu__link-title">
-																<span class="m-menu__link-wrap">
-																	<span class="m-menu__link-text">
-																		Manage Admin
-																	</span>
-																</span>
-															</span>
-														</a>
-													</li>
-													<li class="m-menu__item "  aria-haspopup="true">
 														<a  href="{{route('admin.manage.employee')}}" class="m-menu__link ">
 															<i class="m-menu__link-icon la la-users"></i>
 															<span class="m-menu__link-title">
 																<span class="m-menu__link-wrap">
 																	<span class="m-menu__link-text">
-																		Manage Employees
+																		All Employees
 																	</span>
 																</span>
 															</span>
 														</a>
 													</li>
 													<li class="m-menu__item "  aria-haspopup="true">
-														<a  href="{{route('admin.manage.contract')}}" class="m-menu__link ">
-															<i class="m-menu__link-icon flaticon-tool-1"></i>
+														<a  href="{{route('admin.manage.holiday')}}" class="m-menu__link ">
+															<i class="m-menu__link-icon flaticon-tea-cup"></i>
 															<span class="m-menu__link-title">
 																<span class="m-menu__link-wrap">
 																	<span class="m-menu__link-text">
-																		Contract Type
+																		Holidays
 																	</span>
 																</span>
 															</span>
@@ -572,7 +561,7 @@
 												</ul>
 											</div>
 										</li>
-										<li class="@if(Route::currentRouteName()=='admin.setting.appearance') m-menu__item--active @endif m-menu__item  m-menu__item--submenu m-menu__item--rel"  data-menu-submenu-toggle="click" aria-haspopup="true">
+										<li class="@if(Route::currentRouteName()=='admin.setting.appearance' || Route::currentRouteName()=='admin.manage.contract') m-menu__item--active @endif m-menu__item  m-menu__item--submenu m-menu__item--rel"  data-menu-submenu-toggle="click" aria-haspopup="true">
 											<a  href="javascript:;" class="m-menu__link m-menu__toggle">
 												<span class="m-menu__item-here"></span>
 												<span class="m-menu__link-text">
@@ -591,18 +580,6 @@
 																<span class="m-menu__link-wrap">
 																	<span class="m-menu__link-text">
 																		Appearance
-																	</span>
-																</span>
-															</span>
-														</a>
-													</li>
-													<li class="m-menu__item "  aria-haspopup="true">
-														<a  href="{{route('admin.manage.employee')}}" class="m-menu__link ">
-															<i class="m-menu__link-icon la la-users"></i>
-															<span class="m-menu__link-title">
-																<span class="m-menu__link-wrap">
-																	<span class="m-menu__link-text">
-																		Manage Employees
 																	</span>
 																</span>
 															</span>
@@ -1422,6 +1399,7 @@
         <!--begin::Base Scripts -->
 		<script src="/assets/plugins/base/vendors.bundle.js" type="text/javascript"></script>
 		<script src="/assets/plugins/baseApp/scripts.bundle.js" type="text/javascript"></script>
+		@yield('plugin_script')
 		<script src="/assets/plugins/slim/slim.kickstart.min.js" type="text/javascript"></script>
 		<script src="/js/customGlobal.js" type="text/javascript"></script>
 		<!--end::Base Scripts -->

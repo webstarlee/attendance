@@ -36,7 +36,15 @@
 		{{-- begine::custom style --}}
 		@yield('customStyle')
 		{{-- end::custom style --}}
-		<link rel="shortcut icon" href="/assets/images/logo/favicon.ico" />
+		@if ($setting_count > 0)
+			@if (file_exists('uploads/logos/'.$setting->logo_fav))
+				<link rel="shortcut icon" href="{{asset('uploads/logos/'.$setting->logo_fav)}}" />
+			@else
+				<link rel="shortcut icon" href="/assets/images/logo/logo_compact.png" />
+			@endif
+		@else
+			<link rel="shortcut icon" href="/assets/images/logo/logo_compact.png" />
+		@endif
 	</head>
     <!-- end::Head -->
     <!-- begin::Body -->
@@ -65,7 +73,15 @@
 								<div class="m-stack m-stack--ver m-stack--general m-stack--inline">
 									<div class="m-stack__item m-stack__item--middle m-brand__logo">
 										<a href="{{route('dashboard')}}" class="m-brand__logo-wrapper">
-											<img alt="" src="/assets/images/logo/logo.png"/>
+											@if ($setting_count > 0)
+				                                @if (file_exists('uploads/logos/'.$setting->logo_img))
+				                                    <img src="{{asset('uploads/logos/'.$setting->logo_img)}}" class="company-main-logo-img" alt="author">
+				                                @else
+				                                    <img alt="" src="/assets/images/logo/logo.png" class="company-main-logo-img" />
+				                                @endif
+				                            @else
+												<img alt="" src="/assets/images/logo/logo.png" class="company-main-logo-img" />
+				                            @endif
 										</a>
 									</div>
 									<div class="m-stack__item m-stack__item--middle m-brand__tools">

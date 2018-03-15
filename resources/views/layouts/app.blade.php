@@ -28,6 +28,7 @@
         <!--begin::Base Styles -->
         <link href="/assets/plugins/base/vendors.bundle.css" rel="stylesheet" type="text/css" />
 		<link href="/assets/plugins/baseApp/style.bundle.css" rel="stylesheet" type="text/css" />
+		@yield('plugin_style')
         <link href="/css/loader.css" rel="stylesheet" type="text/css" />
 		<link href="/assets/plugins/slim/slim.min.css" rel="stylesheet" type="text/css" />
 		<link href="/css/customGlobal.css" rel="stylesheet" type="text/css" />
@@ -441,10 +442,10 @@
 																		</a>
 																	</li>
 																	<li class="m-nav__item">
-																		<a href="profile.html" class="m-nav__link">
+																		<a href="javascript:;" class="m-nav__link">
 																			<i class="m-nav__link-icon flaticon-share"></i>
 																			<span class="m-nav__link-text">
-																				Activity
+																				Client Id : {{Auth::user()->client_id}}
 																			</span>
 																		</a>
 																	</li>
@@ -502,6 +503,14 @@
 												<span class="m-menu__item-here"></span>
 												<span class="m-menu__link-text">
 													Dashboard
+												</span>
+											</a>
+										</li>
+										<li class="m-menu__item @if(Route::currentRouteName()=='attendance') m-menu__item--active @endif"  aria-haspopup="true">
+											<a  href="{{route('attendance')}}" class="m-menu__link ">
+												<span class="m-menu__item-here"></span>
+												<span class="m-menu__link-text">
+													Attendance
 												</span>
 											</a>
 										</li>
@@ -1377,6 +1386,7 @@
         <!--begin::Base Scripts -->
         <script src="/assets/plugins/base/vendors.bundle.js" type="text/javascript"></script>
 		<script src="/assets/plugins/baseApp/scripts.bundle.js" type="text/javascript"></script>
+		@yield('plugin_script')
 		<script src="/assets/plugins/slim/slim.kickstart.min.js" type="text/javascript"></script>
 		<script src="/js/customGlobal.js" type="text/javascript"></script>
 		<!--end::Base Scripts -->

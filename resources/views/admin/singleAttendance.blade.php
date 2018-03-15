@@ -1,14 +1,19 @@
 @extends('layouts.adminApp')
 @section('title')
-Manage Holiday
+{{$employee->username}} Attendance
 @endsection
 @section('pageTitle')
-Holiday Management
+{{$employee->username}} Attendance
 @endsection
 @section('plugin_style')
 <link href="/assets/plugins/fullcalendar/fullcalendar.bundle.css" rel="stylesheet" type="text/css" />
+<link href="/assets/plugins/bootstrap-colorpicker/css/bootstrap-colorpicker.min.css" rel="stylesheet" type="text/css" />
 @endsection
 @section('content')
+    <?php
+        $contract_types = \App\ContractType::all();
+    ?>
+    <input type="hidden" name="golobal_employee_id" id="golobal_employee_id" value="{{$employee->id}}">
     <div class="m-portlet" id="m_portlet">
         <div class="m-portlet__head">
             <div class="m-portlet__head-caption">
@@ -17,18 +22,18 @@ Holiday Management
                         <i class="flaticon-map-location"></i>
                     </span>
                     <h3 class="m-portlet__head-text">
-                        Holiday Calendar
+                        Attendance Calendar
                     </h3>
                 </div>
             </div>
             <div class="m-portlet__head-tools">
                 <ul class="m-portlet__nav">
                     <li class="m-portlet__nav-item">
-                        <a href="javascript:;" id="add-new-holiday-btn" class="btn btn-outline-accent m-btn m-btn--custom m-btn--icon m-btn--air">
+                        <a href="javascript:;" id="add-new-attendance-btn" class="btn btn-outline-accent m-btn m-btn--custom m-btn--icon m-btn--air">
                             <span>
                                 <i class="la la-plus"></i>
                                 <span>
-                                    Add Holiday
+                                    Add Attendance
                                 </span>
                             </span>
                         </a>
@@ -39,21 +44,21 @@ Holiday Management
         <div class="m-portlet__body">
             <ul class="nav nav-tabs nav-fill m-tabs-line m-tabs-line--success m-tabs-line--2x" role="tablist">
 				<li class="nav-item m-tabs__item">
-					<a class="nav-link m-tabs__link active" data-toggle="tab" href="#holiday-calendar-tab">
+					<a class="nav-link m-tabs__link active" data-toggle="tab" href="#attendance-calendar-tab">
 						<i class="fa fa-calendar"></i> Calendar
 					</a>
 				</li>
 				<li class="nav-item m-tabs__item">
-					<a class="nav-link m-tabs__link" data-toggle="tab" href="#holiday-table-tab">
+					<a class="nav-link m-tabs__link" data-toggle="tab" href="#attendance-table-tab">
 						<i class="fa fa-table"></i> List View
 					</a>
 				</li>
 			</ul>
             <div class="tab-content">
-                <div class="tab-pane active" id="holiday-calendar-tab" role="tabpanel">
-                    <div id="m_holiday_calendar"></div>
+                <div class="tab-pane active" id="attendance-calendar-tab" role="tabpanel">
+                    <div id="m_attendance_calendar"></div>
                 </div>
-                <div class="tab-pane" id="holiday-table-tab" role="tabpanel">
+                <div class="tab-pane" id="attendance-table-tab" role="tabpanel">
                     <div class="m-form m-form--label-align-right m--margin-top-20 m--margin-bottom-30">
         				<div class="row align-items-center">
         					<div class="col-xl-8 order-2 order-xl-1">
@@ -72,18 +77,18 @@ Holiday Management
         					</div>
         				</div>
         			</div>
-                    <div id="m_holiday_table"></div>
+                    <div id="m_attendance_table"></div>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="modal fade m-custom-modal" id="m-admin-new_holiday-modal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1" aria-hidden="true">
+    <div class="modal fade m-custom-modal" id="m-admin-new_attendance-modal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title" id="exampleModalLabel1">
-						Add New Holiday
+					<h5 class="modal-title" id="exampleModalLabel">
+						Add New Attendance
 					</h5>
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close" style="cursor: pointer;">
 						<span aria-hidden="true">
@@ -91,17 +96,23 @@ Holiday Management
 						</span>
 					</button>
 				</div>
-                <form id="m-admin-new_holiday-form" action="{{route('admin.manage.holiday.store')}}" role="form" method="post" accept-charset="UTF-8" enctype="multipart/form-data">
+                <form id="m-admin-new_attendance-form" action="{{route('admin.manage.attendance.store')}}" role="form" method="post" accept-charset="UTF-8" enctype="multipart/form-data">
                     {{ csrf_field() }}
+                    <input type="hidden" name="employee_id" value="{{$employee->id}}">
     				<div class="modal-body">
                         <div class="row ">
                             <div class="col-sm-12">
                                 <div class="m-form__content"></div>
                                 <div class="form-group m-form__group">
-                                    <label for="contract_title">
-                                        *Date:
+                                    <label for="exampleInputEmail1">
+                                        Date:
                                     </label>
-                                    <input type="text" class="form-control m-input" id="holi_date" name="holi_date" placeholder="Enter Holiday date" required>
+                                    <div class="input-group m-input-group m-input-group--air">
+                                        <span class="input-group-addon">
+                                            <i class="la la-calendar"></i>
+                                        </span>
+                                        <input type="text" class="form-control m-input" id="attend_date" name="attend_date" placeholder="Enter Holiday date" required>
+                                    </div>
                                 </div>
                                 <div class="m-form__content"></div>
                             </div>
@@ -110,23 +121,21 @@ Holiday Management
                             <div class="col-sm-12">
                                 <div class="m-form__content"></div>
                                 <div class="form-group m-form__group">
-                                    <label for="contract_title">
-                                        *Title:
+                                    <label for="exampleInputEmail1">
+                                        Contract Type:
                                     </label>
-                                    <input type="text" class="form-control m-input" id="holi_title" name="holi_title" placeholder="Enter Holiday title" aria-describedby="basic-addon1" required>
+                                    <div class="input-group m-input-group m-input-group--air">
+                                        <span class="input-group-addon">
+                                            <i class="flaticon-tool-1"></i>
+                                        </span>
+                                        <select class="form-control m-bootstrap-select m_selectpicker" name="contract_type">
+                                            @foreach ($contract_types as $contract_type)
+                                                <option value="{{$contract_type->id}}">{{$contract_type->title}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
                                 </div>
                                 <div class="m-form__content"></div>
-                            </div>
-                        </div>
-                        <div class="row ">
-                            <div class="col-sm-12">
-                                <div class="m-form__content"></div>
-                                <div class="form-group m-form__group">
-									<label for="contract_description">
-										Description:
-									</label>
-									<textarea class="form-control m-input" name="holi_description" id="holi_description" placeholder="Enter Holiday description" rows="5"></textarea>
-								</div>
                             </div>
                         </div>
     				</div>
@@ -143,12 +152,12 @@ Holiday Management
 		</div>
     </div>
 
-    <div class="modal fade m-custom-modal" id="m-admin-edit_holiday-modal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade m-custom-modal" id="m-admin-edit_attendance-modal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel2" aria-hidden="true">
         <div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title" id="exampleModalLabel">
-						Edit Holiday
+					<h5 class="modal-title" id="exampleModalLabel2">
+						Edit Attendance
 					</h5>
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close" style="cursor: pointer;">
 						<span aria-hidden="true">
@@ -156,18 +165,23 @@ Holiday Management
 						</span>
 					</button>
 				</div>
-                <form id="m-admin-edit_holiday-form" action="{{route('admin.manage.holiday.update')}}" role="form" method="post" accept-charset="UTF-8" enctype="multipart/form-data">
+                <form id="m-admin-edit_attendance-form" action="{{route('admin.manage.attendance.update')}}" role="form" method="post" accept-charset="UTF-8" enctype="multipart/form-data">
                     {{ csrf_field() }}
-                    <input type="hidden" name="holiday_id" id="holiday_id" value="">
+                    <input type="hidden" name="attendance_id" id="attendance_id" value="">
     				<div class="modal-body">
                         <div class="row ">
                             <div class="col-sm-12">
                                 <div class="m-form__content"></div>
                                 <div class="form-group m-form__group">
-                                    <label for="contract_title">
-                                        *Date:
+                                    <label for="exampleInputEmail1">
+                                        Date:
                                     </label>
-                                    <input type="text" class="form-control m-input" id="_holi_date" name="_holi_date" placeholder="Enter Holiday date" required>
+                                    <div class="input-group m-input-group m-input-group--air">
+                                        <span class="input-group-addon">
+                                            <i class="la la-calendar"></i>
+                                        </span>
+                                        <input type="text" class="form-control m-input" id="_attend_date" name="_attend_date" placeholder="Enter Attendance date" required>
+                                    </div>
                                 </div>
                                 <div class="m-form__content"></div>
                             </div>
@@ -176,23 +190,21 @@ Holiday Management
                             <div class="col-sm-12">
                                 <div class="m-form__content"></div>
                                 <div class="form-group m-form__group">
-                                    <label for="contract_title">
-                                        *Title:
+                                    <label for="exampleInputEmail1">
+                                        Contract Type:
                                     </label>
-                                    <input type="text" class="form-control m-input" id="_holi_title" name="_holi_title" placeholder="Enter Holiday title" aria-describedby="basic-addon1" required>
+                                    <div class="input-group m-input-group m-input-group--air">
+                                        <span class="input-group-addon">
+                                            <i class="flaticon-tool-1"></i>
+                                        </span>
+                                        <select class="form-control m-bootstrap-select m_selectpicker" id="_contract_type" name="_contract_type">
+                                            @foreach ($contract_types as $contract_type)
+                                                <option value="{{$contract_type->id}}">{{$contract_type->title}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
                                 </div>
                                 <div class="m-form__content"></div>
-                            </div>
-                        </div>
-                        <div class="row ">
-                            <div class="col-sm-12">
-                                <div class="m-form__content"></div>
-                                <div class="form-group m-form__group">
-									<label for="contract_description">
-										Description:
-									</label>
-									<textarea class="form-control m-input" name="_holi_description" id="_holi_description" placeholder="Enter Holiday description" rows="5"></textarea>
-								</div>
                             </div>
                         </div>
     				</div>
@@ -200,7 +212,7 @@ Holiday Management
     					<button type="button" class="btn m-btn--air btn-outline-primary" data-dismiss="modal">
     						Close
     					</button>
-                        <button type="button" class="btn m-btn--air btn-outline-danger" id="holiday_delete_btn">
+                        <button type="button" class="btn m-btn--air btn-outline-danger" id="attendance_delete_btn">
     						Delete
     					</button>
     					<button type="submit" class="btn m-btn--air btn-outline-accent form-submit-btn">
@@ -214,6 +226,7 @@ Holiday Management
 @endsection
 @section('plugin_script')
 <script src="/assets/plugins/fullcalendar/fullcalendar.bundle.js" type="text/javascript"></script>
+<script src="/assets/plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.min.js" type="text/javascript"></script>
 @endsection
 @section('customScript')
     <script type="text/javascript">
@@ -222,7 +235,7 @@ Holiday Management
         });
 
         function setJsplugin() {
-            $('#holi_date').datepicker({
+            $('#attend_date').datepicker({
                 todayHighlight: true,
                 autoclose: true,
                 orientation: "bottom left",
@@ -231,8 +244,10 @@ Holiday Management
                     rightArrow: '<i class="la la-angle-right"></i>'
                 }
             });
+
+            $('.m_selectpicker').selectpicker();
         }
     </script>
-    <script src="/js/holiday.js" type="text/javascript"></script>
+    <script src="/js/singleAttend.js" type="text/javascript"></script>
     <script src="/js/customManage.js" type="text/javascript"></script>
 @endsection

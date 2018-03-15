@@ -43,7 +43,7 @@ Setting Appearance
 						</span>
 					</div>
                     <div class="col-lg-4">
-                        <button type="submit" class="btn btn-outline-success m-btn m-btn--outline">
+                        <button type="submit" class="btn btn-outline-accent m-btn m-btn--outline m-btn--air">
                             Save
                         </button>
                     </div>
@@ -71,7 +71,7 @@ Setting Appearance
                         </div>
 					</div>
                     <div class="col-lg-4">
-                        <button type="button" class="btn btn-outline-success m-btn m-btn--outline" data-toggle="modal" data-target="#company-logo__pic-change-modal">
+                        <button type="button" class="btn btn-outline-accent m-btn m-btn--outline m-btn--air" data-toggle="modal" data-target="#company-logo__pic-change-modal">
                             Change
                         </button>
                     </div>
@@ -99,7 +99,7 @@ Setting Appearance
                         </div>
 					</div>
                     <div class="col-lg-4">
-                        <button type="button" class="btn btn-outline-success m-btn m-btn--outline" data-toggle="modal" data-target="#company-fav__pic-change-modal">
+                        <button type="button" class="btn btn-outline-accent m-btn m-btn--outline m-btn--air" data-toggle="modal" data-target="#company-fav__pic-change-modal">
                             Change
                         </button>
                     </div>

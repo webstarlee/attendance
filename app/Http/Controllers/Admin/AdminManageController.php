@@ -233,6 +233,7 @@ class AdminManageController extends Controller
             $contract = new ContractType;
             $contract->title = $contract_title;
             $contract->description = $request->contract_description;
+            $contract->color = $request->contract_color;
             $contract->save();
 
             return back();
@@ -247,6 +248,7 @@ class AdminManageController extends Controller
         if ($contract) {
             $contract->title = $request->_contract_title;
             $contract->description = $request->_contract_description;
+            $contract->color = $request->_contract_color;
             $contract->save();
 
             return back();

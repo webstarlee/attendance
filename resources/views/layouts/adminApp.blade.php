@@ -522,7 +522,7 @@
 												</span>
 											</a>
 										</li>
-										<li class="@if(Route::currentRouteName()=='admin.manage.admins' || Route::currentRouteName()=='admin.manage.employee' || Route::currentRouteName()=='admin.manage.holiday') m-menu__item--active @endif m-menu__item  m-menu__item--submenu m-menu__item--rel"  data-menu-submenu-toggle="click" aria-haspopup="true">
+										<li class="@if(Route::currentRouteName()=='admin.manage.admins' || Route::currentRouteName()=='admin.manage.employee' || Route::currentRouteName()=='admin.manage.holiday' || Route::currentRouteName()=='admin.manage.attendance' || Route::currentRouteName()=='admin.manage.attendance.single') m-menu__item--active @endif m-menu__item  m-menu__item--submenu m-menu__item--rel"  data-menu-submenu-toggle="click" aria-haspopup="true">
 											<a  href="javascript:;" class="m-menu__link m-menu__toggle">
 												<span class="m-menu__item-here"></span>
 												<span class="m-menu__link-text">
@@ -534,7 +534,7 @@
 											<div class="m-menu__submenu m-menu__submenu--classic m-menu__submenu--left">
 												<span class="m-menu__arrow m-menu__arrow--adjust"></span>
 												<ul class="m-menu__subnav">
-													<li class="m-menu__item "  aria-haspopup="true">
+													<li class="m-menu__item" aria-haspopup="true">
 														<a  href="{{route('admin.manage.employee')}}" class="m-menu__link ">
 															<i class="m-menu__link-icon la la-users"></i>
 															<span class="m-menu__link-title">
@@ -546,7 +546,19 @@
 															</span>
 														</a>
 													</li>
-													<li class="m-menu__item "  aria-haspopup="true">
+													<li class="m-menu__item" aria-haspopup="true">
+														<a  href="{{route('admin.manage.attendance')}}" class="m-menu__link ">
+															<i class="m-menu__link-icon la la-fire"></i>
+															<span class="m-menu__link-title">
+																<span class="m-menu__link-wrap">
+																	<span class="m-menu__link-text">
+																		Attendance
+																	</span>
+																</span>
+															</span>
+														</a>
+													</li>
+													<li class="m-menu__item" aria-haspopup="true">
 														<a  href="{{route('admin.manage.holiday')}}" class="m-menu__link ">
 															<i class="m-menu__link-icon flaticon-tea-cup"></i>
 															<span class="m-menu__link-title">

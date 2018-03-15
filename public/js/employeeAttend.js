@@ -8,8 +8,9 @@ var CalendarBasic = function() {
             var YESTERDAY = todayDate.clone().subtract(1, 'day').format('YYYY-MM-DD');
             var TODAY = todayDate.format('YYYY-MM-DD');
             var TOMORROW = todayDate.clone().add(1, 'day').format('YYYY-MM-DD');
+            var golbalEmployeeId = $('#golobal_employee_id').val();
 
-            var holidayCalendar = $('#m_holiday_calendar').fullCalendar({
+            var attendanceCalendar = $('#m_attendance_calendar').fullCalendar({
                 header: {
                     left: 'prev,next today',
                     center: 'title',
@@ -18,40 +19,26 @@ var CalendarBasic = function() {
                 editable: false,
                 eventLimit: true, // allow "more" link when too many events
                 navLinks: true,
-                events: '/admin/manage/holiday/getAlldays/',
+                events: '/attendance/getAttendance/',
 
                 eventRender: function(event, element) {
-                    if (event.rendering == 'background') {
-                        var bgEventTitle = document.createElement('div');
-                        bgEventTitle.style.position = 'absolute';
-                        bgEventTitle.style.bottom = '0';
-                        bgEventTitle.classList.add('fc-event');
-                        bgEventTitle.classList.add('holiday-calendar-title-div');
-                        bgEventTitle.innerHTML = '<h3 class="fc-title holiday-calendar-custom-h3">' + event.title + '</h3>' ;
-                        element.css('position', 'relative').html(bgEventTitle);
-                    }
+
                 },
 
                 dayClick: function(date, jsEvent, view) {
                     var eventDate = date.format();
                     var dataFormat = date.format('MM/DD/YYYY');
-                    var getData = '/admin/manage/holiday/checkDate/'+eventDate;
+                    var getData = '/attendance/checkSingleData/'+eventDate;
                     $.ajax({
                         url: getData,
                         type: 'get',
                         success: function(result){
-                            if (result != "nodata" || jsEvent.target.classList.contains('fc-bgevent')) {
-                                $('#m-admin-edit_holiday-form #holiday_id').val(result.id);
-                                $('#m-admin-edit_holiday-form #_holi_date').val(dataFormat);
-                                $('#m-admin-edit_holiday-form #_holi_date').attr('readonly', true);
-                                $('#m-admin-edit_holiday-form #_holi_title').val(result.title);
-                                $('#m-admin-edit_holiday-form #_holi_description').val(result.description);
-                                $('#m-admin-edit_holiday-modal').modal('show');
-                            } else{
-                                $('#m-admin-new_holiday-form #holi_date').val(dataFormat);
-                                $('#m-admin-new_holiday-form #holi_date').attr('readonly', true);
-                                $('#m-admin-new_holiday-modal').modal('show');
-                                $('#holi_date').datepicker('destroy');
+                            console.log(result);
+                            if (result == "nodata") {
+                                $('#m-employee-new_attendance-form #attend_date').val(dataFormat);
+                                $('#m-employee-new_attendance-form #attend_date').attr('readonly', true);
+                                $('#m-employee-new_attendance-modal').modal('show');
+                                $('#attend_date').datepicker('destroy');
                             }
                         },
                         error: function(result){
@@ -59,15 +46,38 @@ var CalendarBasic = function() {
                         }
                     });
                 },
+
+                eventClick: function(event) {
+                    var eventDate = event.start.format('MM/DD/YYYY');
+                    var getData_url = '/attendance/getSingleAttendance/'+event.id;
+                    $.ajax({
+                        url: getData_url,
+                        type: 'get',
+                        success: function(result){
+                            if (result != "nodata") {
+                                $('#m-employee-edit_attendance-form #attendance_id').val(event.id);
+                                $('#m-employee-edit_attendance-form #_attend_date').val(eventDate);
+                                $('#m-employee-edit_attendance-form #_attend_date').attr('readonly', true);
+                                $('#m-employee-edit_attendance-form #_contract_type').val(result.contract_id);
+                                $('#m-employee-edit_attendance-form #_contract_type').selectpicker('destroy');
+                                $('#m-employee-edit_attendance-form #_contract_type').selectpicker();
+                                $('#m-employee-edit_attendance-modal').modal('show');
+                            }
+                        },
+                        error: function(result){
+                            console.log(result);
+                        }
+                    });
+                }
             });
 
-            var holidayTable = $('#m_holiday_table').mDatatable({
+            var attendanceTable = $('#m_attendance_table').mDatatable({
               // datasource definition
               data: {
                 type: 'remote',
                 source: {
         			read: {
-        				url: '/admin/manage/holiday/getAlldays/',
+        				url: '/attendance/getAttendance/',
                         method: 'GET',
         			},
         		},
@@ -110,12 +120,7 @@ var CalendarBasic = function() {
                   width: 150,
                 }, {
                   field: 'title',
-                  title: 'Title',
-                  width: 150,
-                  responsive: {visible: 'lg'},
-                }, {
-                  field: 'description',
-                  title: 'Description',
+                  title: 'Contract Type',
                   width: 150,
                   responsive: {visible: 'lg'},
                 },{
@@ -128,10 +133,10 @@ var CalendarBasic = function() {
                         var dropup = (datatable.getPageSize() - index) <= 4 ? 'dropup' : '';
 
                         return '\
-                        <a href="javascript:;" data-holiday_date="'+row.start+'" class="m-holiday-edit-btn m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" title="View ">\
+                        <a href="javascript:;" data-attendance_id="'+row.id+'" class="m-attendance-edit-btn m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" title="View ">\
                         <i class="la la-edit"></i>\
                         </a>\
-                        <a href="javascript:;" data-holiday_id="'+row.id+'" class="m-holiday-delete-btn m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill" title="View ">\
+                        <a href="javascript:;" data-attendance_id="'+row.id+'" class="m-attendance-delete-btn m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill" title="View ">\
                         <i class="la la-trash"></i>\
                         </a>\
                         ';
@@ -139,60 +144,16 @@ var CalendarBasic = function() {
                 }],
             });
 
-            $('#add-new-holiday-btn').on('click', function(e) {
+            $('#add-new-attendance-btn').on('click', function(e) {
                 e.preventDefault();
-                var form = $('#m-admin-new_holiday-form')[0];
+                var form = $('#m-employee-new_attendance-form')[0];
                 form.reset();
-                $(form).find('#holi_date').attr('readonly', false);
-                $('#m-admin-new_holiday-modal').modal('show');
+                $(form).find('#attend_date').attr('readonly', false);
+                $('#m-employee-new_attendance-modal').modal('show');
                 setJsplugin();
             })
 
-            $('#m-admin-new_holiday-form').on('submit', function(e) {
-                e.preventDefault();
-                var form = $(this);
-                $.ajaxSetup({
-                    headers: {
-                        'X-CSRF-Token': $('meta[name=csrf-token]').attr('content')
-                    }
-                });
-                var url = $(form).attr( 'action' );
-
-                var formData = new FormData($(form)[0]);
-                var submit_btn = $(form).find('.form-submit-btn');
-                submit_btn.addClass('m-loader m-loader--right m-loader--light').attr('disabled', true);
-                $.ajax({
-                    url: url,
-                    type: 'POST',
-                    data: formData,
-                    success: function (data) {
-                        console.log(data);
-                        if (data == "fail") {
-                            swal({
-                                title: 'Failed?',
-                                text: "Already Exist holiday",
-                                type: 'error',
-                                showCancelButton: false,
-                                confirmButtonText: "Ok!",
-                                confirmButtonClass: "btn m-btn--air btn-outline-accent",
-                            });
-                        } else {
-                            holidayCalendar.fullCalendar('refetchEvents');
-                            holidayTable.reload();
-                        }
-                        submit_btn.removeClass('m-loader m-loader--right m-loader--light').attr('disabled', false);
-                        $('#m-admin-new_holiday-modal').modal('hide');
-                    },
-                    processData: false,
-                    contentType: false,
-                    error: function(data)
-                   {
-                       console.log(data);
-                   }
-                });
-            })
-
-            $('#m-admin-edit_holiday-form').on('submit', function(e) {
+            $('#m-employee-new_attendance-form').on('submit', function(e) {
                 e.preventDefault();
                 var form = $(this);
                 $.ajaxSetup({
@@ -210,10 +171,22 @@ var CalendarBasic = function() {
                     type: 'POST',
                     data: formData,
                     success: function (data) {
-                        submit_btn.removeClass('m-loader m-loader--success m-loader--light').attr('disabled', false);
-                        holidayCalendar.fullCalendar('refetchEvents');
-                        holidayTable.reload();
-                        $('#m-admin-edit_holiday-modal').modal('hide');
+                        console.log(data);
+                        if (data == "fail") {
+                            swal({
+                                title: 'Failed?',
+                                text: "Already Exist attendance",
+                                type: 'error',
+                                showCancelButton: false,
+                                confirmButtonText: "Ok!",
+                                confirmButtonClass: "btn m-btn--air btn-outline-accent",
+                            });
+                        } else {
+                            attendanceCalendar.fullCalendar('refetchEvents');
+                            attendanceTable.reload();
+                        }
+                        submit_btn.removeClass('m-loader m-loader--success m-loader--right').attr('disabled', false);
+                        $('#m-employee-new_attendance-modal').modal('hide');
                     },
                     processData: false,
                     contentType: false,
@@ -222,9 +195,41 @@ var CalendarBasic = function() {
                        console.log(data);
                    }
                 });
-            })
+            });
 
-            $('#holiday_delete_btn').on('click', function(e) {
+            $('#m-employee-edit_attendance-form').on('submit', function(e) {
+                e.preventDefault();
+                var form = $(this);
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-Token': $('meta[name=csrf-token]').attr('content')
+                    }
+                });
+                var url = $(form).attr( 'action' );
+
+                var formData = new FormData($(form)[0]);
+                var submit_btn = $(form).find('.form-submit-btn');
+                submit_btn.addClass('m-loader m-loader--success m-loader--right').attr('disabled', true);
+                $.ajax({
+                    url: url,
+                    type: 'POST',
+                    data: formData,
+                    success: function (data) {
+                        submit_btn.removeClass('m-loader m-loader--success m-loader--right').attr('disabled', false);
+                        attendanceCalendar.fullCalendar('refetchEvents');
+                        attendanceTable.reload();
+                        $('#m-employee-edit_attendance-modal').modal('hide');
+                    },
+                    processData: false,
+                    contentType: false,
+                    error: function(data)
+                   {
+                       console.log(data);
+                   }
+                });
+            });
+
+            $('#attendance_delete_btn').on('click', function(e) {
                 e.preventDefault();
                 var $this = $(this);
                 swal({
@@ -237,21 +242,21 @@ var CalendarBasic = function() {
                     cancelButtonClass: "btn m-btn--air btn-outline-primary",
                 }).then(function(result) {
                     if (result.value) {
-                        var form = $this.parents('#m-admin-edit_holiday-form');
-                        var holidayId = form.find('#holiday_id').val();
+                        var form = $this.parents('#m-employee-edit_attendance-form');
+                        var attendanceId = form.find('#attendance_id').val();
                         $.ajax({
-                            url: '/admin/manage/holiday/destroy/'+holidayId,
+                            url: '/attendance/destroy/'+attendanceId,
                             type: 'get',
                             success: function(result){
-                                $('#m-admin-edit_holiday-modal').modal('hide');
+                                $('#m-employee-edit_attendance-modal').modal('hide');
                                 swal({
                                     "title": "Success",
                                     "text": "Holiday Deleted !.",
                                     "type": "success",
                                     "confirmButtonClass": "btn m-btn--air btn-outline-accent"
                                 });
-                                holidayCalendar.fullCalendar('refetchEvents');
-                                holidayTable.reload();
+                                attendanceCalendar.fullCalendar('refetchEvents');
+                                attendanceTable.reload();
                             },
                             error: function(error){
                                 console.log(error);
@@ -261,37 +266,38 @@ var CalendarBasic = function() {
                 });
             });
 
-            $(document).on('click', '.m-holiday-edit-btn', function(e) {
+            $(document).on('click', '.m-attendance-edit-btn', function(e) {
                 e.preventDefault();
                 var $this = $(this);
-                var holidayDate = $this.data('holiday_date');
-                var getData = '/admin/manage/holiday/checkDate/'+holidayDate;
+                var attendanceId = $this.data('attendance_id');
+                var getData_url = '/attendance/getSingleAttendance/'+attendanceId;
                 $.ajax({
-                    url: getData,
+                    url: getData_url,
                     type: 'get',
                     success: function(result){
                         if (result != "nodata") {
-                            var from = holidayDate.split("-");
+                            var from = result.attendance_date.split("-");
                             var dateYear = from[0];
                             var dateMonth = from[1];
                             var dateDay = from[2];
                             var dataFormat = dateMonth+"/"+dateDay+"/"+dateYear;
-                            $('#m-admin-edit_holiday-form #holiday_id').val(result.id);
-                            $('#m-admin-edit_holiday-form #_holi_date').val(dataFormat);
-                            $('#m-admin-edit_holiday-form #_holi_date').attr('readonly', true);
-                            $('#m-admin-edit_holiday-form #_holi_title').val(result.title);
-                            $('#m-admin-edit_holiday-form #_holi_description').val(result.description);
-                            $('#m-admin-edit_holiday-modal').modal('show');
+
+                            $('#m-employee-edit_attendance-form #attendance_id').val(attendanceId);
+                            $('#m-employee-edit_attendance-form #_attend_date').val(dataFormat);
+                            $('#m-employee-edit_attendance-form #_attend_date').attr('readonly', true);
+                            $('#m-employee-edit_attendance-form #_contract_type').val(result.contract_id);
+                            $('#m-employee-edit_attendance-form #_contract_type').selectpicker('destroy');
+                            $('#m-employee-edit_attendance-form #_contract_type').selectpicker();
+                            $('#m-employee-edit_attendance-modal').modal('show');
                         }
                     },
                     error: function(result){
                         console.log(result);
                     }
                 });
-                console.log(holidayDate);
-            })
+            });
 
-            $(document).on('click', '.m-holiday-delete-btn', function(e) {
+            $(document).on('click', '.m-attendance-delete-btn', function(e) {
                 e.preventDefault();
                 var $this = $(this);
                 swal({
@@ -303,26 +309,28 @@ var CalendarBasic = function() {
                     confirmButtonClass: "btn m-btn--air btn-outline-accent",
                     cancelButtonClass: "btn m-btn--air btn-outline-primary",
                 }).then(function(result) {
-                    var holidayId = $this.data('holiday_id');
-                    $.ajax({
-                        url: '/admin/manage/holiday/destroy/'+holidayId,
-                        type: 'get',
-                        success: function(result){
-                            swal({
-                                "title": "Success",
-                                "text": "Holiday Deleted !.",
-                                "type": "success",
-                                "confirmButtonClass": "btn m-btn--air btn-outline-accent"
-                            });
-                            holidayCalendar.fullCalendar('refetchEvents');
-                            holidayTable.reload();
-                        },
-                        error: function(error){
-                            console.log(error);
-                        }
-                    });
+                    if (result.value) {
+                        var attendanceId = $this.data('attendance_id');
+                        $.ajax({
+                            url: '/attendance/destroy/'+attendanceId,
+                            type: 'get',
+                            success: function(result){
+                                swal({
+                                    "title": "Success",
+                                    "text": "Attendance Deleted !.",
+                                    "type": "success",
+                                    "confirmButtonClass": "btn m-btn--air btn-outline-accent"
+                                });
+                                attendanceCalendar.fullCalendar('refetchEvents');
+                                attendanceTable.reload();
+                            },
+                            error: function(error){
+                                console.log(error);
+                            }
+                        });
+                    }
                 });
-            })
+            });
         }
     };
 }();

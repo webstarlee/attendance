@@ -43,6 +43,15 @@ Route::middleware(['auth'])->group(function () {
     Route::post('profile/update/unique', 'User\UserController@updateEmployeeUnique');
     Route::post('profile/update/info', 'User\UserController@updateEmployeeInfo');
     Route::post('profile/update/password', 'User\UserController@updateEmployeePassOwn');
+    //attendance manage
+    Route::get('/attendance', 'User\UserController@attendance')->name('attendance');
+    Route::post('/attendance/store', 'User\UserController@attendanceStore')->name('attendance.store');
+    Route::post('/attendance/update', 'User\UserController@attendanceUpdate')->name('attendance.update');
+    Route::get('/attendance/getAttendance', 'User\UserController@getAttendance');
+    Route::get('/attendance/getSingleAttendance/{id}', 'User\UserController@getSingleAttendance');
+    Route::get('/attendance/checkSingleData/{date}', 'User\UserController@checkSinlgeAttendance');
+    Route::get('/attendance/destroy/{id}', 'User\UserController@attendanceDestroy');
+    //end
 });
 
 Route::middleware(['auth'])->group(function () {
@@ -101,6 +110,17 @@ Route::prefix('admin')->group(function () {
         Route::post('manage/holiday/store', 'Admin\adminController@storeHoliday')->name('admin.manage.holiday.store');
         Route::post('manage/holiday/update', 'Admin\adminController@updateHoliday')->name('admin.manage.holiday.update');
         Route::get('manage/holiday/destroy/{id}', 'Admin\adminController@destroyHoliday');
+        //end
+        //manage attendance
+        Route::get('manage/attendance', 'Admin\AttendanceController@index')->name('admin.manage.attendance');
+        Route::post('manage/attendance/store', 'Admin\AttendanceController@store')->name('admin.manage.attendance.store');
+        Route::post('manage/attendance/update', 'Admin\AttendanceController@update')->name('admin.manage.attendance.update');
+        Route::get('manage/attendance/getEmployee', 'Admin\AttendanceController@getAllEmployee');
+        Route::get('manage/attendance/{unique}/view', 'Admin\AttendanceController@viewSingleAttendance')->name('admin.manage.attendance.single');
+        Route::get('manage/attendance/getSingleData/{id}', 'Admin\AttendanceController@getSinlgeAttendance');
+        Route::get('manage/attendance/getAttendance/{id}', 'Admin\AttendanceController@getAttendance');
+        Route::get('manage/attendance/checkSingleData/{id}/{date}', 'Admin\AttendanceController@checkSinlgeAttendance');
+        Route::get('manage/attendance/destroy/{id}', 'Admin\AttendanceController@destroy');
         //end
         //setting
         Route::get('setting/appearance', 'Admin\SettingController@index')->name('admin.setting.appearance');

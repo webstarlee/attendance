@@ -120,7 +120,7 @@ Employee Management
 						</div>
 					</div>
 					<div class="col-xl-4 order-1 order-xl-2 m--align-right">
-						<a href="#m-employee-add-new-modal" data-toggle="modal" class="btn btn-primary m-btn m-btn--custom m-btn--icon m-btn--air">
+						<a href="#m-employee-add-new-modal" data-toggle="modal" class="btn btn-outline-accent m-btn m-btn--custom m-btn--icon m-btn--air">
 							<span>
 								<i class="la la-user-plus"></i>
 								<span>

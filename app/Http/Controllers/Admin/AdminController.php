@@ -39,14 +39,19 @@ class adminController extends Controller
         $selectedDate = DateTime::createFromFormat('m/d/Y', $request->holi_date);
         $finalDate = $selectedDate->format('Y-m-d');
 
-        $holiday = new Holiday;
-        $holiday->date = $finalDate;
-        $holiday->title = $request->holi_title;
-        $holiday->description = $request->holi_description;
-        $holiday->color = '#e4003e';
-        $holiday->save();
+        $check_holiday = Holiday::where('date', $finalDate)->count();
+        if ($check_holiday == 0) {
+            $holiday = new Holiday;
+            $holiday->date = $finalDate;
+            $holiday->title = $request->holi_title;
+            $holiday->description = $request->holi_description;
+            $holiday->color = '#e4003e';
+            $holiday->save();
 
-        return "success";
+            return "success";
+        }
+
+        return "fail";
     }
 
     public function updateHoliday(Request $request)

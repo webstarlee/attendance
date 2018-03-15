@@ -100,6 +100,8 @@ $(document).on('click', '.m-contract-type-edit_btn', function(){
                 $('#m-admin-edit_contract-type-form #contract_id_for_edit').val(result.id);
                 $('#m-admin-edit_contract-type-form #_contract_title').val(result.title);
                 $('#m-admin-edit_contract-type-form #_contract_description').val(result.description);
+                $('#m-admin-edit_contract-type-form #_contract_color').val(result.color);
+                $('#m-admin-edit_contract-type-form #_contract_color').parent().colorpicker('update');
                 $('#m-admin-edit_contract-type-modal').modal('show');
             }
         },

@@ -8,6 +8,10 @@ Manage Contract type
 Contract type Management
 @endsection
 
+@section('plugin_style')
+<link href="/assets/plugins/bootstrap-colorpicker/css/bootstrap-colorpicker.min.css" rel="stylesheet" type="text/css" />
+@endsection
+
 @section('content')
     <div class="m-portlet m-portlet--mobile">
 		<div class="m-portlet__head">
@@ -116,7 +120,7 @@ Contract type Management
 						</div>
 					</div>
 					<div class="col-xl-4 order-1 order-xl-2 m--align-right">
-						<a href="#m-admin-new_contract-type-modal" data-toggle="modal" class="btn btn-primary m-btn m-btn--custom m-btn--icon m-btn--air">
+						<a href="#m-admin-new_contract-type-modal" data-toggle="modal" class="btn btn-outline-accent m-btn m-btn--custom m-btn--icon m-btn--air">
 							<span>
 								<i class="la la-plus"></i>
 								<span>
@@ -158,7 +162,12 @@ Contract type Management
                                     <label for="contract_title">
                                         Title (required):
                                     </label>
-                                    <input type="text" class="form-control m-input" id="contract_title" name="contract_title" placeholder="Enter contract title (required)" aria-describedby="basic-addon1" required>
+                                    <div class="input-group m-input-group m-input-group--air">
+                                        <span class="input-group-addon">
+                                            <i class="la la-comment-o"></i>
+                                        </span>
+                                        <input type="text" class="form-control m-input" id="contract_title" name="contract_title" placeholder="Enter contract title (required)" aria-describedby="basic-addon1" required>
+                                    </div>
                                 </div>
                                 <div class="m-form__content"></div>
                             </div>
@@ -174,12 +183,28 @@ Contract type Management
 								</div>
                             </div>
                         </div>
+                        <div class="row ">
+                            <div class="col-sm-12">
+                                <div class="m-form__content"></div>
+                                <div class="form-group m-form__group">
+                                    <label for="exampleInputEmail1">
+                                        Color:
+                                    </label>
+                                    <div class="input-group m-input-group m-input-group--air colorpicker-input">
+                                        <input type="text" class="form-control m-input" id="contract_color" name="contract_color" placeholder="Enter Attendance date" required value="#000">
+                                        <span class="input-group-addon">
+                                            <i></i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
     				</div>
     				<div class="modal-footer">
-    					<button type="button" class="btn btn-secondary" data-dismiss="modal">
+    					<button type="button" class="btn btn-outline-primary m-btn m-btn--custom m-btn--air" data-dismiss="modal">
     						Close
     					</button>
-    					<button type="submit" class="btn btn-primary form-submit-btn">
+    					<button type="submit" class="btn btn-outline-accent m-btn m-btn--custom m-btn--air form-submit-btn">
     						Submit
     					</button>
     				</div>
@@ -209,10 +234,15 @@ Contract type Management
                             <div class="col-sm-12">
                                 <div class="m-form__content"></div>
                                 <div class="form-group m-form__group">
-                                    <label for="_contract_title">
+                                    <label for="contract_title">
                                         Title (required):
                                     </label>
-                                    <input type="text" class="form-control m-input" id="_contract_title" name="_contract_title" placeholder="Enter contract title (required)" aria-describedby="basic-addon1" required>
+                                    <div class="input-group m-input-group m-input-group--air">
+                                        <span class="input-group-addon">
+                                            <i class="la la-comment-o"></i>
+                                        </span>
+                                        <input type="text" class="form-control m-input" id="_contract_title" name="_contract_title" placeholder="Enter contract title (required)" aria-describedby="basic-addon1" required>
+                                    </div>
                                 </div>
                                 <div class="m-form__content"></div>
                             </div>
@@ -228,12 +258,28 @@ Contract type Management
 								</div>
                             </div>
                         </div>
+                        <div class="row ">
+                            <div class="col-sm-12">
+                                <div class="m-form__content"></div>
+                                <div class="form-group m-form__group">
+                                    <label for="exampleInputEmail1">
+                                        Color:
+                                    </label>
+                                    <div class="input-group m-input-group m-input-group--air colorpicker-input">
+                                        <input type="text" class="form-control m-input" id="_contract_color" name="_contract_color" placeholder="Enter Attendance date" required>
+                                        <span class="input-group-addon">
+                                            <i></i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
     				</div>
     				<div class="modal-footer">
-    					<button type="button" class="btn btn-secondary" data-dismiss="modal">
+    					<button type="button" class="btn btn-outline-primary m-btn m-btn--custom m-btn--air" data-dismiss="modal">
     						Close
     					</button>
-    					<button type="submit" class="btn btn-primary form-submit-btn">
+    					<button type="submit" class="btn btn-outline-accent m-btn m-btn--custom m-btn--air form-submit-btn">
     						Update
     					</button>
     				</div>
@@ -242,7 +288,23 @@ Contract type Management
 		</div>
 	</div>
 @endsection
+@section('plugin_script')
+<script src="/assets/plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.min.js" type="text/javascript"></script>
+@endsection
 @section('customScript')
+    <script type="text/javascript">
+    $(document).ready(function(){
+        setJsplugin();
+    });
+
+    function setJsplugin() {
+        $('.colorpicker-input').each(function(){
+            $(this).colorpicker({
+                format: 'rgba'
+            });
+        })
+    }
+    </script>
     <script src="/js/datatable/loadContractData.js" type="text/javascript"></script>
     <script src="/js/customManage.js" type="text/javascript"></script>
 @endsection

@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\User;
 
 use Auth;
+use DateTime;
 use App\Slim;
 use App\User;
 use App\Admin;
+use App\Attendance;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
@@ -37,6 +39,87 @@ class UserController extends Controller
     public function profile()
     {
         return view('user.profile');
+    }
+
+    public function attendance()
+    {
+        return view('user.attendance');
+    }
+
+    public function getAttendance()
+    {
+        $employee = Auth::user();
+        $attendance_count = Attendance::where('employee_id', $employee->id)->count();
+        $myArray = array();
+        if ($attendance_count > 0) {
+            $attendances = Attendance::where('employee_id', $employee->id)->join('contract_types', 'contract_types.id', '=', 'attendances.contract_id')->select('attendances.*', 'contract_types.title', 'contract_types.color')->get();
+            foreach ($attendances as $attendance) {
+                $myArray[] = array('id' => $attendance->id, 'start' => $attendance->attendance_date, 'color' => $attendance->color, 'title' => $attendance->title, "className" => "m-fc-event--light m-fc-event--solid-primary");
+            }
+        }
+        return $myArray;
+    }
+
+    public function checkSinlgeAttendance($date)
+    {
+        $attendances = Attendance::where('employee_id', Auth::user()->id)->where('attendance_date', $date)->first();
+        if ($attendances) {
+            return $attendances;
+        }
+        return "nodata";
+    }
+
+    public function attendanceStore(Request $request)
+    {
+        $selectedDate = DateTime::createFromFormat('m/d/Y', $request->attend_date);
+        $finalDate = $selectedDate->format('Y-m-d');
+
+        $check_attendance = Attendance::where('attendance_date', $finalDate)->count();
+        if ($check_attendance == 0) {
+            $attendance = new Attendance;
+            $attendance->employee_id = Auth::user()->id;
+            $attendance->attendance_date = $finalDate;
+            $attendance->contract_id = $request->contract_type;
+            $attendance->save();
+
+            return "success";
+        }
+
+        return "fail";
+    }
+
+    public function attendanceUpdate(Request $request)
+    {
+        $attendance = Attendance::find($request->attendance_id);
+        if ($attendance) {
+            $attendance->contract_id = $request->_contract_type;
+            $attendance->save();
+
+            return "success";
+        }
+
+        return "fail";
+    }
+    
+    public function attendanceDestroy($id)
+    {
+        $attendance = Attendance::find($id);
+        if ($attendance) {
+            $attendance->delete();
+
+            return "success";
+        }
+
+        return "fail";
+    }
+
+    public function getSingleAttendance($id)
+    {
+        $attendance = Attendance::find($id);
+        if ($attendance) {
+            return $attendance;
+        }
+        return "fail";
     }
 
     public function profileUpdateAvatar(Request $request)

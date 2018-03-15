@@ -173,7 +173,7 @@
                                         <div class="form-group m-form__group row">
                                             <div class="col-lg-2 col-md-2 col-sm-3 col-xs-12"></div>
         									<div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
-        										<button type="button" id="profile_unique_info_form_submit-btn" class="btn btn-outline-accent m-btn m-btn--custom" disabled>Save changes</button>
+        										<button type="button" id="profile_unique_info_form_submit-btn" class="btn btn-outline-accent m-btn--air m-btn m-btn--custom" disabled>Save changes</button>
         									</div>
             							</div>
                                         <div class="m-form__seperator m-form__seperator--dashed m-form__seperator--space-2x"></div>
@@ -257,7 +257,7 @@
                                         <div class="form-group m-form__group row">
                                             <div class="col-lg-2 col-md-2 col-sm-3 col-xs-12"></div>
         									<div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
-        										<button type="submit" class="btn btn-outline-accent m-btn m-btn--custom">Save changes</button>
+        										<button type="submit" class="btn btn-outline-accent m-btn m-btn--custom m-btn--air">Save changes</button>
         									</div>
             							</div>
                                     </form>
@@ -301,7 +301,7 @@
                                         <div class="form-group m-form__group row">
                                             <div class="col-lg-3 col-md-3 col-sm-4 col-xs-12"></div>
                                             <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
-                                                <button type="submit" class="btn btn-outline-accent m-btn m-btn--custom">Save changes</button>
+                                                <button type="submit" class="btn btn-outline-accent m-btn m-btn--custom m-btn--air">Save changes</button>
                                             </div>
                                         </div>
                                     </form>
@@ -335,10 +335,10 @@
 	                    </div>
     				</div>
     				<div class="modal-footer">
-    					<button type="button" class="btn btn-secondary" data-dismiss="modal">
+    					<button type="button" class="btn btn-outline-primary m-btn m-btn--custom m-btn--air" data-dismiss="modal">
     						Close
     					</button>
-    					<button type="submit" class="btn btn-primary form-submit-btn">
+    					<button type="submit" class="btn btn-outline-accent m-btn m-btn--custom m-btn--air form-submit-btn">
     						Update
     					</button>
     				</div>
@@ -368,10 +368,10 @@
 	                    </div>
     				</div>
     				<div class="modal-footer">
-    					<button type="button" class="btn btn-secondary" data-dismiss="modal">
+    					<button type="button" class="btn btn-outline-primary m-btn m-btn--custom m-btn--air" data-dismiss="modal">
     						Close
     					</button>
-    					<button type="submit" class="btn btn-primary form-submit-btn">
+    					<button type="submit" class="btn btn-outline-accent m-btn m-btn--custom m-btn--air form-submit-btn">
     						Update
     					</button>
     				</div>

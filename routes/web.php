@@ -127,6 +127,9 @@ Route::prefix('admin')->group(function () {
         Route::post('setting/update/name', 'Admin\SettingController@update_name')->name('admin.setting.update.name');
         Route::post('setting/update/logo', 'Admin\SettingController@update_logo')->name('admin.setting.update.logo');
         Route::post('setting/update/fav', 'Admin\SettingController@update_fav')->name('admin.setting.update.fav');
+        Route::post('setting/update/break-time', 'Admin\SettingController@update_breaktime')->name('admin.setting.update.breaktime');
+        Route::post('setting/update/vacation-rule', 'Admin\SettingController@update_vacation_rule')->name('admin.setting.update.vacation');
+        Route::get('setting/update/custom-breaktime/{status}', 'Admin\SettingController@update_custom_break')->name('admin.setting.update.breaktime.custom');
     });
 
     Route::get('login', 'Admin\Auth\AdminLoginController@showLoginForm')->name('admin.login');

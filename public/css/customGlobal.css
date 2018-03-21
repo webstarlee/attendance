@@ -1,5 +1,5 @@
 .m-brand .m-brand__logo .m-brand__logo-wrapper img {
-    height: 50px!important;
+    height: 45px!important;
     width: auto!important;
 }
 .modal.m-custom-modal {
@@ -119,11 +119,37 @@
     color: #fff!important;
     font-size: 14px!important;
 }
+.hr-setting-contents-padding {
+    margin: 10px 0;
+    text-align: center;
+}
+.hr-setting-contents-company-name-div {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    position: relative;
+}
+.hr-setting-contents-company-name-div >p {
+    margin-bottom: 0;
+    font-size: 17px;
+    font-weight: 600;
+    position: relative;
+}
+.condition-vacation-rule-label {
+    font-size: 12px!important;
+    color: #8c8c8c;
+}
 @media(max-width: 767px) {
     .m-dropdown__wrapper.m-masked-dropdown {
         padding-top: 20px!important;
     }
     .m-dropdown.m-dropdown--header-bg-fill .m-masked-dropdown .m-dropdown__header {
         top: -20px;
+    }
+    .hr-setting-contents-padding>input {
+        text-align: center;
     }
 }

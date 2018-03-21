@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use Auth;
+use DateTime;
 use App\Slim;
 use App\User;
 use App\Admin;
@@ -37,9 +38,61 @@ class SettingController extends Controller
             }
             $setting->app_name = $request->company_name;
             $setting->save();
-            return back();
+            return "success";
         }
-        return redirect()->route('admin.dashboard');
+        return "fail";
+    }
+
+    public function update_breaktime(Request $request)
+    {
+        if (Auth::guard('admin')->user()->role == 3) {
+            $setting_exist = Setting::find(1);
+            $setting = "";
+            if ($setting_exist) {
+                $setting = $setting_exist;
+            } else {
+                $setting = new Setting;
+            }
+            $setting->break_start = $setting->time_format2($request->break_starttime);
+            $setting->break_end = $setting->time_format2($request->break_endtime);
+            $setting->save();
+            return "success";
+        }
+        return "fail";
+    }
+
+    public function update_custom_break($status)
+    {
+        if (Auth::guard('admin')->user()->role == 3) {
+            $setting_exist = Setting::find(1);
+            $setting = "";
+            if ($setting_exist) {
+                $setting = $setting_exist;
+            } else {
+                $setting = new Setting;
+            }
+            $setting->custom_breaktime = $status;
+            $setting->save();
+            return $status;
+        }
+        return "fail";
+    }
+
+    public function update_vacation_rule(Request $request)
+    {
+        if (Auth::guard('admin')->user()->role == 3) {
+            $setting_exist = Setting::find(1);
+            $setting = "";
+            if ($setting_exist) {
+                $setting = $setting_exist;
+            } else {
+                $setting = new Setting;
+            }
+            $setting->vacation_week = $request->vacation_weeks;
+            $setting->save();
+            return $setting->vacation_week;
+        }
+        return "fail";
     }
 
     public function uploadImagetoServer($imgdata, $name, $path)

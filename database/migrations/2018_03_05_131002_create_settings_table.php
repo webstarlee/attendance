@@ -18,6 +18,10 @@ class CreateSettingsTable extends Migration
             $table->string('app_name')->default('HR');
             $table->string('logo_img')->default('default.jpg');
             $table->string('logo_fav')->default('default.jpg');
+            $table->time('break_start')->default('12:00');
+            $table->time('break_end')->default('14:00');
+            $table->boolean('custom_breaktime')->default(0);
+            $table->integer('vacation_week')->default(4);
         });
     }
 

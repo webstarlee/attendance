@@ -18,20 +18,6 @@ Attendance Management
 					</h3>
 				</div>
 			</div>
-            {{-- <div class="m-portlet__head-tools">
-                <ul class="m-portlet__nav">
-                    <li class="m-portlet__nav-item">
-                        <a href="javascript:;" id="add-new-attendance-employee-btn" class="btn btn-outline-accent m-btn m-btn--custom m-btn--icon m-btn--air">
-                            <span>
-                                <i class="la la-plus"></i>
-                                <span>
-                                    Add Attendance
-                                </span>
-                            </span>
-                        </a>
-                    </li>
-                </ul>
-            </div> --}}
 		</div>
 		<div class="m-portlet__body">
 			<!--begin: Search Form -->

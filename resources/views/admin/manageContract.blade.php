@@ -152,7 +152,7 @@ Contract type Management
 						</span>
 					</button>
 				</div>
-                <form id="m-admin-new_contract-type-form" action="{{route('admin.manage.contract.store')}}" role="form" method="post" accept-charset="UTF-8" enctype="multipart/form-data">
+                <form id="m-admin-new_contract-type-form" class="m-form" action="{{route('admin.manage.contract.store')}}" role="form" method="post" accept-charset="UTF-8" enctype="multipart/form-data">
                     {{ csrf_field() }}
     				<div class="modal-body">
                         <div class="row ">
@@ -176,27 +176,46 @@ Contract type Management
                             <div class="col-sm-12">
                                 <div class="m-form__content"></div>
                                 <div class="form-group m-form__group">
-									<label for="contract_description">
-										Description (optional)
-									</label>
-									<textarea class="form-control m-input" name="contract_description" id="contract_description" placeholder="Enter contract description (optional)" rows="5"></textarea>
-								</div>
+                                    <label for="contract_title">
+                                        Work Time:
+                                    </label>
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <div class="form-group m-form__group">
+                                                <div class="input-group m-input-group m-input-group--air">
+                                                    <span class="input-group-addon">
+                                                        <i class="la la-clock-o"></i>
+                                                    </span>
+                                                    <input type="text" class="form-control m-input input_mask_time" id="contract_time_hour" name="contract_time_hour" placeholder="Hours" aria-describedby="basic-addon1">
+                                                </div>
+                                                <span class="m-form__help">Work time hours</span>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="form-group m-form__group">
+                                                <div class="input-group m-input-group m-input-group--air">
+                                                    <span class="input-group-addon">
+                                                        <i class="la la-clock-o"></i>
+                                                    </span>
+                                                    <input type="text" class="form-control m-input input_mask_time" id="contract_time_min" name="contract_time_min" placeholder="Minutes" aria-describedby="basic-addon1">
+                                                </div>
+                                                <span class="m-form__help">Work time minutes</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="m-form__content"></div>
                             </div>
                         </div>
                         <div class="row ">
                             <div class="col-sm-12">
                                 <div class="m-form__content"></div>
                                 <div class="form-group m-form__group">
-                                    <label for="exampleInputEmail1">
-                                        Color:
-                                    </label>
-                                    <div class="input-group m-input-group m-input-group--air colorpicker-input">
-                                        <input type="text" class="form-control m-input" id="contract_color" name="contract_color" placeholder="Enter Attendance date" required value="#000">
-                                        <span class="input-group-addon">
-                                            <i></i>
-                                        </span>
-                                    </div>
-                                </div>
+									<label for="contract_description">
+										Description (optional)
+									</label>
+									<textarea class="form-control m-input" name="contract_description" id="contract_description" placeholder="Enter contract description (optional)" rows="5"></textarea>
+								</div>
                             </div>
                         </div>
     				</div>
@@ -226,7 +245,7 @@ Contract type Management
 						</span>
 					</button>
 				</div>
-                <form id="m-admin-edit_contract-type-form" action="{{route('admin.manage.contract.update')}}" role="form" method="post" accept-charset="UTF-8" enctype="multipart/form-data">
+                <form id="m-admin-edit_contract-type-form" class="m-form" action="{{route('admin.manage.contract.update')}}" role="form" method="post" accept-charset="UTF-8" enctype="multipart/form-data">
                     {{ csrf_field() }}
                     <input type="hidden" id="contract_id_for_edit" name="contract_id_for_edit" value="">
     				<div class="modal-body">
@@ -251,27 +270,46 @@ Contract type Management
                             <div class="col-sm-12">
                                 <div class="m-form__content"></div>
                                 <div class="form-group m-form__group">
-									<label for="_contract_description">
-										Description (optional)
-									</label>
-									<textarea class="form-control m-input" name="_contract_description" id="_contract_description" placeholder="Enter contract description (optional)" rows="5"></textarea>
-								</div>
+                                    <label for="contract_title">
+                                        Work Time:
+                                    </label>
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <div class="form-group m-form__group">
+                                                <div class="input-group m-input-group m-input-group--air">
+                                                    <span class="input-group-addon">
+                                                        <i class="la la-clock-o"></i>
+                                                    </span>
+                                                    <input type="text" class="form-control m-input" id="_contract_time_hour" name="_contract_time_hour" placeholder="Hours" aria-describedby="basic-addon1" required>
+                                                </div>
+                                                <span class="m-form__help">Work time hours</span>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="form-group m-form__group">
+                                                <div class="input-group m-input-group m-input-group--air">
+                                                    <span class="input-group-addon">
+                                                        <i class="la la-clock-o"></i>
+                                                    </span>
+                                                    <input type="text" class="form-control m-input" id="_contract_time_min" name="_contract_time_min" placeholder="Minutes" aria-describedby="basic-addon1" required>
+                                                </div>
+                                                <span class="m-form__help">Work time minutes</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="m-form__content"></div>
                             </div>
                         </div>
                         <div class="row ">
                             <div class="col-sm-12">
                                 <div class="m-form__content"></div>
                                 <div class="form-group m-form__group">
-                                    <label for="exampleInputEmail1">
-                                        Color:
-                                    </label>
-                                    <div class="input-group m-input-group m-input-group--air colorpicker-input">
-                                        <input type="text" class="form-control m-input" id="_contract_color" name="_contract_color" placeholder="Enter Attendance date" required>
-                                        <span class="input-group-addon">
-                                            <i></i>
-                                        </span>
-                                    </div>
-                                </div>
+									<label for="_contract_description">
+										Description (optional)
+									</label>
+									<textarea class="form-control m-input" name="_contract_description" id="_contract_description" placeholder="Enter contract description (optional)" rows="5"></textarea>
+								</div>
                             </div>
                         </div>
     				</div>
@@ -292,19 +330,6 @@ Contract type Management
 <script src="/assets/plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.min.js" type="text/javascript"></script>
 @endsection
 @section('customScript')
-    <script type="text/javascript">
-    $(document).ready(function(){
-        setJsplugin();
-    });
-
-    function setJsplugin() {
-        $('.colorpicker-input').each(function(){
-            $(this).colorpicker({
-                format: 'rgba'
-            });
-        })
-    }
-    </script>
     <script src="/js/datatable/loadContractData.js" type="text/javascript"></script>
     <script src="/js/customManage.js" type="text/javascript"></script>
 @endsection

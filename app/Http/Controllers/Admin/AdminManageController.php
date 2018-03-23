@@ -230,30 +230,44 @@ class AdminManageController extends Controller
     {
         $contract_title = $request->contract_title;
         if ($contract_title != "") {
+            $total_min = 0;
+            if ($request->contract_time_hour != "") {
+                $total_min = $total_min + $request->contract_time_hour*60;
+            }
+            if ($request->contract_time_min != "") {
+                $total_min = $total_min + $request->contract_time_min;
+            }
             $contract = new ContractType;
             $contract->title = $contract_title;
             $contract->description = $request->contract_description;
-            $contract->color = $request->contract_color;
+            $contract->working_time = $total_min;
             $contract->save();
 
-            return back();
+            return "success";
         }
 
-        return back();
+        return "fail";
     }
 
     public function updateContract(Request $request)
     {
         $contract = ContractType::find($request->contract_id_for_edit);
         if ($contract) {
+            $total_min = 0;
+            if ($request->_contract_time_hour != "") {
+                $total_min = $total_min + $request->_contract_time_hour*60;
+            }
+            if ($request->_contract_time_min != "") {
+                $total_min = $total_min + $request->_contract_time_min;
+            }
             $contract->title = $request->_contract_title;
             $contract->description = $request->_contract_description;
-            $contract->color = $request->_contract_color;
+            $contract->working_time = $total_min;
             $contract->save();
 
-            return back();
+            return "success";
         }
-        return back();
+        return "fail";
     }
 
     public function getSingleContract($contract_id)

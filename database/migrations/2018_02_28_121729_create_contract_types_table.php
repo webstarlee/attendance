@@ -16,8 +16,8 @@ class CreateContractTypesTable extends Migration
         Schema::create('contract_types', function (Blueprint $table) {
             $table->increments('id');
             $table->string('title');
+            $table->integer('working_time');
             $table->text('description')->nullable();
-            $table->string('color');
         });
     }
 

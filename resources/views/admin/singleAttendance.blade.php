@@ -12,6 +12,7 @@
 @section('content')
     <?php
         $contract_types = \App\ContractType::all();
+        $setting = \App\Setting::where('id', 1)->first();
     ?>
     <input type="hidden" name="golobal_employee_id" id="golobal_employee_id" value="{{$employee->id}}">
     <div class="m-portlet" id="m_portlet">
@@ -111,7 +112,7 @@
                                         <span class="input-group-addon">
                                             <i class="la la-calendar"></i>
                                         </span>
-                                        <input type="text" class="form-control m-input" id="attend_date" name="attend_date" placeholder="Enter Holiday date" required>
+                                        <input type="text" class="form-control m-input" id="attend_date" name="attend_date" placeholder="Enter date" required>
                                     </div>
                                 </div>
                                 <div class="m-form__content"></div>
@@ -128,7 +129,7 @@
                                         <span class="input-group-addon">
                                             <i class="flaticon-tool-1"></i>
                                         </span>
-                                        <select class="form-control m-bootstrap-select m_selectpicker" name="contract_type">
+                                        <select class="form-control m-bootstrap-select m_selectpicker" name="contract_type" readonly>
                                             @foreach ($contract_types as $contract_type)
                                                 <option value="{{$contract_type->id}}">{{$contract_type->title}}</option>
                                             @endforeach
@@ -138,10 +139,118 @@
                                 <div class="m-form__content"></div>
                             </div>
                         </div>
+                        <div class="row ">
+                            <div class="col-sm-12">
+                                <div class="m-form__content"></div>
+                                <div class="form-group m-form__group">
+                                    <label for="exampleInputEmail1">
+                                        Arrival Time:
+                                    </label>
+                                    <div class="input-group m-input-group m-input-group--air">
+                                        <span class="input-group-addon">
+                                            <i class="la la-clock-o"></i>
+                                        </span>
+                                        <input type="text" class="form-control m-input" id="attend_arrive_time" name="attend_arrive_time" placeholder="Enter time" required>
+                                    </div>
+                                </div>
+                                <div class="m-form__content"></div>
+                            </div>
+                        </div>
+                        <div class="row ">
+                            <div class="col-sm-12">
+                                <div class="m-form__content"></div>
+                                <div class="form-group m-form__group">
+                                    <label for="exampleInputEmail1">
+                                        Departure Time:
+                                    </label>
+                                    <div class="input-group m-input-group m-input-group--air">
+                                        <span class="input-group-addon">
+                                            <i class="la la-clock-o"></i>
+                                        </span>
+                                        <input type="text" class="form-control m-input input-time-picker" id="attend_departure_time" name="attend_departure_time" placeholder="Enter time" required>
+                                    </div>
+                                </div>
+                                <div class="m-form__content"></div>
+                            </div>
+                        </div>
+                        <div class="row ">
+                            <div class="col-sm-6">
+                                <div class="m-form__content"></div>
+                                <div class="form-group m-form__group">
+                                    <label for="exampleInputEmail1">
+                                        Break Start Time:
+                                    </label>
+                                    <div class="input-group m-input-group m-input-group--air">
+                                        <span class="input-group-addon">
+                                            <i class="la la-clock-o"></i>
+                                        </span>
+                                        <input type="text" class="form-control m-input @if($setting->custom_breaktime == 1) input-break-time-picker @endif" id="attend_break_start" name="attend_break_start" value="{{$setting->time_format($setting->break_start)}}" placeholder="Enter time" @if($setting->custom_breaktime == 0) readonly @endif required>
+                                    </div>
+                                </div>
+                                <div class="m-form__content"></div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="m-form__content"></div>
+                                <div class="form-group m-form__group">
+                                    <label for="exampleInputEmail1">
+                                        Break End Time:
+                                    </label>
+                                    <div class="input-group m-input-group m-input-group--air">
+                                        <span class="input-group-addon">
+                                            <i class="la la-clock-o"></i>
+                                        </span>
+                                        <input type="text" class="form-control m-input @if($setting->custom_breaktime == 1) input-break-time-picker @endif" id="attend_break_end" name="attend_break_end" value="{{$setting->time_format($setting->break_end)}}" placeholder="Enter time" @if($setting->custom_breaktime == 0) readonly @endif required>
+                                    </div>
+                                </div>
+                                <div class="m-form__content"></div>
+                            </div>
+                        </div>
+                        <div class="row ">
+                            <div class="col-sm-6">
+                                <div class="m-form__content"></div>
+                                <div class="form-group m-form__group">
+                                    <label for="exampleInputEmail1">
+                                        Break Start Time:
+                                    </label>
+                                    <div class="input-group m-input-group m-input-group--air">
+                                        <span class="input-group-addon">
+                                            <i class="la la-clock-o"></i>
+                                        </span>
+                                        <input type="text" class="form-control m-input @if($setting->custom_breaktime == 1) input-break-time-picker @endif" id="attend_break_start" name="attend_break_start" value="{{$setting->time_format($setting->break_start)}}" placeholder="Enter time" @if($setting->custom_breaktime == 0) readonly @endif required>
+                                    </div>
+                                </div>
+                                <div class="m-form__content"></div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="m-form__content"></div>
+                                <div class="form-group m-form__group">
+                                    <label for="exampleInputEmail1">
+                                        Break End Time:
+                                    </label>
+                                    <div class="input-group m-input-group m-input-group--air">
+                                        <span class="input-group-addon">
+                                            <i class="la la-clock-o"></i>
+                                        </span>
+                                        <input type="text" class="form-control m-input @if($setting->custom_breaktime == 1) input-break-time-picker @endif" id="attend_break_end" name="attend_break_end" value="{{$setting->time_format($setting->break_end)}}" placeholder="Enter time" @if($setting->custom_breaktime == 0) readonly @endif required>
+                                    </div>
+                                </div>
+                                <div class="m-form__content"></div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="form-group m-form__group smoke-time-container-form" style="display: none;">
+                                    <label for="exampleInputEmail1">
+                                        Smoking Time:
+                                    </label>
+                                    <div class="smoke-time-container"></div>
+                                </div>
+                            </div>
+                        </div>
     				</div>
     				<div class="modal-footer">
-    					<button type="button" class="btn m-btn--air btn-outline-primary" data-dismiss="modal">
-    						Close
+                        <button type="button" class="btn m-btn--air btn-outline-success add-smoke-time-btn">
+    						Add smoke time
     					</button>
     					<button type="submit" class="btn m-btn--air btn-outline-accent form-submit-btn">
     						Submit
@@ -246,6 +355,27 @@
             });
 
             $('.m_selectpicker').selectpicker();
+
+            $('#attend_arrive_time').timepicker({
+                minuteStep: 1,
+                showMeridian: true,
+                snapToStep: true
+            });
+            $('#attend_departure_time').timepicker({
+                defaultTime: '4:00 PM',
+                minuteStep: 1,
+                showMeridian: true,
+                snapToStep: true
+            });
+            $('.input-break-time-picker').timepicker({
+                minuteStep: 1,
+                showMeridian: true,
+                snapToStep: true
+            });
+            $('.input-smoke-timepicker').timepicker({
+                minuteStep: 1,
+                showMeridian: true,
+            })
         }
     </script>
     <script src="/js/singleAttend.js" type="text/javascript"></script>

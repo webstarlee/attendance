@@ -113,7 +113,8 @@ Setting Appearance
 					</label>
 					<div class="col-lg-6 hr-setting-contents-padding">
                         <div class="hr-setting-contents-company-name-div">
-                            <p id="hr-system-company-break-time">{{$setting->time_format($setting->break_start)}} ~ {{$setting->time_format($setting->break_end)}}</p>
+                            <p id="hr-system-company-break-time">{{$setting->time_format($setting->break1_start)}} ~ {{$setting->time_format($setting->break1_end)}}</p>
+                            <p id="hr-system-company-break-time">{{$setting->time_format($setting->break2_start)}} ~ {{$setting->time_format($setting->break2_end)}}</p>
                         </div>
 					</div>
                     <div class="col-lg-4 hr-setting-contents-padding">
@@ -338,7 +339,7 @@ Setting Appearance
                             </label>
                             <div class="input-group m-input-group m-input-group--air">
                                 <select class="form-control m-bootstrap-select m_selectpicker" name="vacation_weeks">
-                                    @for ($i=1; $i < 6; $i++)
+                                    @for ($i=1; $i < 10; $i++)
                                         <option value="{{$i}}" @if ($setting->vacation_week == $i) selected @endif> {{$i}} Week </option>
                                     @endfor
                                 </select>

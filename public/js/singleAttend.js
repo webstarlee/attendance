@@ -153,6 +153,52 @@ var CalendarBasic = function() {
                 setJsplugin();
             })
 
+            $('.add-smoke-time-btn').on('click', function(e) {
+                e.preventDefault();
+                var form = $(this).parents('form')[0];
+                var smoke_container = $(form).find('.smoke-time-container');
+                var new_smoking = '<div class="input-group m-input-group m-input-group--air">'+
+                                    '<a class="current_smoking_time_delete_btn" title="delete smoke time"><i class="la la-close"></i></a>'+
+                                    '<div class="row">'+
+                                        '<div class="col-sm-6">'+
+                                            '<div class="m-form__content"></div>'+
+                                            '<div class="form-group m-form__group">'+
+                                                '<label for="exampleInputEmail1">Start:</label>'+
+                                                '<div class="input-group m-input-group m-input-group--air">'+
+                                                    '<span class="input-group-addon"><i class="la la-clock-o"></i></span>'+
+                                                    '<input type="text" class="form-control m-input input-smoke-timepicker" name="attend_smoking_start[]" value="" placeholder="Enter time" required>'+
+                                                '</div>'+
+                                            '</div>'+
+                                            '<div class="m-form__content"></div>'+
+                                        '</div>'+
+                                        '<div class="col-sm-6">'+
+                                            '<div class="m-form__content"></div>'+
+                                            '<div class="form-group m-form__group">'+
+                                                '<label for="exampleInputEmail1">End:</label>'+
+                                                '<div class="input-group m-input-group m-input-group--air">'+
+                                                    '<span class="input-group-addon"><i class="la la-clock-o"></i></span>'+
+                                                    '<input type="text" class="form-control m-input input-smoke-timepicker" name="attend_smoking_end[]" value="" placeholder="Enter time" required>'+
+                                                '</div>'+
+                                            '</div>'+
+                                            '<div class="m-form__content"></div>'+
+                                        '</div>'+
+                                    '</div>'+
+                                '</div>';
+                smoke_container.append(new_smoking);
+                smoke_container.parents('.smoke-time-container-form').css({'display': 'block'});
+                setJsplugin();
+            });
+
+            $(document).on('click', '.current_smoking_time_delete_btn', function(e){
+                e.preventDefault();
+                var smoking_time_form = $(this).parent();
+                var top_container = smoking_time_form.parent();
+                smoking_time_form.remove();
+                if (top_container[0].childNodes.length == 0) {
+                    top_container.parent().css({'display': 'none'});
+                }
+            })
+
             $('#m-admin-new_attendance-form').on('submit', function(e) {
                 e.preventDefault();
                 var form = $(this);

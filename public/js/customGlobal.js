@@ -15,4 +15,11 @@ function input_mask() {
             "greedy": false
         });
     });
+    $("input.input_mask_time").each(function(){
+        $(this).inputmask({
+            "mask": "9",
+            "repeat": 2,
+            "greedy": false
+        });
+    });
 }

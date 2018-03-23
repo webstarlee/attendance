@@ -51,11 +51,11 @@ var DatatableAutoColumnHideDemo = function() {
         {
           field: 'title',
           title: 'Contract Title',
-          width: 100,
+          width: 150,
         },{
           field: 'working_time',
           title: 'Work Time',
-          width: 100,
+          width: 150,
           responsive: {visible: 'sm'},
           template: function (row, index, datatable) {
               var minutes = row.working_time%60;

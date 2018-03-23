@@ -22,7 +22,7 @@ class CreateSettingsTable extends Migration
             $table->time('break1_end')->default('12:00');
             $table->time('break2_start')->default('14:30');
             $table->time('break2_end')->default('15:00');
-            $table->boolean('custom_breaktime')->default(0);
+            $table->boolean('custom_breaktime')->default(1);
             $table->integer('vacation_week')->default(4);
         });
     }

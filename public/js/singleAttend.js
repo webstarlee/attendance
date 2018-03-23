@@ -1,157 +1,81 @@
-var CalendarBasic = function() {
+var AttendBasic = function() {
 
     return {
         //main function to initiate the module
         init: function() {
-            var todayDate = moment().startOf('day');
-            var YM = todayDate.format('YYYY-MM');
-            var YESTERDAY = todayDate.clone().subtract(1, 'day').format('YYYY-MM-DD');
-            var TODAY = todayDate.format('YYYY-MM-DD');
-            var TOMORROW = todayDate.clone().add(1, 'day').format('YYYY-MM-DD');
-            var golbalEmployeeId = $('#golobal_employee_id').val();
-
-            var attendanceCalendar = $('#m_attendance_calendar').fullCalendar({
-                header: {
-                    left: 'prev,next today',
-                    center: 'title',
-                    right: 'month,agendaWeek,agendaDay,listWeek'
-                },
-                editable: false,
-                eventLimit: true, // allow "more" link when too many events
-                navLinks: true,
-                events: '/admin/manage/attendance/getSingleData/'+golbalEmployeeId,
-
-                eventRender: function(event, element) {
-
-                },
-
-                dayClick: function(date, jsEvent, view) {
-                    var eventDate = date.format();
-                    var dataFormat = date.format('MM/DD/YYYY');
-                    var getData = '/admin/manage/attendance/checkSingleData/'+golbalEmployeeId+'/'+eventDate;
-                    $.ajax({
-                        url: getData,
-                        type: 'get',
-                        success: function(result){
-                            console.log(result);
-                            if (result == "nodata") {
-                                $('#m-admin-new_attendance-form #attend_date').val(dataFormat);
-                                $('#m-admin-new_attendance-form #attend_date').attr('readonly', true);
-                                $('#m-admin-new_attendance-modal').modal('show');
-                                $('#attend_date').datepicker('destroy');
-                            }
-                        },
-                        error: function(result){
-                            console.log(result);
-                        }
-                    });
-                },
-
-                eventClick: function(event) {
-                    var eventDate = event.start.format('MM/DD/YYYY');
-                    var getData_url = '/admin/manage/attendance/getAttendance/'+event.id;
-                    $.ajax({
-                        url: getData_url,
-                        type: 'get',
-                        success: function(result){
-                            if (result != "nodata") {
-                                $('#m-admin-edit_attendance-form #attendance_id').val(event.id);
-                                $('#m-admin-edit_attendance-form #_attend_date').val(eventDate);
-                                $('#m-admin-edit_attendance-form #_attend_date').attr('readonly', true);
-                                $('#m-admin-edit_attendance-form #_contract_type').val(result.contract_id);
-                                $('#m-admin-edit_attendance-form #_contract_type').selectpicker('destroy');
-                                $('#m-admin-edit_attendance-form #_contract_type').selectpicker();
-                                $('#m-admin-edit_attendance-modal').modal('show');
-                            }
-                        },
-                        error: function(result){
-                            console.log(result);
-                        }
-                    });
-                }
-            });
-
-            var attendanceTable = $('#m_attendance_table').mDatatable({
-              // datasource definition
-              data: {
-                type: 'remote',
-                source: {
-        			read: {
-        				url: '/admin/manage/attendance/getSingleData/'+golbalEmployeeId,
-                        method: 'GET',
-        			},
-        		},
-                pageSize: 10,
-              },
-
-              // column sorting
-              sortable: true,
-
-              pagination: true,
-
-              toolbar: {
-                // toolbar items
-                items: {
-                  // pagination
-                  pagination: {
-                    // page size select
-                    pageSizeSelect: [10, 20, 30, 50, 100],
-                  },
-                },
-              },
-
-              search: {
-                input: $('#generalSearch'),
-              },
-
-              // columns definition
-              columns: [
-                 {
-                  field: "id",
-                  title: "#",
-                  width: 20,
-                  sortable: false,
-                  textAlign: 'center',
-                  selector: {class: 'm-checkbox--solid m-checkbox--brand'}
-                },
-                {
-                  field: 'start',
-                  title: 'Date',
-                  width: 150,
-                }, {
-                  field: 'title',
-                  title: 'Contract Type',
-                  width: 150,
-                  responsive: {visible: 'lg'},
-                },{
-                    field: "Actions",
-                    width: 80,
-                    title: "Actions",
-                    sortable: false,
-                    overflow: 'visible',
-                    template: function (row, index, datatable) {
-                        var dropup = (datatable.getPageSize() - index) <= 4 ? 'dropup' : '';
-
-                        return '\
-                        <a href="javascript:;" data-attendance_id="'+row.id+'" class="m-attendance-edit-btn m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" title="View ">\
-                        <i class="la la-edit"></i>\
-                        </a>\
-                        <a href="javascript:;" data-attendance_id="'+row.id+'" class="m-attendance-delete-btn m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill" title="View ">\
-                        <i class="la la-trash"></i>\
-                        </a>\
-                        ';
-                    }
-                }],
-            });
 
             $('#add-new-attendance-btn').on('click', function(e) {
                 e.preventDefault();
                 var form = $('#m-admin-new_attendance-form')[0];
                 form.reset();
                 $(form).find('#attend_date').attr('readonly', false);
+                $(form).find('#attendance_type').selectpicker('destroy');
+                $(form).find('#attendance_type').selectpicker();
+                var input_boxs = $('#hidden_attendance_input_box_container').html();
+                $(form).find('.attendance_status_input_container').html(input_boxs);
+                $(form).find('button.add-smoke-time-btn').css({'display':'block'});
                 $('#m-admin-new_attendance-modal').modal('show');
                 setJsplugin();
             })
+
+            $('#m-admin-new_attendance-form select[name=attendance_type]').on('change', function(e) {
+                e.preventDefault();
+                var form = $('#m-admin-new_attendance-form');
+                var select_box = $(this);
+                var current_status = select_box.val();
+                var attendance_input_container = form.find('.attendance_status_input_container')[0];
+                var smoking_add_btn = form.find('button.add-smoke-time-btn');
+                if (current_status == 1) {
+                    if(attendance_input_container.childNodes.length == 0) {
+                        var input_boxs = $('#hidden_attendance_input_box_container').html();
+                        $(attendance_input_container).html(input_boxs);
+                        smoking_add_btn.css({'display': 'block'});
+                        setJsplugin();
+                    }
+                } else {
+                    $(attendance_input_container).html("");
+                    smoking_add_btn.css({'display': 'none'});
+                }
+                console.log($(this).val());
+            })
+
+            $('#m-admin-edit_attendance-form select[name=_attendance_type]').on('change', function(e) {
+                e.preventDefault();
+                var form = $('#m-admin-edit_attendance-form');
+                var select_box = $(this);
+                var current_status = select_box.val();
+                var attendance_input_container = form.find('.attendance_status_input_container')[0];
+                var smoking_add_btn = form.find('button.add-smoke-time-btn');
+                if (current_status == 1) {
+                    if(attendance_input_container.childNodes.length == 0) {
+                        var input_boxs;
+                        if (random_string_id == null) {
+                                input_boxs = $('#hidden_attendance_input_box_container').html();
+                        } else {
+                            input_boxs = $('#'+random_string_id).html();
+                        }
+                        $(attendance_input_container).html(input_boxs);
+                        smoking_add_btn.css({'display': 'block'});
+                        setJsplugin();
+                    }
+
+                    if (random_string_id != null) {
+                        $('#'+random_string_id).remove();
+                    }
+                    random_string_id = null;
+                } else {
+                    if(attendance_input_container.childNodes.length != 0) {
+                        if (random_string_id == null) {
+                            random_string_id = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+                            var new_random_div = '<div id="'+random_string_id+'" style="display: none;"></div>';
+                            $('body .m-content').append(new_random_div);
+                        }
+                        $('#'+random_string_id).html($(attendance_input_container).html());
+                        $(attendance_input_container).html("");
+                    }
+                    smoking_add_btn.css({'display': 'none'});
+                }
+            });
 
             $('.add-smoke-time-btn').on('click', function(e) {
                 e.preventDefault();
@@ -228,8 +152,12 @@ var CalendarBasic = function() {
                                 confirmButtonClass: "btn m-btn--air btn-outline-accent",
                             });
                         } else {
-                            attendanceCalendar.fullCalendar('refetchEvents');
-                            attendanceTable.reload();
+                            if (typeof attendanceCalendar !== 'undefined') {
+                                attendanceCalendar.fullCalendar('refetchEvents');
+                            }
+                            if (typeof attendanceTable !== 'undefined') {
+                                attendanceTable.reload();
+                            }
                         }
                         submit_btn.removeClass('m-loader m-loader--success m-loader--right').attr('disabled', false);
                         $('#m-admin-new_attendance-modal').modal('hide');
@@ -262,8 +190,12 @@ var CalendarBasic = function() {
                     data: formData,
                     success: function (data) {
                         submit_btn.removeClass('m-loader m-loader--success m-loader--right').attr('disabled', false);
-                        attendanceCalendar.fullCalendar('refetchEvents');
-                        attendanceTable.reload();
+                        if (typeof attendanceCalendar !== 'undefined') {
+                            attendanceCalendar.fullCalendar('refetchEvents');
+                        }
+                        if (typeof attendanceTable !== 'undefined') {
+                            attendanceTable.reload();
+                        }
                         $('#m-admin-edit_attendance-modal').modal('hide');
                     },
                     processData: false,
@@ -301,8 +233,12 @@ var CalendarBasic = function() {
                                     "type": "success",
                                     "confirmButtonClass": "btn m-btn--air btn-outline-accent"
                                 });
-                                attendanceCalendar.fullCalendar('refetchEvents');
-                                attendanceTable.reload();
+                                if (typeof attendanceCalendar !== 'undefined') {
+                                    attendanceCalendar.fullCalendar('refetchEvents');
+                                }
+                                if (typeof attendanceTable !== 'undefined') {
+                                    attendanceTable.reload();
+                                }
                             },
                             error: function(error){
                                 console.log(error);
@@ -367,8 +303,12 @@ var CalendarBasic = function() {
                                     "type": "success",
                                     "confirmButtonClass": "btn m-btn--air btn-outline-accent"
                                 });
-                                attendanceCalendar.fullCalendar('refetchEvents');
-                                attendanceTable.reload();
+                                if (typeof attendanceCalendar !== 'undefined') {
+                                    attendanceCalendar.fullCalendar('refetchEvents');
+                                }
+                                if (typeof attendanceTable !== 'undefined') {
+                                    attendanceTable.reload();
+                                }
                             },
                             error: function(error){
                                 console.log(error);
@@ -382,5 +322,5 @@ var CalendarBasic = function() {
 }();
 
 jQuery(document).ready(function() {
-    CalendarBasic.init();
+    AttendBasic.init();
 });

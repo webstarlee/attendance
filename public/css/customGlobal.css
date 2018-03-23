@@ -149,6 +149,27 @@
     margin-bottom: 15px;
     position: relative;
 }
+.break-time-container>.input-group {
+    padding: 10px 15px 1px 15px;
+    border: 1px solid #ebedf2;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    position: relative;
+}
+@media(min-width: 576px) {
+    .svg-inline--fa.fa-smoking {
+        display: none;
+    }
+    .add-smoke-time-btn>span {
+        display: block!important;
+    }
+    #attendance_delete_btn>i.la.la-trash {
+        display: none;
+    }
+    #attendance_delete_btn>span {
+        display: block!important;
+    }
+}
 .fc-bgevent {
     opacity: 1!important;
 }

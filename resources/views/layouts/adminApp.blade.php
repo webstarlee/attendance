@@ -48,7 +48,7 @@
 	</head>
     <!-- end::Head -->
     <!-- begin::Body -->
-	<body class="m-page--wide m-header--fixed m-header--fixed-mobile m-footer--push m-aside--offcanvas-default"  >
+	<body class="m-page--wide m-header--fixed m-header--fixed-mobile m-footer--push m-aside--offcanvas-default @yield('body_class')"  >
         {{-- start loading --}}
         <div class="loader-container circle-pulse-multiple">
             <div class="loaders">
@@ -85,6 +85,7 @@
 										</a>
 									</div>
 									<div class="m-stack__item m-stack__item--middle m-brand__tools">
+										@yield('left_sidebar_toggle')
 										<!-- begin::Responsive Header Menu Toggler-->
 										<a id="m_aside_header_menu_mobile_toggle" href="javascript:;" class="m-brand__icon m-brand__toggler m--visible-tablet-and-mobile-inline-block">
 											<span></span>
@@ -522,7 +523,7 @@
 												</span>
 											</a>
 										</li>
-										<li class="@if(Route::currentRouteName()=='admin.manage.admins' || Route::currentRouteName()=='admin.manage.employee' || Route::currentRouteName()=='admin.manage.holiday' || Route::currentRouteName()=='admin.manage.attendance' || Route::currentRouteName()=='admin.manage.attendance.single') m-menu__item--active @endif m-menu__item  m-menu__item--submenu m-menu__item--rel"  data-menu-submenu-toggle="click" aria-haspopup="true">
+										<li class="@if(Route::currentRouteName()=='admin.manage.admins' || Route::currentRouteName()=='admin.manage.attendance.single.calendar' || Route::currentRouteName()=='admin.manage.attendance.single.datatable' || Route::currentRouteName()=='admin.manage.employee' || Route::currentRouteName()=='admin.manage.holiday' || Route::currentRouteName()=='admin.manage.attendance' || Route::currentRouteName()=='admin.manage.attendance.single') m-menu__item--active @endif m-menu__item  m-menu__item--submenu m-menu__item--rel"  data-menu-submenu-toggle="click" aria-haspopup="true">
 											<a  href="javascript:;" class="m-menu__link m-menu__toggle">
 												<span class="m-menu__item-here"></span>
 												<span class="m-menu__link-text">
@@ -915,7 +916,8 @@
 			<!-- end::Header -->
             <!-- begin::Body -->
 			<div class="m-grid__item m-grid__item--fluid m-grid m-grid--hor-desktop m-grid--desktop m-body">
-				<div class="m-grid__item m-grid__item--fluid  m-grid m-grid--ver	m-container m-container--responsive m-container--xxl m-page__container">
+				<div class="m-grid__item m-grid__item--fluid  m-grid m-grid--ver m-container m-container--responsive m-container--xxl m-page__container">
+					@yield('left_sidebar')
 					<div class="m-grid__item m-grid__item--fluid m-wrapper">
 						<!-- BEGIN: Subheader -->
 						<div class="m-subheader ">

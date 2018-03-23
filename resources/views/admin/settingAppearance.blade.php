@@ -113,8 +113,8 @@ Setting Appearance
 					</label>
 					<div class="col-lg-6 hr-setting-contents-padding">
                         <div class="hr-setting-contents-company-name-div">
-                            <p id="hr-system-company-break-time">{{$setting->time_format($setting->break1_start)}} ~ {{$setting->time_format($setting->break1_end)}}</p>
-                            <p id="hr-system-company-break-time">{{$setting->time_format($setting->break2_start)}} ~ {{$setting->time_format($setting->break2_end)}}</p>
+                            <p id="hr-system-company-break-time-1">{{$setting->time_format($setting->break1_start)}} ~ {{$setting->time_format($setting->break1_end)}}</p>
+                            <p id="hr-system-company-break-time-2">{{$setting->time_format($setting->break2_start)}} ~ {{$setting->time_format($setting->break2_end)}}</p>
                         </div>
 					</div>
                     <div class="col-lg-4 hr-setting-contents-padding">
@@ -287,20 +287,70 @@ Setting Appearance
                 <form id="company-break__time-change-form" action="{{route('admin.setting.update.breaktime')}}" role="form" method="post" accept-charset="UTF-8" enctype="multipart/form-data">
                     {{ csrf_field() }}
     				<div class="modal-body">
-                        <div class="form-group m-form__group">
+                        <div class="form-group m-form__group smoke-time-container-form">
                             <label for="exampleInputEmail1">
-                                Start Time:
+                                Break Time 1:
                             </label>
-                            <div class="input-group m-input-group m-input-group--air">
-                                <input type="text" class="form-control m-input break-time-picker" name="break_starttime" value="{{$setting->time_format($setting->break_start)}}" aria-describedby="basic-addon1">
+                            <div class="smoke-time-container">
+                                <div class="input-group m-input-group m-input-group--air">
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <div class="m-form__content"></div>
+                                            <div class="form-group m-form__group">
+                                                <label for="exampleInputEmail1">Start:</label>
+                                                <div class="input-group m-input-group m-input-group--air">
+                                                    <span class="input-group-addon"><i class="la la-clock-o"></i></span>
+                                                    <input type="text" class="form-control m-input break-time-picker" name="break_start_1" value="{{$setting->time_format($setting->break1_start)}}" placeholder="Enter time" required="">
+                                                </div>
+                                            </div>
+                                            <div class="m-form__content"></div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="m-form__content"></div>
+                                            <div class="form-group m-form__group">
+                                                <label for="exampleInputEmail1">End:</label>
+                                                <div class="input-group m-input-group m-input-group--air">
+                                                    <span class="input-group-addon"><i class="la la-clock-o"></i></span>
+                                                    <input type="text" class="form-control m-input break-time-picker" name="break_end_1" value="{{$setting->time_format($setting->break1_end)}}" placeholder="Enter time" required="">
+                                                </div>
+                                            </div>
+                                            <div class="m-form__content"></div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <div class="form-group m-form__group">
+                        <div class="form-group m-form__group smoke-time-container-form">
                             <label for="exampleInputEmail1">
-                                End Time:
+                                Break Time 2:
                             </label>
-                            <div class="input-group m-input-group m-input-group--air">
-                                <input type="text" class="form-control m-input break-time-picker" name="break_endtime" value="{{$setting->time_format($setting->break_end)}}" aria-describedby="basic-addon1">
+                            <div class="smoke-time-container">
+                                <div class="input-group m-input-group m-input-group--air">
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <div class="m-form__content"></div>
+                                            <div class="form-group m-form__group">
+                                                <label for="exampleInputEmail1">Start:</label>
+                                                <div class="input-group m-input-group m-input-group--air">
+                                                    <span class="input-group-addon"><i class="la la-clock-o"></i></span>
+                                                    <input type="text" class="form-control m-input break-time-picker" name="break_start_2" value="{{$setting->time_format($setting->break2_start)}}" placeholder="Enter time" required="">
+                                                </div>
+                                            </div>
+                                            <div class="m-form__content"></div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="m-form__content"></div>
+                                            <div class="form-group m-form__group">
+                                                <label for="exampleInputEmail1">End:</label>
+                                                <div class="input-group m-input-group m-input-group--air">
+                                                    <span class="input-group-addon"><i class="la la-clock-o"></i></span>
+                                                    <input type="text" class="form-control m-input break-time-picker" name="break_end_2" value="{{$setting->time_format($setting->break2_end)}}" placeholder="Enter time" required="">
+                                                </div>
+                                            </div>
+                                            <div class="m-form__content"></div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
     				</div>

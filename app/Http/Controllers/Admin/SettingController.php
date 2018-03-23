@@ -53,8 +53,10 @@ class SettingController extends Controller
             } else {
                 $setting = new Setting;
             }
-            $setting->break_start = $setting->time_format2($request->break_starttime);
-            $setting->break_end = $setting->time_format2($request->break_endtime);
+            $setting->break1_start = $setting->time_format2($request->break_start_1);
+            $setting->break1_end = $setting->time_format2($request->break_end_1);
+            $setting->break2_start = $setting->time_format2($request->break_start_2);
+            $setting->break2_end = $setting->time_format2($request->break_end_2);
             $setting->save();
             return "success";
         }

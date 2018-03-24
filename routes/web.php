@@ -44,13 +44,20 @@ Route::middleware(['auth'])->group(function () {
     Route::post('profile/update/info', 'User\UserController@updateEmployeeInfo');
     Route::post('profile/update/password', 'User\UserController@updateEmployeePassOwn');
     //attendance manage
-    Route::get('/attendance', 'User\UserController@attendance')->name('attendance');
-    Route::post('/attendance/store', 'User\UserController@attendanceStore')->name('attendance.store');
-    Route::post('/attendance/update', 'User\UserController@attendanceUpdate')->name('attendance.update');
-    Route::get('/attendance/getAttendance', 'User\UserController@getAttendance');
-    Route::get('/attendance/getSingleAttendance/{id}', 'User\UserController@getSingleAttendance');
-    Route::get('/attendance/checkSingleData/{date}', 'User\UserController@checkSinlgeAttendance');
-    Route::get('/attendance/destroy/{id}', 'User\UserController@attendanceDestroy');
+    Route::get('/attendance', 'User\AttendanceController@attendance')->name('attendance');
+    Route::get('/attendance/listView', 'User\AttendanceController@attendance')->name('attendance.datatable');
+    Route::get('/attendance/request', 'User\AttendanceController@attendance')->name('attendance.request');
+    Route::post('/attendance/store', 'User\AttendanceController@attendanceStore')->name('attendance.store');
+    Route::post('/attendance/update', 'User\AttendanceController@attendanceRequest')->name('attendance.update');
+    Route::post('/attendance/new/request', 'User\AttendanceController@storeAttendanceRequest')->name('attendance.store.request');
+    Route::post('/attendance/update/request', 'User\AttendanceController@updateAttendanceRequest')->name('attendance.update.request');
+    Route::get('/attendance/getAttendance', 'User\AttendanceController@getAttendance');
+    Route::get('/attendance/getAttendanceRequest', 'User\AttendanceController@getAttendanceRequest');
+    Route::get('/attendance/getSingleAttendance/{id}', 'User\AttendanceController@getSingleAttendance');
+    Route::get('/attendance/getSingleAttendanceRequest/{id}', 'User\AttendanceController@getSingleAttendanceRequest');
+    Route::get('/attendance/checkSingleData/{date}', 'User\AttendanceController@checkSinlgeAttendance');
+    Route::get('/attendance/destroy/{id}', 'User\AttendanceController@attendanceDestroy');
+    Route::get('/attendance/request/destroy/{id}', 'User\AttendanceController@attendanceRequestDestroy');
     //end
 });
 
@@ -119,10 +126,15 @@ Route::prefix('admin')->group(function () {
         Route::get('manage/attendance/{unique}/view', 'Admin\AttendanceController@viewSingleAttendance')->name('admin.manage.attendance.single');
         Route::get('manage/attendance/{unique}/view/calendar', 'Admin\AttendanceController@viewSingleAttendance')->name('admin.manage.attendance.single.calendar');
         Route::get('manage/attendance/{unique}/view/datatable', 'Admin\AttendanceController@viewSingleAttendance')->name('admin.manage.attendance.single.datatable');
-        Route::get('manage/attendance/getSingleData/{id}', 'Admin\AttendanceController@getSinlgeAttendance');
+        Route::get('manage/attendance/{unique}/view/request', 'Admin\AttendanceController@viewSingleAttendance')->name('admin.manage.attendance.single.request');
+        Route::get('manage/attendance/getSingleData/{id}', 'Admin\AttendanceController@getSinlgeUserAttendance');
+        Route::get('manage/attendance/request/getSingleData/{id}', 'Admin\AttendanceController@getSinlgeUserAttendanceRequest');
         Route::get('manage/attendance/getAttendance/{id}', 'Admin\AttendanceController@getAttendance');
+        Route::get('manage/attendance/request/getsingle/{id}', 'Admin\AttendanceController@getAttendanceRequest');
         Route::get('manage/attendance/checkSingleData/{id}/{date}', 'Admin\AttendanceController@checkSinlgeAttendance');
         Route::get('manage/attendance/destroy/{id}', 'Admin\AttendanceController@destroy');
+        Route::get('manage/attendance/request/destroy/{id}', 'Admin\AttendanceController@destroyRequest');
+        Route::get('manage/attendance/request/approve/{id}', 'Admin\AttendanceController@approveRequest');
         //end
         //setting
         Route::get('setting/appearance', 'Admin\SettingController@index')->name('admin.setting.appearance');

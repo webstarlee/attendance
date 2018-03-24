@@ -48,7 +48,7 @@
 	</head>
     <!-- end::Head -->
     <!-- begin::Body -->
-	<body class="m-page--wide m-header--fixed m-header--fixed-mobile m-footer--push m-aside--offcanvas-default"  >
+	<body class="m-page--wide m-header--fixed m-header--fixed-mobile m-footer--push m-aside--offcanvas-default  @yield('body_class')"  >
         {{-- start loading --}}
         <div class="loader-container circle-pulse-multiple">
             <div class="loaders">
@@ -85,6 +85,7 @@
 										</a>
 									</div>
 									<div class="m-stack__item m-stack__item--middle m-brand__tools">
+										@yield('left_sidebar_toggle')
 										<!-- begin::Responsive Header Menu Toggler-->
 										<a id="m_aside_header_menu_mobile_toggle" href="javascript:;" class="m-brand__icon m-brand__toggler m--visible-tablet-and-mobile-inline-block">
 											<span></span>
@@ -906,7 +907,8 @@
 			<!-- end::Header -->
             <!-- begin::Body -->
 			<div class="m-grid__item m-grid__item--fluid m-grid m-grid--hor-desktop m-grid--desktop m-body">
-				<div class="m-grid__item m-grid__item--fluid  m-grid m-grid--ver	m-container m-container--responsive m-container--xxl m-page__container">
+				<div class="m-grid__item m-grid__item--fluid  m-grid m-grid--ver m-container m-container--responsive m-container--xxl m-page__container">
+					@yield('left_sidebar')
 					<div class="m-grid__item m-grid__item--fluid m-wrapper">
 						<!-- BEGIN: Subheader -->
 						<div class="m-subheader ">

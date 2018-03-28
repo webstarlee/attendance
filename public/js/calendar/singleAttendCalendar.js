@@ -21,40 +21,65 @@ var CalendardBasic = function() {
             navLinks: true,
             selectable: true,
             events: '/admin/manage/attendance/getSingleData/'+golbalEmployeeId,
-
-            eventRender: function(event, element) {
-                var bgEventTitle = document.createElement('div');
-                bgEventTitle.style.position = 'absolute';
-                bgEventTitle.style.bottom = '0';
-                bgEventTitle.classList.add('fc-event');
-                bgEventTitle.classList.add('holiday-calendar-title-div');
-                var approval_status_string = '<p style="margin-bottom: 0;font-size: 11px;color:#ffffff;">(Approved)</p>';
-                if (event.approval == 0) {
-                    approval_status_string = '<p style="margin-bottom: 0;font-size: 11px;color:#000000;">(Pending)</p>';;
-                }
-                if (event.status == 1) {
-                    var minutes = event.total_work%60;
-                    var hours = (event.total_work - minutes)/60;
-                    var string_working = "";
-                    if (hours == 0) {
-                        string_working = '<p style="margin-bottom: 0;">'+minutes+' minutes </p>';
-                    } else if(minutes == 0) {
-                        string_working = '<p style="margin-bottom: 0;">'+hours+' hours </p>';
-                    } else {
-                        string_working = '<p style="margin-bottom: 0;">'+hours+' hours </p><p style="margin-bottom: 0;">'+minutes+' minutes </p>';
-                    }
-                    bgEventTitle.innerHTML = '<h3 class="fc-title holiday-calendar-custom-h3">'+string_working+approval_status_string+'</h3>' ;
-                } else if (event.status == 0) {
-                    bgEventTitle.innerHTML = '<h3 class="fc-title holiday-calendar-custom-h3">Absence'+approval_status_string+'</h3>' ;
-                } else if (event.status == 2) {
-                    bgEventTitle.innerHTML = '<h3 class="fc-title holiday-calendar-custom-h3">Business Trip'+approval_status_string+'</h3>' ;
-                } else if (event.status == 3) {
-                    bgEventTitle.innerHTML = '<h3 class="fc-title holiday-calendar-custom-h3">Vacation'+approval_status_string+'</h3>' ;
-                } else if (event.status == 4) {
-                    bgEventTitle.innerHTML = '<h3 class="fc-title holiday-calendar-custom-h3">Sickness'+approval_status_string+'</h3>' ;
-                }
-                element.css('position', 'relative').html(bgEventTitle);
-            },
+            // events: [
+            //     {
+            //         'start': '2018-03-28',
+            //         'title': 'Attendance',
+            //         'color': 'rgb(11, 186, 139)',
+            //         'rendering':'background',
+            //     },
+            //     {
+            //         'start': '2018-03-28 08:00:00',
+            //         'end': '2018-03-28 16:00:00',
+            //         'title': 'Attendance',
+            //         'color': 'rgb(186, 11, 149)',
+            //     },
+            //     {
+            //         'start': '2018-03-29 08:00:00',
+            //         'end': '2018-03-29 16:00:00',
+            //         'title': 'Attendance',
+            //         'color': 'rgb(186, 11, 149)',
+            //     },
+            //     {
+            //         'start': '2018-03-29 11:30:00',
+            //         'end': '2018-03-29 12:00:00',
+            //         'title': 'hello',
+            //         'color': 'rgb(251, 251, 251)',
+            //     }
+            // ],
+            // eventRender: function(event, element) {
+            //     var bgEventTitle = document.createElement('div');
+            //     bgEventTitle.style.position = 'absolute';
+            //     bgEventTitle.style.bottom = '0';
+            //     bgEventTitle.classList.add('fc-event');
+            //     bgEventTitle.classList.add('holiday-calendar-title-div');
+            //     var approval_status_string = '<p style="margin-bottom: 0;font-size: 11px;color:#ffffff;">(Approved)</p>';
+            //     if (event.approval == 0) {
+            //         approval_status_string = '<p style="margin-bottom: 0;font-size: 11px;color:#000000;">(Pending)</p>';;
+            //     }
+            //     if (event.status == 1) {
+            //         var minutes = event.total_work%60;
+            //         var hours = (event.total_work - minutes)/60;
+            //         var string_working = "";
+            //         if (hours == 0) {
+            //             string_working = '<p style="margin-bottom: 0;">'+minutes+' minutes </p>';
+            //         } else if(minutes == 0) {
+            //             string_working = '<p style="margin-bottom: 0;">'+hours+' hours </p>';
+            //         } else {
+            //             string_working = '<p style="margin-bottom: 0;">'+hours+' hours </p><p style="margin-bottom: 0;">'+minutes+' minutes </p>';
+            //         }
+            //         bgEventTitle.innerHTML = '<h3 class="fc-title holiday-calendar-custom-h3">'+string_working+approval_status_string+'</h3>' ;
+            //     } else if (event.status == 0) {
+            //         bgEventTitle.innerHTML = '<h3 class="fc-title holiday-calendar-custom-h3">Absence'+approval_status_string+'</h3>' ;
+            //     } else if (event.status == 2) {
+            //         bgEventTitle.innerHTML = '<h3 class="fc-title holiday-calendar-custom-h3">Business Trip'+approval_status_string+'</h3>' ;
+            //     } else if (event.status == 3) {
+            //         bgEventTitle.innerHTML = '<h3 class="fc-title holiday-calendar-custom-h3">Vacation'+approval_status_string+'</h3>' ;
+            //     } else if (event.status == 4) {
+            //         bgEventTitle.innerHTML = '<h3 class="fc-title holiday-calendar-custom-h3">Sickness'+approval_status_string+'</h3>' ;
+            //     }
+            //     element.css('position', 'relative').html(bgEventTitle);
+            // },
             select: function(start, end, jsEvent, view) {
                 var eventDate = start.format('YYYY-MM-DD');
                 var dataFormat = start.format('MM/DD/YYYY');

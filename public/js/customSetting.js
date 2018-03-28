@@ -168,7 +168,7 @@ var hrSystemSetting = function () {
                     var new_end_time_2 = $(form).find('input[name=break_end_2]').val();
                     var new_break_time_1 = new_start_time_1+" ~ "+new_end_time_1;
                     var new_break_time_2 = new_start_time_2+" ~ "+new_end_time_2;
-                    
+
                     $('#hr-system-company-break-time-1').text(new_break_time_1);
                     $('#hr-system-company-break-time-2').text(new_break_time_2);
                     $('#company-break__time-change-modal').modal('hide');
@@ -194,9 +194,9 @@ var hrSystemSetting = function () {
                 type: 'get',
                 success: function(result){
                     if (result == 1) {
-                        $('#hr-system-company-break-time-custom').text('Enabled');
+                        $('#hr-system-company-break-time-custom').text(i18n.language.enabled);
                     }else if (result == 0) {
-                        $('#hr-system-company-break-time-custom').text('Disabled');
+                        $('#hr-system-company-break-time-custom').text(i18n.language.disabled);
                     }
                 },
                 error: function(error){

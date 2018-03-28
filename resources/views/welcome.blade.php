@@ -5,7 +5,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>HRM</title>
+        <title>@lang('language.title')</title>
 
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
@@ -71,12 +71,13 @@
                     H R M
                 </div>
                 <div class="links">
-                    <a href="/admin/">Login as Admin</a>
-                    <a href="#">Terms and condition</a>
-                    <a href="https://laravel-news.com">Privacy</a>
-                    <a href="/login">Login as Employee</a>
+                    <a href="/admin/">@lang('language.login_as_admin')</a>
+                    <a href="#">@lang('language.terms_condition')</a>
+                    <a href="https://laravel-news.com">@lang('language.privacy')</a>
+                    <a href="/login">@lang('language.login_as_employee')</a>
                 </div>
             </div>
         </div>
+        <script type="text/javascript" src="/js/language.js"></script>
     </body>
 </html>

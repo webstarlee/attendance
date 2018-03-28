@@ -9,7 +9,7 @@
 				$setting = \App\Setting::where('id', 1)->first();
 			}
 		?>
-		<title>@if ($setting_count > 0 ) {{$setting->app_name}} @else HR @endif | @yield('title')</title>
+		<title>@if ($setting_count > 0 ) {{$setting->app_name}} @else @lang('language.title') @endif | @yield('title')</title>
 		<meta name="description" content="Latest updates and statistic charts">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -447,7 +447,7 @@
 																			<span class="m-nav__link-title">
 																				<span class="m-nav__link-wrap">
 																					<span class="m-nav__link-text">
-																						My Profile
+																						@lang('language.profile.my_profile')
 																					</span>
 																					<span class="m-nav__link-badge">
 																						<span class="m-badge m-badge--success">
@@ -476,7 +476,7 @@
 																	</li>
 																	<li class="m-nav__separator m-nav__separator--fit"></li>
 																		<a href="{{route('admin.logout')}}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="btn m-btn--pill btn-secondary m-btn m-btn--custom m-btn--label-brand m-btn--bolder">
-																			Logout
+																			@lang('language.logout')
 																		</a>
                                                                         <form id="logout-form" action="{{ route('admin.logout') }}" method="POST" style="display: none;">
                                                                             @csrf
@@ -1413,6 +1413,7 @@
         <!--begin::Base Scripts -->
 		<script src="/assets/plugins/base/vendors.bundle.js" type="text/javascript"></script>
 		<script src="/assets/plugins/baseApp/scripts.bundle.js" type="text/javascript"></script>
+		<script src="/js/language.js" type="text/javascript"></script>
 		@yield('plugin_script')
 		<script src="/assets/plugins/slim/slim.kickstart.min.js" type="text/javascript"></script>
 		<script src="/js/customGlobal.js" type="text/javascript"></script>

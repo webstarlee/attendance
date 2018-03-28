@@ -9,7 +9,7 @@
 				$setting = \App\Setting::where('id', 1)->first();
 			}
 		?>
-		<title>@if ($setting_count > 0 ) {{$setting->app_name}} @else HR @endif | @yield('title')</title>
+		<title>@if ($setting_count > 0 ) {{$setting->app_name}} @else @lang('language.title') @endif | @yield('title')</title>
 		<meta name="description" content="Latest updates and statistic charts">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -82,6 +82,7 @@
     	<!--begin::Base Scripts -->
 		<script src="/assets/plugins/base/vendors.bundle.js" type="text/javascript"></script>
 		<script src="/assets/plugins/base/scripts.bundle.js" type="text/javascript"></script>
+		<script src="/js/language.js" type="text/javascript"></script>
 		<!--end::Base Scripts -->
         <!--begin::Page Snippets -->
 		<script src="/js/loginAdmin.js" type="text/javascript"></script>

@@ -55,7 +55,22 @@ class AttendanceController extends Controller
                 } elseif ($attendance->status == 4) {
                     $attendance_color = "#4854ea";
                 }
-                $myArray[] = array('id' => $attendance->id, 'status' => $attendance->status, 'start' => $attendance->attendance_date, 'color' => $attendance_color, 'rendering' => 'background', 'total_work' => $attendance->total_min, 'approval' => $attendance->approval, "className" => "m-fc-event--light m-fc-event--solid-primary");
+                $start_day = $attendance->attendance_date;
+                $start_time = $attendance->attendance_date." ".$attendance->arrival_time;
+                $end_time = $attendance->attendance_date." ".$attendance->departure_time;
+                $myArray[] = array(
+                    'start' => $start_day,
+                    'rendering' => 'background',
+                    'color' => $attendance_color,
+                    'className' => 'm-fc-event--light m-fc-event--solid-primary'
+                );
+                $myArray[] = array(
+                    'start' => $start_time,
+                    'end' => $end_time,
+                    'color' => $attendance_color,
+                    'title' => $attendance->total_min,
+                    'className' => 'm-fc-event--light m-fc-event--solid-primary'
+                );
             }
         }
         return $myArray;

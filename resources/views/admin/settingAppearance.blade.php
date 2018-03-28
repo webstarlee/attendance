@@ -1,11 +1,11 @@
 @extends('layouts.adminApp')
 
 @section('title')
-Setting Appearance
+@lang('language.setting.appearance_setting')
 @endsection
 
 @section('pageTitle')
-Setting Appearance
+@lang('language.setting.appearance_setting')
 @endsection
 
 @section('customStyle')
@@ -18,7 +18,7 @@ Setting Appearance
 			<div class="m-portlet__head-caption">
 				<div class="m-portlet__head-title">
 					<h3 class="m-portlet__head-text">
-						<i class="la la-gear"></i> &nbsp;Appearance
+						<i class="la la-gear"></i> &nbsp;@lang('language.setting.setting')
 					</h3>
 				</div>
 			</div>
@@ -33,7 +33,7 @@ Setting Appearance
 			<div class="m-portlet__body">
 				<div class="form-group m-form__group row">
 					<label class="col-lg-2 col-form-label hr-setting-contents-padding">
-						Company Name:
+						@lang('language.setting.company_name'):
 					</label>
 					<div class="col-lg-6 hr-setting-contents-padding">
                         <div class="hr-setting-contents-company-name-div">
@@ -42,7 +42,7 @@ Setting Appearance
 					</div>
                     <div class="col-lg-4 hr-setting-contents-padding">
                         <button type="button" class="btn btn-outline-accent m-btn m-btn--outline m-btn--air" data-toggle="modal" data-target="#company-name__title-change-modal">
-                            Change
+                            @lang('language.change')
                         </button>
                     </div>
 				</div>
@@ -53,7 +53,7 @@ Setting Appearance
 			<div class="m-portlet__body">
 				<div class="form-group m-form__group row">
 					<label class="col-lg-2 col-form-label hr-setting-contents-padding">
-						Logo image:
+						@lang('language.setting.logo_img'):
 					</label>
 					<div class="col-lg-6 hr-setting-contents-padding">
                         <div class="company-logo-container-div">
@@ -70,7 +70,7 @@ Setting Appearance
 					</div>
                     <div class="col-lg-4 hr-setting-contents-padding">
                         <button type="button" class="btn btn-outline-accent m-btn m-btn--outline m-btn--air" data-toggle="modal" data-target="#company-logo__pic-change-modal">
-                            Change
+                            @lang('language.change')
                         </button>
                     </div>
 				</div>
@@ -81,7 +81,7 @@ Setting Appearance
 			<div class="m-portlet__body">
 				<div class="form-group m-form__group row">
 					<label class="col-lg-2 col-form-label hr-setting-contents-padding">
-						Fav Icon image:
+						@lang('language.setting.fav_img'):
 					</label>
 					<div class="col-lg-6 hr-setting-contents-padding">
                         <div class="company-fav-container-div">
@@ -98,7 +98,7 @@ Setting Appearance
 					</div>
                     <div class="col-lg-4 hr-setting-contents-padding">
                         <button type="button" class="btn btn-outline-accent m-btn m-btn--outline m-btn--air" data-toggle="modal" data-target="#company-fav__pic-change-modal">
-                            Change
+                            @lang('language.change')
                         </button>
                     </div>
 				</div>
@@ -109,7 +109,7 @@ Setting Appearance
 			<div class="m-portlet__body">
 				<div class="form-group m-form__group row">
 					<label class="col-lg-2 col-form-label hr-setting-contents-padding">
-						Default Break Time:
+						@lang('language.setting.default_break_time'):
 					</label>
 					<div class="col-lg-6 hr-setting-contents-padding">
                         <div class="hr-setting-contents-company-name-div">
@@ -119,7 +119,7 @@ Setting Appearance
 					</div>
                     <div class="col-lg-4 hr-setting-contents-padding">
                         <button type="button" class="btn btn-outline-accent m-btn m-btn--outline m-btn--air" data-toggle="modal" data-target="#company-break__time-change-modal">
-                            Change
+                            @lang('language.change')
                         </button>
                     </div>
 				</div>
@@ -130,11 +130,11 @@ Setting Appearance
 			<div class="m-portlet__body">
 				<div class="form-group m-form__group row">
 					<label class="col-lg-2 col-form-label hr-setting-contents-padding">
-						Custom Break Time:
+						@lang('language.setting.custom_break_time'):
 					</label>
 					<div class="col-lg-6 hr-setting-contents-padding">
                         <div class="hr-setting-contents-company-name-div">
-                            <p id="hr-system-company-break-time-custom">@if ($setting->custom_breaktime == 0) Disabled @else Enabled @endif</p>
+                            <p id="hr-system-company-break-time-custom">@if ($setting->custom_breaktime == 0) @lang('language.disabled') @else @lang('language.enabled') @endif</p>
                         </div>
 					</div>
                     <div class="col-lg-4 hr-setting-contents-padding">
@@ -153,17 +153,17 @@ Setting Appearance
 			<div class="m-portlet__body">
 				<div class="form-group m-form__group row">
 					<label class="col-lg-2 col-form-label hr-setting-contents-padding">
-						Vacation Rule:
+						@lang('language.setting.vacation_rule'):
 					</label>
 					<div class="col-lg-6 hr-setting-contents-padding">
                         <div class="hr-setting-contents-company-name-div">
-                            <p><span id="hr-system-company-vacation-weeke">{{$setting->vacation_week}}</span> Week</p>
-                            <label class="condition-vacation-rule-label">If worked more than 60 days</label>
+                            <p><span id="hr-system-company-vacation-weeke">{{$setting->vacation_week}}</span> @lang('language.week')</p>
+                            <label class="condition-vacation-rule-label">@lang('language.setting.if_work_60days')</label>
                         </div>
 					</div>
                     <div class="col-lg-4 hr-setting-contents-padding">
                         <button type="button" class="btn btn-outline-accent m-btn m-btn--outline m-btn--air" data-toggle="modal" data-target="#company-vacation__rule-change-modal">
-                            Change
+                            @lang('language.change')
                         </button>
                     </div>
 				</div>
@@ -177,7 +177,7 @@ Setting Appearance
 			<div class="modal-content">
 				<div class="modal-header">
 					<h5 class="modal-title" id="exampleModalLabel">
-						Update Company Logo
+						@lang('language.setting.update_company_logo')
 					</h5>
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close" style="cursor: pointer;">
 						<span aria-hidden="true">
@@ -194,10 +194,10 @@ Setting Appearance
     				</div>
     				<div class="modal-footer">
     					<button type="button" class="btn btn-outline-primary m-btn m-btn--outline m-btn--air" data-dismiss="modal">
-    						Close
+    						@lang('language.close')
     					</button>
     					<button type="submit" class="btn btn-outline-accent m-btn m-btn--outline m-btn--air form-submit-btn">
-    						Update
+    						@lang('language.update')
     					</button>
     				</div>
                 </form>
@@ -210,7 +210,7 @@ Setting Appearance
 			<div class="modal-content">
 				<div class="modal-header">
 					<h5 class="modal-title" id="exampleModalLabel">
-						Update Fav ico
+						@lang('language.setting.update_fav_icon')
 					</h5>
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close" style="cursor: pointer;">
 						<span aria-hidden="true">
@@ -227,10 +227,10 @@ Setting Appearance
     				</div>
     				<div class="modal-footer">
     					<button type="button" class="btn btn-outline-primary m-btn m-btn--outline m-btn--air" data-dismiss="modal">
-    						Close
+    						@lang('language.close')
     					</button>
     					<button type="submit" class="btn btn-outline-accent m-btn m-btn--outline m-btn--air form-submit-btn">
-    						Update
+    						@lang('language.update')
     					</button>
     				</div>
                 </form>
@@ -243,7 +243,7 @@ Setting Appearance
 			<div class="modal-content">
 				<div class="modal-header">
 					<h5 class="modal-title" id="exampleModalLabel">
-						Update Company Name
+						@lang('language.setting.update_company_name')
 					</h5>
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close" style="cursor: pointer;">
 						<span aria-hidden="true">
@@ -260,10 +260,10 @@ Setting Appearance
     				</div>
     				<div class="modal-footer">
     					<button type="button" class="btn btn-outline-primary m-btn m-btn--outline m-btn--air" data-dismiss="modal">
-    						Close
+    						@lang('language.close')
     					</button>
     					<button type="submit" class="btn btn-outline-accent m-btn m-btn--outline m-btn--air form-submit-btn">
-    						Update
+    						@lang('language.update')
     					</button>
     				</div>
                 </form>
@@ -276,7 +276,7 @@ Setting Appearance
 			<div class="modal-content">
 				<div class="modal-header">
 					<h5 class="modal-title" id="exampleModalLabel">
-						Update Company Break time
+						@lang('language.setting.update_com_break_time')
 					</h5>
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close" style="cursor: pointer;">
 						<span aria-hidden="true">
@@ -289,7 +289,7 @@ Setting Appearance
     				<div class="modal-body">
                         <div class="form-group m-form__group smoke-time-container-form">
                             <label for="exampleInputEmail1">
-                                Break Time 1:
+                                @lang('language.setting.break_time') 1:
                             </label>
                             <div class="smoke-time-container">
                                 <div class="input-group m-input-group m-input-group--air">
@@ -297,7 +297,7 @@ Setting Appearance
                                         <div class="col-sm-6">
                                             <div class="m-form__content"></div>
                                             <div class="form-group m-form__group">
-                                                <label for="exampleInputEmail1">Start:</label>
+                                                <label for="exampleInputEmail1">@lang('language.start'):</label>
                                                 <div class="input-group m-input-group m-input-group--air">
                                                     <span class="input-group-addon"><i class="la la-clock-o"></i></span>
                                                     <input type="text" class="form-control m-input break-time-picker" name="break_start_1" value="{{$setting->time_format($setting->break1_start)}}" placeholder="Enter time" required="">
@@ -308,7 +308,7 @@ Setting Appearance
                                         <div class="col-sm-6">
                                             <div class="m-form__content"></div>
                                             <div class="form-group m-form__group">
-                                                <label for="exampleInputEmail1">End:</label>
+                                                <label for="exampleInputEmail1">@lang('language.end'):</label>
                                                 <div class="input-group m-input-group m-input-group--air">
                                                     <span class="input-group-addon"><i class="la la-clock-o"></i></span>
                                                     <input type="text" class="form-control m-input break-time-picker" name="break_end_1" value="{{$setting->time_format($setting->break1_end)}}" placeholder="Enter time" required="">
@@ -322,7 +322,7 @@ Setting Appearance
                         </div>
                         <div class="form-group m-form__group smoke-time-container-form">
                             <label for="exampleInputEmail1">
-                                Break Time 2:
+                                @lang('language.setting.break_time') 2:
                             </label>
                             <div class="smoke-time-container">
                                 <div class="input-group m-input-group m-input-group--air">
@@ -330,7 +330,7 @@ Setting Appearance
                                         <div class="col-sm-6">
                                             <div class="m-form__content"></div>
                                             <div class="form-group m-form__group">
-                                                <label for="exampleInputEmail1">Start:</label>
+                                                <label for="exampleInputEmail1">@lang('language.start'):</label>
                                                 <div class="input-group m-input-group m-input-group--air">
                                                     <span class="input-group-addon"><i class="la la-clock-o"></i></span>
                                                     <input type="text" class="form-control m-input break-time-picker" name="break_start_2" value="{{$setting->time_format($setting->break2_start)}}" placeholder="Enter time" required="">
@@ -341,7 +341,7 @@ Setting Appearance
                                         <div class="col-sm-6">
                                             <div class="m-form__content"></div>
                                             <div class="form-group m-form__group">
-                                                <label for="exampleInputEmail1">End:</label>
+                                                <label for="exampleInputEmail1">@lang('language.end'):</label>
                                                 <div class="input-group m-input-group m-input-group--air">
                                                     <span class="input-group-addon"><i class="la la-clock-o"></i></span>
                                                     <input type="text" class="form-control m-input break-time-picker" name="break_end_2" value="{{$setting->time_format($setting->break2_end)}}" placeholder="Enter time" required="">
@@ -356,10 +356,10 @@ Setting Appearance
     				</div>
     				<div class="modal-footer">
     					<button type="button" class="btn btn-outline-primary m-btn m-btn--outline m-btn--air" data-dismiss="modal">
-    						Close
+    						@lang('language.close')
     					</button>
     					<button type="submit" class="btn btn-outline-accent m-btn m-btn--outline m-btn--air form-submit-btn">
-    						Update
+    						@lang('language.update')
     					</button>
     				</div>
                 </form>
@@ -372,7 +372,7 @@ Setting Appearance
 			<div class="modal-content">
 				<div class="modal-header">
 					<h5 class="modal-title" id="exampleModalLabel">
-						Update Company Vacation Rule
+						@lang('language.setting.update_com_vacation_rule')
 					</h5>
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close" style="cursor: pointer;">
 						<span aria-hidden="true">
@@ -385,12 +385,12 @@ Setting Appearance
     				<div class="modal-body">
                         <div class="form-group m-form__group">
                             <label for="exampleInputEmail1">
-                                Vacation Week:
+                                @lang('language.vacation') @lang('language.week'):
                             </label>
                             <div class="input-group m-input-group m-input-group--air">
                                 <select class="form-control m-bootstrap-select m_selectpicker" name="vacation_weeks">
                                     @for ($i=1; $i < 10; $i++)
-                                        <option value="{{$i}}" @if ($setting->vacation_week == $i) selected @endif> {{$i}} Week </option>
+                                        <option value="{{$i}}" @if ($setting->vacation_week == $i) selected @endif> {{$i}} @lang('language.week') </option>
                                     @endfor
                                 </select>
                             </div>
@@ -398,10 +398,10 @@ Setting Appearance
     				</div>
     				<div class="modal-footer">
     					<button type="button" class="btn btn-outline-primary m-btn m-btn--outline m-btn--air" data-dismiss="modal">
-    						Close
+    						@lang('language.close')
     					</button>
     					<button type="submit" class="btn btn-outline-accent m-btn m-btn--outline m-btn--air form-submit-btn">
-    						Update
+    						@lang('language.update')
     					</button>
     				</div>
                 </form>
@@ -418,8 +418,8 @@ Setting Appearance
                 height: 10,
             },
             download: false,
-            label: 'Choose Logo.',
-            statusImageTooSmall:'Image too small. Min Size is $0 pixel. Try again',
+            label: i18n.language.change +" "+ i18n.language.img,
+            statusImageTooSmall: i18n.language.profile.image_too_small_slim,
         });
 
         var company_fav_cropper = new Slim(document.getElementById('company-fav__pic-slim'), {
@@ -428,8 +428,8 @@ Setting Appearance
                 height: 10,
             },
             download: false,
-            label: 'Choose Logo.',
-            statusImageTooSmall:'Image too small. Min Size is $0 pixel. Try again',
+            label: i18n.language.change +" "+ i18n.language.img,
+            statusImageTooSmall: i18n.language.profile.image_too_small_slim,
         });
 
         $('.m_selectpicker').selectpicker();

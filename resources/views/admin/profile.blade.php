@@ -1,11 +1,11 @@
 @extends('layouts.adminApp')
 
 @section('title')
-{{$admin->username}}'s Profile
+@lang('language.profile.users_profile', ['name' => $admin->username."'s"])
 @endsection
 
 @section('pageTitle')
-{{$admin->username}}'s Profile
+@lang('language.profile.users_profile', ['name' => $admin->username."'s"])
 @endsection
 
 @section('customStyle')
@@ -124,20 +124,20 @@
     					<ul class="nav nav-tabs m-tabs m-tabs-line   m-tabs-line--left m-tabs-line--primary" role="tablist">
     						<li class="nav-item m-tabs__item">
     							<a class="nav-link m-tabs__link active" data-toggle="tab" href="#m_user_profile_tab_1" role="tab">
-    								&nbsp;<i class="flaticon-share"></i> BIO&nbsp;
+    								&nbsp;<i class="flaticon-share"></i> @lang('language.profile.bio')&nbsp;
     							</a>
     						</li>
                             @if (Auth::guard('admin')->user()->id == $admin->id)
                                 <li class="nav-item m-tabs__item">
         							<a class="nav-link m-tabs__link" data-toggle="tab" href="#m_user_profile_tab_pass" role="tab">
-        								&nbsp;<i class="la la-key"></i> PASSWORD&nbsp;
+        								&nbsp;<i class="la la-key"></i> @lang('language.password')&nbsp;
         							</a>
         						</li>
                             @endif
                             @if (Auth::guard('admin')->user()->role > $admin->role && Auth::guard('admin')->user()->role > 1)
                                 <li class="nav-item m-tabs__item">
         							<a class="nav-link m-tabs__link" data-toggle="tab" href="#m_user_profile_tab_pass_force" role="tab">
-        								&nbsp;<i class="la la-key"></i> PASSWORD&nbsp;
+        								&nbsp;<i class="la la-key"></i> @lang('language.password')&nbsp;
         							</a>
         						</li>
                             @endif
@@ -161,17 +161,13 @@
                                             <div class="col-lg-2 col-md-2 col-sm-3 col-xs-12"></div>
             								<div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
             									<h3 class="m-form__section" style="margin-bottom: 0;">
-            										1. Unique Info
+            										1. @lang('language.profile.unique_info')
             									</h3>
-                                                <span class="m-form__help">
-            										*With this info, we can separate admin or user. <br />
-                                                    *This is unique for each user.
-            									</span>
             								</div>
             							</div>
                                         <div class="form-group m-form__group row">
                                             <label for="example-text-input" class="col-lg-2 col-md-2 col-sm-3 col-xs-12 col-form-label">
-            									UserName*
+            									@lang('language.username')*
             								</label>
             								<div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
                                                 <div class="m-user-unique_username-container">
@@ -181,7 +177,7 @@
             							</div>
                                         <div class="form-group m-form__group row">
                                             <label for="example-text-input" class="col-lg-2 col-md-2 col-sm-3 col-xs-12 col-form-label">
-            									Email*
+            									@lang('language.email')*
             								</label>
             								<div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
                                                 <div class="m-user-unique_username-container">
@@ -193,7 +189,7 @@
                                             <div class="form-group m-form__group row">
                                                 <div class="col-lg-2 col-md-2 col-sm-3 col-xs-12"></div>
             									<div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
-            										<button type="button" id="profile_unique_info_form_submit-btn" class="btn btn-outline-accent m-btn m-btn--air m-btn--custom" disabled>Save changes</button>
+            										<button type="button" id="profile_unique_info_form_submit-btn" class="btn btn-outline-accent m-btn m-btn--air m-btn--custom" disabled>@lang('language.save') @lang('language.change')</button>
             									</div>
                 							</div>
                                         @endif
@@ -208,13 +204,13 @@
                                         <div class="form-group m-form__group row">
             								<div class="col-10 ml-auto">
             									<h3 class="m-form__section">
-            										2. Personal Info
+            										2. @lang('language.profile.personal_info')
             									</h3>
             								</div>
             							</div>
                                         <div class="form-group m-form__group row">
             								<label for="example-text-input" class="col-lg-2 col-md-2 col-sm-3 col-xs-12 col-form-label">
-            									Surname
+            									@lang('language.surname')
             								</label>
             								<div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
             									<input class="form-control m-input" type="text" name="lastName" value="{{$admin->last_name}}" {{$ediatable}} />
@@ -222,7 +218,7 @@
             							</div>
                                         <div class="form-group m-form__group row">
             								<label for="example-text-input" class="col-lg-2 col-md-2 col-sm-3 col-xs-12col-form-label">
-            									Full Name
+            									@lang('language.fullname')
             								</label>
             								<div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
             									<input class="form-control m-input" type="text" name="firstName" value="{{$admin->first_name}}" {{$ediatable}} />
@@ -230,41 +226,41 @@
             							</div>
                                         <div class="form-group m-form__group row">
             								<label for="example-text-input" class="col-lg-2 col-md-2 col-sm-3 col-xs-12 col-form-label">
-            									Birthday
+            									@lang('language.profile.birthday')
             								</label>
             								<div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
-            									<input class="form-control m-input input_mask_date" @if (Auth::guard('admin')->user()->checkEditable($admin)) id="m_profile_birth" @endif placeholder="Birthday" type="text" name="birth" value="{{$admin->birth}}" {{$ediatable}} />
+            									<input class="form-control m-input input_mask_date" @if (Auth::guard('admin')->user()->checkEditable($admin)) id="m_profile_birth" @endif placeholder="@lang('language.profile.birthday')" type="text" name="birth" value="{{$admin->birth}}" {{$ediatable}} />
             								</div>
             							</div>
                                         <div class="form-group m-form__group row">
             								<label for="example-text-input" class="col-lg-2 col-md-2 col-sm-3 col-xs-12 col-form-label">
-            									Social Number
+            									@lang('language.profile.social_number')
             								</label>
             								<div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
-            									<input class="form-control m-input input_mask_integer" type="text" name="socialNumber" placeholder="Social Number" value="{{$admin->social_number}}" {{$ediatable}} />
+            									<input class="form-control m-input input_mask_integer" type="text" name="socialNumber" placeholder="@lang('language.profile.social_number')" value="{{$admin->social_number}}" {{$ediatable}} />
             								</div>
             							</div>
                                         <div class="form-group m-form__group row">
             								<label for="example-text-input" class="col-lg-2 col-md-2 col-sm-3 col-xs-12 col-form-label">
-            									Personal Number
+            									@lang('language.profile.personal_number')
             								</label>
             								<div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
-            									<input class="form-control m-input input_mask_integer" type="text" name="personalNumber" placeholder="Personal Number" value="{{$admin->personal_number}}" {{$ediatable}} />
+            									<input class="form-control m-input input_mask_integer" type="text" name="personalNumber" placeholder="@lang('language.profile.personal_number')" value="{{$admin->personal_number}}" {{$ediatable}} />
             								</div>
             							</div>
                                         <div class="form-group m-form__group row">
             								<label for="example-text-input" class="col-lg-2 col-md-2 col-sm-3 col-xs-12 col-form-label">
-            									Emergency Contact
+            									@lang('language.profile.emergency_contact')
             								</label>
             								<div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
-            									<input class="form-control m-input input_mask_integer" type="text" name="emergencyContact" placeholder="Eg: Wife's Phone number" value="{{$admin->emergency_contact}}" {{$ediatable}} />
+            									<input class="form-control m-input input_mask_integer" type="text" name="emergencyContact" placeholder="@lang('language.profile.emergency_eg_text', ['name' => "wife's"])" value="{{$admin->emergency_contact}}" {{$ediatable}} />
             								</div>
             							</div>
                                         @if(Auth::guard('admin')->user()->checkEditable($admin))
                                             <div class="form-group m-form__group row">
                                                 <div class="col-lg-2 col-md-2 col-sm-3 col-xs-12"></div>
             									<div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
-            										<button type="submit" class="btn btn-outline-accent m-btn m-btn--custom m-btn--air">Save changes</button>
+            										<button type="submit" class="btn btn-outline-accent m-btn m-btn--custom m-btn--air">@lang('language.save') @lang('language.change')</button>
             									</div>
                 							</div>
                                         @endif
@@ -283,13 +279,13 @@
                                                 <div class="col-lg-3 col-md-3 col-sm-4 col-xs-12"></div>
                                                 <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
                                                     <h3 class="m-form__section" style="margin-bottom: 0;">
-                                                        Password Change
+                                                        @lang('language.password') @lang('language.change')
                                                     </h3>
                                                 </div>
                                             </div>
                                             <div class="form-group m-form__group row">
                                                 <label for="example-text-input" class="col-lg-3 col-md-3 col-sm-4 col-xs-12 col-form-label">
-                                                    New Password*
+                                                    @lang('language.new') @lang('language.password')*
                                                 </label>
                                                 <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
                                                     <div class="m-user-unique_username-container">
@@ -299,7 +295,7 @@
                                             </div>
                                             <div class="form-group m-form__group row">
                                                 <label for="example-text-input" class="col-lg-3 col-md-3 col-sm-4 col-xs-12 col-form-label">
-                                                    Confirm Password*
+                                                    @lang('language.confirm') @lang('language.password')**
                                                 </label>
                                                 <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
                                                     <div class="m-user-unique_username-container">
@@ -310,7 +306,7 @@
                                             <div class="form-group m-form__group row">
                                                 <div class="col-lg-3 col-md-3 col-sm-4 col-xs-12"></div>
                                                 <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
-                                                    <button type="submit" class="btn btn-outline-accent m-btn m-btn--custom m-btn--air">Save changes</button>
+                                                    <button type="submit" class="btn btn-outline-accent m-btn m-btn--custom m-btn--air">@lang('language.save') @lang('language.change')</button>
                                                 </div>
                                             </div>
                                         </form>
@@ -329,26 +325,23 @@
                                                 <div class="col-lg-3 col-md-3 col-sm-4 col-xs-12"></div>
                                                 <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
                                                     <h3 class="m-form__section" style="margin-bottom: 0;">
-                                                        Password Change
+                                                        @lang('language.password') @lang('language.change')
                                                     </h3>
                                                 </div>
                                             </div>
                                             <div class="form-group m-form__group row">
                                                 <label for="example-text-input" class="col-lg-3 col-md-3 col-sm-4 col-xs-12 col-form-label">
-                                                    Old Password*
+                                                    @lang('language.old') @lang('language.password')*
                                                 </label>
                                                 <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
                                                     <div class="m-user-unique_username-container">
                                                         <input class="form-control m-input" type="password" name="old_password" value="" {{$ediatable}} required />
                                                     </div>
-                                                    <span class="m-form__help">
-                										You must provide your current password in order to change it.
-                									</span>
                                                 </div>
                                             </div>
                                             <div class="form-group m-form__group row">
                                                 <label for="example-text-input" class="col-lg-3 col-md-3 col-sm-4 col-xs-12 col-form-label">
-                                                    New Password*
+                                                    @lang('language.new') @lang('language.password')*
                                                 </label>
                                                 <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
                                                     <div class="m-user-unique_username-container">
@@ -358,7 +351,7 @@
                                             </div>
                                             <div class="form-group m-form__group row">
                                                 <label for="example-text-input" class="col-lg-3 col-md-3 col-sm-4 col-xs-12 col-form-label">
-                                                    Confirm Password*
+                                                    @lang('language.confirm') @lang('language.password')*
                                                 </label>
                                                 <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
                                                     <div class="m-user-unique_username-container">
@@ -369,7 +362,7 @@
                                             <div class="form-group m-form__group row">
                                                 <div class="col-lg-3 col-md-3 col-sm-4 col-xs-12"></div>
                                                 <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
-                                                    <button type="submit" class="btn btn-outline-accent m-btn m-btn--custom m-btn--air">Save changes</button>
+                                                    <button type="submit" class="btn btn-outline-accent m-btn m-btn--custom m-btn--air">@lang('language.save') @lang('language.change')</button>
                                                 </div>
                                             </div>
                                         </form>
@@ -388,7 +381,7 @@
 			<div class="modal-content">
 				<div class="modal-header">
 					<h5 class="modal-title" id="exampleModalLabel">
-						Update your Profile image
+						@lang('language.profile.update_profile_image')
 					</h5>
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close" style="cursor: pointer;">
 						<span aria-hidden="true">
@@ -405,10 +398,10 @@
     				</div>
     				<div class="modal-footer">
     					<button type="button" class="btn btn-outline-primary m-btn m-btn--custom m-btn--air" data-dismiss="modal">
-    						Close
+    						@lang('language.close')
     					</button>
     					<button type="submit" class="btn btn-outline-accent m-btn m-btn--custom m-btn--air form-submit-btn">
-    						Update
+    						@lang('language.update')
     					</button>
     				</div>
                 </form>
@@ -421,7 +414,7 @@
 			<div class="modal-content">
 				<div class="modal-header">
 					<h5 class="modal-title" id="exampleModalLabel">
-						Update your Cover image
+						@lang('language.profile.update_cover_image')
 					</h5>
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close" style="cursor: pointer;">
 						<span aria-hidden="true">
@@ -438,10 +431,10 @@
     				</div>
     				<div class="modal-footer">
     					<button type="button" class="btn btn-outline-accent m-btn m-btn--custom m-btn--air" data-dismiss="modal">
-    						Close
+    						@lang('language.close')
     					</button>
     					<button type="submit" class="btn btn-outline-accent m-btn m-btn--custom m-btn--air form-submit-btn">
-    						Update
+    						@lang('language.update')
     					</button>
     				</div>
                 </form>
@@ -459,8 +452,8 @@
                 height: 150,
             },
             download: false,
-            label: 'Drop your image here or Click.',
-            statusImageTooSmall:'Image too small. Min Size is $0 pixel. Try again',
+            label: i18n.language.profile.drop_your_img_here,
+            statusImageTooSmall: i18n.language.profile.image_too_small_slim,
         });
 
         var user_cover_cropper = new Slim(document.getElementById('m-user__pic-cover-slim'), {
@@ -470,8 +463,8 @@
                 height: 100,
             },
             download: false,
-            label: 'Drop your image here or Click.',
-            statusImageTooSmall:'Image too small. Min Size is $0 pixel. Try again',
+            label: i18n.language.profile.drop_your_img_here,
+            statusImageTooSmall: i18n.language.profile.image_too_small_slim,
         });
 
         $('#m_profile_birth').datepicker({

@@ -66,6 +66,7 @@
     	<!--begin::Base Scripts -->
         <script src="/assets/plugins/base/vendors.bundle.js" type="text/javascript"></script>
 		<script src="/assets/plugins/base/scripts.bundle.js" type="text/javascript"></script>
+		<script src="/js/language.js" type="text/javascript"></script>
 		<script src="/js/customGlobal.js" type="text/javascript"></script>
 		<!--end::Base Scripts -->
         <!--begin::Page Snippets -->

@@ -3,6 +3,7 @@
 namespace App;
 
 use DateTime;
+use Route;
 use Illuminate\Database\Eloquent\Model;
 
 class Setting extends Model
@@ -37,5 +38,28 @@ class Setting extends Model
     public function time_format2($time)
     {
         return date( "H:i:s", strtotime($time));
+    }
+
+    public function menuActiveCheck($menu)
+    {
+        if ($menu == "dashboard") {
+            if (Route::currentRouteName()=='admin.dashboard') {
+                return true;
+            }
+            return false;
+        }
+        if ($menu == "employee") {
+            if (Route::currentRouteName()=='admin.manage.attendance.single.calendar'
+            || Route::currentRouteName()=='admin.manage.attendance.single.datatable'
+            || Route::currentRouteName()=='admin.manage.employee'
+            || Route::currentRouteName()=='admin.manage.holiday'
+            || Route::currentRouteName()=='admin.manage.attendance'
+            || Route::currentRouteName()=='admin.manage.attendance.single'
+            || Route::currentRouteName()=='admin.manage.department'
+            || Route::currentRouteName()=='admin.manage.designation') {
+                return true;
+            }
+            return false;
+        }
     }
 }

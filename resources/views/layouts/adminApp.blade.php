@@ -4,12 +4,9 @@
 	<head>
 		<meta charset="utf-8" />
 		<?php
-			$setting_count = \App\Setting::where('id', 1)->count();
-			if ($setting_count > 0) {
-				$setting = \App\Setting::where('id', 1)->first();
-			}
+			$setting = \App\Setting::where('id', 1)->first();
 		?>
-		<title>@if ($setting_count > 0 ) {{$setting->app_name}} @else @lang('language.title') @endif | @yield('title')</title>
+		<title>{{$setting->app_name}} | @yield('title')</title>
 		<meta name="description" content="Latest updates and statistic charts">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -36,12 +33,8 @@
 		{{-- begine::custom style --}}
 		@yield('customStyle')
 		{{-- end::custom style --}}
-		@if ($setting_count > 0)
-			@if (file_exists('uploads/logos/'.$setting->logo_fav))
-				<link rel="shortcut icon" href="{{asset('uploads/logos/'.$setting->logo_fav)}}" />
-			@else
-				<link rel="shortcut icon" href="/assets/images/logo/logo_compact.png" />
-			@endif
+		@if (file_exists('uploads/logos/'.$setting->logo_fav))
+			<link rel="shortcut icon" href="{{asset('uploads/logos/'.$setting->logo_fav)}}" />
 		@else
 			<link rel="shortcut icon" href="/assets/images/logo/logo_compact.png" />
 		@endif
@@ -73,15 +66,11 @@
 								<div class="m-stack m-stack--ver m-stack--general m-stack--inline">
 									<div class="m-stack__item m-stack__item--middle m-brand__logo">
 										<a href="{{route('admin.dashboard')}}" class="m-brand__logo-wrapper">
-											@if ($setting_count > 0)
-				                                @if (file_exists('uploads/logos/'.$setting->logo_img))
-				                                    <img src="{{asset('uploads/logos/'.$setting->logo_img)}}" class="company-main-logo-img" alt="author">
-				                                @else
-				                                    <img alt="" src="/assets/images/logo/logo.png" class="company-main-logo-img" />
-				                                @endif
-				                            @else
-												<img alt="" src="/assets/images/logo/logo.png" class="company-main-logo-img" />
-				                            @endif
+			                                @if (file_exists('uploads/logos/'.$setting->logo_img))
+			                                    <img src="{{asset('uploads/logos/'.$setting->logo_img)}}" class="company-main-logo-img" alt="author">
+			                                @else
+			                                    <img alt="" src="/assets/images/logo/logo.png" class="company-main-logo-img" />
+			                                @endif
 										</a>
 									</div>
 									<div class="m-stack__item m-stack__item--middle m-brand__tools">
@@ -515,19 +504,19 @@
 								</button>
 								<div id="m_header_menu" class="m-header-menu m-aside-header-menu-mobile m-aside-header-menu-mobile--offcanvas  m-header-menu--skin-dark m-header-menu--submenu-skin-light m-aside-header-menu-mobile--skin-light m-aside-header-menu-mobile--submenu-skin-light "  >
 									<ul class="m-menu__nav  m-menu__nav--submenu-arrow ">
-										<li class="m-menu__item @if(Route::currentRouteName()=='admin.dashboard') m-menu__item--active @endif"  aria-haspopup="true">
+										<li class="m-menu__item @if($setting->menuActiveCheck('dashboard')) m-menu__item--active @endif"  aria-haspopup="true">
 											<a  href="{{route('admin.dashboard')}}" class="m-menu__link ">
 												<span class="m-menu__item-here"></span>
 												<span class="m-menu__link-text">
-													Dashboard
+													@lang('language.dashboard')
 												</span>
 											</a>
 										</li>
-										<li class="@if(Route::currentRouteName()=='admin.manage.admins' || Route::currentRouteName()=='admin.manage.attendance.single.calendar' || Route::currentRouteName()=='admin.manage.attendance.single.datatable' || Route::currentRouteName()=='admin.manage.employee' || Route::currentRouteName()=='admin.manage.holiday' || Route::currentRouteName()=='admin.manage.attendance' || Route::currentRouteName()=='admin.manage.attendance.single') m-menu__item--active @endif m-menu__item  m-menu__item--submenu m-menu__item--rel"  data-menu-submenu-toggle="click" aria-haspopup="true">
+										<li class="@if($setting->menuActiveCheck('employee')) m-menu__item--active @endif m-menu__item  m-menu__item--submenu m-menu__item--rel"  data-menu-submenu-toggle="click" aria-haspopup="true">
 											<a  href="javascript:;" class="m-menu__link m-menu__toggle">
 												<span class="m-menu__item-here"></span>
 												<span class="m-menu__link-text">
-													Employee
+													@lang('language.employee')
 												</span>
 												<i class="m-menu__hor-arrow la la-angle-down"></i>
 												<i class="m-menu__ver-arrow la la-angle-right"></i>
@@ -541,7 +530,7 @@
 															<span class="m-menu__link-title">
 																<span class="m-menu__link-wrap">
 																	<span class="m-menu__link-text">
-																		All Employees
+																		@lang('language.all') @lang('language.employee')
 																	</span>
 																</span>
 															</span>
@@ -553,7 +542,7 @@
 															<span class="m-menu__link-title">
 																<span class="m-menu__link-wrap">
 																	<span class="m-menu__link-text">
-																		Attendance
+																		@lang('language.attendance.attendance')
 																	</span>
 																</span>
 															</span>
@@ -565,7 +554,31 @@
 															<span class="m-menu__link-title">
 																<span class="m-menu__link-wrap">
 																	<span class="m-menu__link-text">
-																		Holidays
+																		@lang('language.holidays')
+																	</span>
+																</span>
+															</span>
+														</a>
+													</li>
+													<li class="m-menu__item" aria-haspopup="true">
+														<a  href="{{route('admin.manage.department')}}" class="m-menu__link ">
+															<i class="m-menu__link-icon la la-clipboard"></i>
+															<span class="m-menu__link-title">
+																<span class="m-menu__link-wrap">
+																	<span class="m-menu__link-text">
+																		@lang('language.department.department')
+																	</span>
+																</span>
+															</span>
+														</a>
+													</li>
+													<li class="m-menu__item" aria-haspopup="true">
+														<a  href="{{route('admin.manage.designation')}}" class="m-menu__link ">
+															<i class="m-menu__link-icon la la-clipboard"></i>
+															<span class="m-menu__link-title">
+																<span class="m-menu__link-wrap">
+																	<span class="m-menu__link-text">
+																		@lang('language.department.designation')
 																	</span>
 																</span>
 															</span>
@@ -578,7 +591,7 @@
 											<a  href="javascript:;" class="m-menu__link m-menu__toggle">
 												<span class="m-menu__item-here"></span>
 												<span class="m-menu__link-text">
-													Setting
+													@lang('language.setting.setting')
 												</span>
 												<i class="m-menu__hor-arrow la la-angle-down"></i>
 												<i class="m-menu__ver-arrow la la-angle-right"></i>
@@ -592,7 +605,7 @@
 															<span class="m-menu__link-title">
 																<span class="m-menu__link-wrap">
 																	<span class="m-menu__link-text">
-																		Appearance
+																		@lang('language.appearance')
 																	</span>
 																</span>
 															</span>
@@ -604,7 +617,7 @@
 															<span class="m-menu__link-title">
 																<span class="m-menu__link-wrap">
 																	<span class="m-menu__link-text">
-																		Contract Type
+																		@lang('language.contract_type')
 																	</span>
 																</span>
 															</span>

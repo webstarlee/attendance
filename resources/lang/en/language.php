@@ -11,9 +11,11 @@
         'fullname' => 'Fullname',
         'old' => 'Old',
         'new' => 'New',
+        'edit' => 'Edit',
         'confirm' => 'Confirm',
         'save' => 'Save',
         'change' => 'Change',
+        'submit' => 'Submit',
         'update' => 'Update',
         'close' => 'Close',
         'week' => 'Week',
@@ -34,6 +36,16 @@
         'password' => 'Password',
         'client_id' => 'Client Id',
         'check_client_id' => 'Client Id',
+        'dashboard' => 'Dashboard',
+        'employee' => 'Employee',
+        'holidays' => 'Holidays',
+        'all' => 'All',
+        'appearance' => 'Appearance',
+        'contract_type' => 'Contract Type',
+        'management' => 'Management',
+        'title' => 'Title',
+        'required' => 'Required',
+        'note' => 'Note',
         'profile' => [
             'my_profile' => 'My Profile',
             'users_profile' => ':name Profile',
@@ -66,6 +78,15 @@
             'update_com_break_time' => 'Update Company Break Time',
             'update_com_vacation_rule' => 'Update Company Vacation Rule',
             'break_time' => 'Break Time',
-        ]
+        ],
+        'attendance' => [
+            'attendance' => 'Attendance',
+        ],
+        'department' => [
+            'department' => 'Department',
+            'designation' => 'Designation',
+            'add_new_department' => 'Add New Department',
+            'add_new_designation' => 'Add New Designation',
+        ],
     ]
 ?>

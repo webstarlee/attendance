@@ -1,24 +1,23 @@
 @extends('layouts.adminApp')
 
 @section('title')
-Manage Contract type
+@lang('language.department.designation') @lang('language.management')
 @endsection
 
 @section('pageTitle')
-Contract type Management
-@endsection
-
-@section('plugin_style')
-<link href="/assets/plugins/bootstrap-colorpicker/css/bootstrap-colorpicker.min.css" rel="stylesheet" type="text/css" />
+@lang('language.department.designation') @lang('language.management')
 @endsection
 
 @section('content')
+    <?php
+        $departments = \App\Department::all();
+    ?>
     <div class="m-portlet m-portlet--mobile">
-		<div class="m-portlet__head">
+        <div class="m-portlet__head">
 			<div class="m-portlet__head-caption">
 				<div class="m-portlet__head-title">
 					<h3 class="m-portlet__head-text">
-						<i class="la la-gear"></i> &nbsp;Contract type Management
+						<i class="la la-gear"></i> &nbsp;@lang('language.department.designation') @lang('language.management')
 					</h3>
 				</div>
 			</div>
@@ -120,11 +119,11 @@ Contract type Management
 						</div>
 					</div>
 					<div class="col-xl-4 order-1 order-xl-2 m--align-right">
-						<a href="#m-admin-new_contract-type-modal" data-toggle="modal" class="btn btn-outline-accent m-btn m-btn--custom m-btn--icon m-btn--air">
+						<a href="#m-admin-new_designation-modal" data-toggle="modal" class="btn btn-outline-accent m-btn m-btn--custom m-btn--icon m-btn--air">
 							<span>
 								<i class="la la-plus"></i>
 								<span>
-									New Contract Type
+									@lang('language.new') @lang('language.department.designation')
 								</span>
 							</span>
 						</a>
@@ -134,17 +133,17 @@ Contract type Management
 			</div>
 			<!--end: Search Form -->
             <!--begin: Datatable -->
-			<div class="m_contract_datatable"></div>
+			<div id="m_designation_datatable"></div>
 			<!--end: Datatable -->
 		</div>
-	</div>
+    </div>
 
-    <div class="modal fade m-custom-modal" id="m-admin-new_contract-type-modal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-		<div class="modal-dialog" role="document">
+    <div class="modal fade m-custom-modal" id="m-admin-new_designation-modal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
 					<h5 class="modal-title" id="exampleModalLabel">
-						Add New Contract Type
+						@lang('language.department.add_new_designation')
 					</h5>
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close" style="cursor: pointer;">
 						<span aria-hidden="true">
@@ -152,7 +151,7 @@ Contract type Management
 						</span>
 					</button>
 				</div>
-                <form id="m-admin-new_contract-type-form" class="m-form" action="{{route('admin.manage.contract.store')}}" role="form" method="post" accept-charset="UTF-8" enctype="multipart/form-data">
+                <form id="m-admin-new_designation-form" class="m-form" action="{{route('admin.manage.designation.store')}}" role="form" method="post" accept-charset="UTF-8" enctype="multipart/form-data">
                     {{ csrf_field() }}
     				<div class="modal-body">
                         <div class="row ">
@@ -160,13 +159,13 @@ Contract type Management
                                 <div class="m-form__content"></div>
                                 <div class="form-group m-form__group">
                                     <label for="contract_title">
-                                        Title (required):
+                                        @lang('language.title') ( @lang('language.required') )
                                     </label>
                                     <div class="input-group m-input-group m-input-group--air">
                                         <span class="input-group-addon">
                                             <i class="la la-comment-o"></i>
                                         </span>
-                                        <input type="text" class="form-control m-input" id="contract_title" name="contract_title" placeholder="Enter contract title (required)" aria-describedby="basic-addon1" required>
+                                        <input type="text" class="form-control m-input" name="designation_title" placeholder="@lang('language.title') (@lang('language.required'))" aria-describedby="basic-addon1" required>
                                     </div>
                                 </div>
                                 <div class="m-form__content"></div>
@@ -176,32 +175,18 @@ Contract type Management
                             <div class="col-sm-12">
                                 <div class="m-form__content"></div>
                                 <div class="form-group m-form__group">
-                                    <label for="contract_title">
-                                        Work Time:
+                                    <label for="exampleInputEmail1">
+                                        @lang('language.department.department')
                                     </label>
-                                    <div class="row">
-                                        <div class="col-sm-6">
-                                            <div class="form-group m-form__group">
-                                                <div class="input-group m-input-group m-input-group--air">
-                                                    <span class="input-group-addon">
-                                                        <i class="la la-clock-o"></i>
-                                                    </span>
-                                                    <input type="text" class="form-control m-input input_mask_time" id="contract_time_hour" name="contract_time_hour" placeholder="Hours" aria-describedby="basic-addon1">
-                                                </div>
-                                                <span class="m-form__help">Work time hours</span>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <div class="form-group m-form__group">
-                                                <div class="input-group m-input-group m-input-group--air">
-                                                    <span class="input-group-addon">
-                                                        <i class="la la-clock-o"></i>
-                                                    </span>
-                                                    <input type="text" class="form-control m-input input_mask_time" id="contract_time_min" name="contract_time_min" placeholder="Minutes" aria-describedby="basic-addon1">
-                                                </div>
-                                                <span class="m-form__help">Work time minutes</span>
-                                            </div>
-                                        </div>
+                                    <div class="input-group m-input-group">
+                                        <span class="input-group-addon">
+                                            <i class="la la-clipboard"></i>
+                                        </span>
+                                        <select class="form-control m-bootstrap-select m_selectpicker" name="department_id">
+                                            @foreach ($departments as $department)
+                                                <option value="{{$department->id}}">{{$department->depart_title}}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="m-form__content"></div>
@@ -212,32 +197,32 @@ Contract type Management
                                 <div class="m-form__content"></div>
                                 <div class="form-group m-form__group">
 									<label for="contract_description">
-										Description (optional)
+										@lang('language.note'):
 									</label>
-									<textarea class="form-control m-input" name="contract_description" id="contract_description" placeholder="Enter contract description (optional)" rows="5"></textarea>
+									<textarea class="form-control m-input" name="designation_note" placeholder="@lang('language.note')" rows="5"></textarea>
 								</div>
                             </div>
                         </div>
     				</div>
     				<div class="modal-footer">
     					<button type="button" class="btn btn-outline-primary m-btn m-btn--custom m-btn--air" data-dismiss="modal">
-    						Close
+    						@lang('language.close')
     					</button>
     					<button type="submit" class="btn btn-outline-accent m-btn m-btn--custom m-btn--air form-submit-btn">
-    						Submit
+    						@lang('language.submit')
     					</button>
     				</div>
                 </form>
 			</div>
 		</div>
-	</div>
+    </div>
 
-    <div class="modal fade m-custom-modal" id="m-admin-edit_contract-type-modal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1" aria-hidden="true">
-		<div class="modal-dialog" role="document">
+    <div class="modal fade m-custom-modal" id="m-admin-edit_designation-modal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1" aria-hidden="true">
+        <div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
 					<h5 class="modal-title" id="exampleModalLabel1">
-						Edit Contract Type
+						@lang('language.edit') @lang('language.department.designation')
 					</h5>
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close" style="cursor: pointer;">
 						<span aria-hidden="true">
@@ -245,22 +230,22 @@ Contract type Management
 						</span>
 					</button>
 				</div>
-                <form id="m-admin-edit_contract-type-form" class="m-form" action="{{route('admin.manage.contract.update')}}" role="form" method="post" accept-charset="UTF-8" enctype="multipart/form-data">
+                <form id="m-admin-edit_designation-form" class="m-form" action="{{route('admin.manage.designation.update')}}" role="form" method="post" accept-charset="UTF-8" enctype="multipart/form-data">
                     {{ csrf_field() }}
-                    <input type="hidden" id="contract_id_for_edit" name="contract_id_for_edit" value="">
+                    <input type="hidden" id="designation_id_for_edit" name="designation_id_for_edit" value="">
     				<div class="modal-body">
                         <div class="row ">
                             <div class="col-sm-12">
                                 <div class="m-form__content"></div>
                                 <div class="form-group m-form__group">
                                     <label for="contract_title">
-                                        Title (required):
+                                        @lang('language.title') (@lang('language.required')):
                                     </label>
                                     <div class="input-group m-input-group m-input-group--air">
                                         <span class="input-group-addon">
                                             <i class="la la-comment-o"></i>
                                         </span>
-                                        <input type="text" class="form-control m-input" id="_contract_title" name="_contract_title" placeholder="Enter contract title (required)" aria-describedby="basic-addon1" required>
+                                        <input type="text" class="form-control m-input" id="_designation_title" name="_designation_title" placeholder="@lang('language.title') ( @lang('language.required') )" aria-describedby="basic-addon1" required>
                                     </div>
                                 </div>
                                 <div class="m-form__content"></div>
@@ -270,32 +255,18 @@ Contract type Management
                             <div class="col-sm-12">
                                 <div class="m-form__content"></div>
                                 <div class="form-group m-form__group">
-                                    <label for="contract_title">
-                                        Work Time:
+                                    <label for="exampleInputEmail1">
+                                        @lang('language.department.department')
                                     </label>
-                                    <div class="row">
-                                        <div class="col-sm-6">
-                                            <div class="form-group m-form__group">
-                                                <div class="input-group m-input-group m-input-group--air">
-                                                    <span class="input-group-addon">
-                                                        <i class="la la-clock-o"></i>
-                                                    </span>
-                                                    <input type="text" class="form-control m-input" id="_contract_time_hour" name="_contract_time_hour" placeholder="Hours" aria-describedby="basic-addon1" required>
-                                                </div>
-                                                <span class="m-form__help">Work time hours</span>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <div class="form-group m-form__group">
-                                                <div class="input-group m-input-group m-input-group--air">
-                                                    <span class="input-group-addon">
-                                                        <i class="la la-clock-o"></i>
-                                                    </span>
-                                                    <input type="text" class="form-control m-input" id="_contract_time_min" name="_contract_time_min" placeholder="Minutes" aria-describedby="basic-addon1" required>
-                                                </div>
-                                                <span class="m-form__help">Work time minutes</span>
-                                            </div>
-                                        </div>
+                                    <div class="input-group m-input-group">
+                                        <span class="input-group-addon">
+                                            <i class="la la-clipboard"></i>
+                                        </span>
+                                        <select class="form-control m-bootstrap-select m_selectpicker" id="_department_id" name="_department_id">
+                                            @foreach ($departments as $department)
+                                                <option value="{{$department->id}}">{{$department->depart_title}}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="m-form__content"></div>
@@ -306,27 +277,26 @@ Contract type Management
                                 <div class="m-form__content"></div>
                                 <div class="form-group m-form__group">
 									<label for="_contract_description">
-										Description (optional)
+										@lang('language.note'):
 									</label>
-									<textarea class="form-control m-input" name="_contract_description" id="_contract_description" placeholder="Enter contract description (optional)" rows="5"></textarea>
+									<textarea class="form-control m-input" name="_designation_note" id="_designation_note" placeholder="@lang('language.note')" rows="5"></textarea>
 								</div>
                             </div>
                         </div>
     				</div>
     				<div class="modal-footer">
     					<button type="button" class="btn btn-outline-primary m-btn m-btn--custom m-btn--air" data-dismiss="modal">
-    						Close
+    						@lang('language.close')
     					</button>
     					<button type="submit" class="btn btn-outline-accent m-btn m-btn--custom m-btn--air form-submit-btn">
-    						Update
+    						@lang('language.submit')
     					</button>
     				</div>
                 </form>
 			</div>
 		</div>
-	</div>
+    </div>
 @endsection
 @section('customScript')
-    <script src="/js/datatable/loadContractData.js" type="text/javascript"></script>
-    <script src="/js/customManage.js" type="text/javascript"></script>
+    <script src="/js/datatable/loadDesignationData.js" type="text/javascript"></script>
 @endsection

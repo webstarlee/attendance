@@ -296,7 +296,9 @@ class AdminManageController extends Controller
 
     public function getEmployeeData(Request $request)
     {
-        $employees = User::join('contract_types', 'contract_types.id', '=', 'users.contract_type')->select('users.*', 'contract_types.title as contract_type')->get();
+        $employees = User::join('contract_types', 'contract_types.id', '=', 'users.contract_type')
+        ->join('designations', 'designations.id', '=', 'users.role_id')
+        ->select('users.*', 'contract_types.title as contract_type', 'designations.design_title')->get();
         $metaData = array(
             "page" => 1,
             "pages" => 1,
@@ -319,7 +321,7 @@ class AdminManageController extends Controller
         $employee->username = $request->username;
         $employee->unique_id = str_random(10);
         $employee->client_id = rand(10000, 99999);
-        $employee->birth = $request->birth;
+        $employee->role_id = $request->user_role;
         $employee->email = $request->email;
         $employee->password = bcrypt($request->password);
         $employee->contract_type = $request->contract_type;

@@ -13,6 +13,11 @@ Employee Management
 @endsection
 
 @section('content')
+    <?php
+        $contract_types = \App\ContractType::all();
+        $departments = \App\Department::all();
+        $designations = \App\Designation::all();
+    ?>
     <div class="m-portlet m-portlet--mobile">
 		<div class="m-portlet__head">
 			<div class="m-portlet__head-caption">
@@ -303,12 +308,9 @@ Employee Management
                 										<span class="input-group-addon">
                 											<i class="la la-user-secret"></i>
                 										</span>
-                                                        <?php
-                                                            $contract_types = \App\ContractType::all();
-                                                        ?>
                 										<select class="form-control m-bootstrap-select m_selectpicker" name="contract_type">
                                                             @foreach ($contract_types as $contract_type)
-                                                                <option value="{{$contract_type->id}}" @if ($contract_type->id == 0) selected @endif>{{$contract_type->title}}</option>
+                                                                <option value="{{$contract_type->id}}" @if($contract_type->id == 0) selected @endif>{{$contract_type->title}}</option>
                                                             @endforeach
                 										</select>
                 									</div>
@@ -318,14 +320,24 @@ Employee Management
                                                 <div class="m-form__content"></div>
                                                 <div class="form-group m-form__group">
                                                     <label for="exampleInputEmail1">
-                                                        Birthday:
+                                                        User role:
                                                     </label>
-                                                    <div class="input-group m-input-group m-input-group--air">
-                                                        <span class="input-group-addon">
-                                                            <i class="la la-calendar"></i>
-                                                        </span>
-                                                        <input type="text" class="form-control m-input input_mask_date" name="birth" placeholder="Birthday (optional)" aria-describedby="basic-addon1">
-                                                    </div>
+                                                    <div class="input-group m-input-group">
+                										<span class="input-group-addon">
+                											<i class="la la-user-secret"></i>
+                										</span>
+                										<select class="form-control m-bootstrap-select m_selectpicker" name="user_role">
+                                                            @foreach ($departments as $department)
+                                                                <optgroup label="{{$department->depart_title}}">
+                                                                    @foreach ($designations as $designation)
+                                                                        @if ($designation->depart_id == $department->id)
+                                                                            <option value="{{$designation->id}}" @if($designation->id == 0) selected @endif>{{$designation->design_title}}</option>
+                                                                        @endif
+                                                                    @endforeach
+                                                                </optgroup>
+                                                            @endforeach
+                										</select>
+                									</div>
                                                 </div>
                                             </div>
                                         </div>

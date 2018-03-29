@@ -63,7 +63,7 @@
                             <div class="row m-row--no-padding align-items-center">
                                 <div class="col">
                                     <h3 class="m-widget1__title">
-                                        My Client Id:
+                                        @lang('language.client_id')
                                     </h3>
                                 </div>
                                 <div class="col m--align-right">

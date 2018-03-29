@@ -13,6 +13,11 @@
 @endsection
 
 @section('content')
+    <?php
+        $contract_types = \App\ContractType::all();
+        $departments = \App\Department::all();
+        $designations = \App\Designation::all();
+    ?>
     <div class="row">
     	<div class="col-lg-4">
     		<div class="m-portlet m-portlet--full-height">
@@ -62,15 +67,12 @@
     						<div class="row m-row--no-padding align-items-center">
     							<div class="col">
     								<h3 class="m-widget1__title">
-    									Member Profit
+    									@lang('language.client_id')
     								</h3>
-    								<span class="m-widget1__desc">
-    									Awerage Weekly Profit
-    								</span>
     							</div>
     							<div class="col m--align-right">
     								<span class="m-widget1__number m--font-brand">
-    									+$17,800
+    									{{$employee->client_id}}
     								</span>
     							</div>
     						</div>
@@ -142,17 +144,13 @@
                                             <div class="col-lg-2 col-md-2 col-sm-3 col-xs-12"></div>
             								<div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
             									<h3 class="m-form__section" style="margin-bottom: 0;">
-            										1. Unique Info
+            										1. @lang('language.profile.unique_info')
             									</h3>
-                                                <span class="m-form__help">
-            										*With this info, we can separate admin or user. <br />
-                                                    *This is unique for each user.
-            									</span>
             								</div>
             							</div>
                                         <div class="form-group m-form__group row">
                                             <label for="example-text-input" class="col-lg-2 col-md-2 col-sm-3 col-xs-12 col-form-label">
-            									UserName*
+            									@lang('language.username')*
             								</label>
             								<div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
                                                 <div class="m-user-unique_username-container">
@@ -162,7 +160,7 @@
             							</div>
                                         <div class="form-group m-form__group row">
                                             <label for="example-text-input" class="col-lg-2 col-md-2 col-sm-3 col-xs-12 col-form-label">
-            									Email*
+            									@lang('language.email')*
             								</label>
             								<div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
                                                 <div class="m-user-unique_username-container">
@@ -173,7 +171,7 @@
                                         <div class="form-group m-form__group row">
                                             <div class="col-lg-2 col-md-2 col-sm-3 col-xs-12"></div>
         									<div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
-        										<button type="button" id="profile_unique_info_form_submit-btn" class="btn btn-outline-accent m-btn--air m-btn m-btn--custom" disabled>Save changes</button>
+        										<button type="button" id="profile_unique_info_form_submit-btn" class="btn btn-outline-accent m-btn--air m-btn m-btn--custom" disabled>@lang('language.save') @lang('language.change')</button>
         									</div>
             							</div>
                                         <div class="m-form__seperator m-form__seperator--dashed m-form__seperator--space-2x"></div>
@@ -187,13 +185,13 @@
                                         <div class="form-group m-form__group row">
             								<div class="col-10 ml-auto">
             									<h3 class="m-form__section">
-            										2. Personal Info
+            										2. @lang('language.profile.personal_info')
             									</h3>
             								</div>
             							</div>
                                         <div class="form-group m-form__group row">
             								<label for="example-text-input" class="col-lg-2 col-md-2 col-sm-3 col-xs-12 col-form-label">
-            									Surname
+            									@lang('language.surname')
             								</label>
             								<div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
             									<input class="form-control m-input" type="text" name="lastName" value="{{$employee->last_name}}" />
@@ -201,7 +199,7 @@
             							</div>
                                         <div class="form-group m-form__group row">
             								<label for="example-text-input" class="col-lg-2 col-md-2 col-sm-3 col-xs-12col-form-label">
-            									Full Name
+            									@lang('language.fullname')
             								</label>
             								<div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
             									<input class="form-control m-input" type="text" name="firstName" value="{{$employee->first_name}}" />
@@ -209,20 +207,17 @@
             							</div>
                                         <div class="form-group m-form__group row">
             								<label for="example-text-input" class="col-lg-2 col-md-2 col-sm-3 col-xs-12 col-form-label">
-            									Birthday
+            									@lang('language.profile.birthday')
             								</label>
             								<div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
-            									<input class="form-control m-input input_mask_date" id="m_profile_birth" placeholder="Birthday" type="text" name="birth" value="{{$employee->birth}}" />
+            									<input class="form-control m-input input_mask_date" id="m_profile_birth" placeholder="@lang('language.profile.birthday')" type="text" name="birth" value="{{$employee->birth}}" />
             								</div>
             							</div>
                                         <div class="form-group m-form__group row">
             								<label for="example-text-input" class="col-lg-2 col-md-2 col-sm-3 col-xs-12 col-form-label">
-            									Contract Type
+            									@lang('language.contract_type')
             								</label>
             								<div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
-                                                <?php
-                                                    $contract_types = \App\ContractType::all();
-                                                ?>
                                                 <select class="form-control m-bootstrap-select m_selectpicker" name="contract_type">
                                                     @foreach ($contract_types as $contract_type)
                                                         <option value="{{$contract_type->id}}" @if ($contract_type->id == $employee->contract_type) selected @endif>{{$contract_type->title}}</option>
@@ -232,26 +227,47 @@
             							</div>
                                         <div class="form-group m-form__group row">
             								<label for="example-text-input" class="col-lg-2 col-md-2 col-sm-3 col-xs-12 col-form-label">
-            									Social Number
+            									@lang('language.user_role')
             								</label>
             								<div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
-            									<input class="form-control m-input input_mask_integer" type="text" name="socialNumber" placeholder="Social Number" value="{{$employee->social_number}}" />
+                                                <?php
+                                                    $contract_types = \App\ContractType::all();
+                                                ?>
+                                                <select class="form-control m-bootstrap-select m_selectpicker" name="user_role">
+                                                    @foreach ($departments as $department)
+                                                        <optgroup label="{{$department->depart_title}}">
+                                                            @foreach ($designations as $designation)
+                                                                @if ($designation->depart_id == $department->id)
+                                                                    <option value="{{$designation->id}}" @if($designation->id == $employee->role_id) selected @endif>{{$designation->design_title}}</option>
+                                                                @endif
+                                                            @endforeach
+                                                        </optgroup>
+                                                    @endforeach
+                                                </select>
             								</div>
             							</div>
                                         <div class="form-group m-form__group row">
             								<label for="example-text-input" class="col-lg-2 col-md-2 col-sm-3 col-xs-12 col-form-label">
-            									Personal Number
+            									@lang('language.profile.social_number')
             								</label>
             								<div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
-            									<input class="form-control m-input input_mask_integer" type="text" name="personalNumber" placeholder="Personal Number" value="{{$employee->personal_number}}" />
+            									<input class="form-control m-input input_mask_integer" type="text" name="socialNumber" placeholder="@lang('language.profile.social_number')" value="{{$employee->social_number}}" />
             								</div>
             							</div>
                                         <div class="form-group m-form__group row">
             								<label for="example-text-input" class="col-lg-2 col-md-2 col-sm-3 col-xs-12 col-form-label">
-            									Emergency Contact
+            									@lang('language.profile.personal_number')
             								</label>
             								<div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
-            									<input class="form-control m-input input_mask_integer" type="text" name="emergencyContact" placeholder="Eg: Wife's Phone number" value="{{$employee->emergency_contact}}" />
+            									<input class="form-control m-input input_mask_integer" type="text" name="personalNumber" placeholder="@lang('language.profile.personal_number')" value="{{$employee->personal_number}}" />
+            								</div>
+            							</div>
+                                        <div class="form-group m-form__group row">
+            								<label for="example-text-input" class="col-lg-2 col-md-2 col-sm-3 col-xs-12 col-form-label">
+            									@lang('language.profile.emergency_contact')
+            								</label>
+            								<div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
+            									<input class="form-control m-input input_mask_integer" type="text" name="emergencyContact" placeholder="@lang('language.profile.emergency_eg_text', ['name' => "wife's"])" value="{{$employee->emergency_contact}}" />
             								</div>
             							</div>
                                         <div class="form-group m-form__group row">

@@ -326,6 +326,7 @@ class AdminProfileController extends Controller
             $employee->first_name = $request->firstName;
             $employee->last_name = $request->lastName;
             $employee->birth = $request->birth;
+            $employee->role_id = $request->user_role;
             $employee->contract_type = $request->contract_type;
             $employee->social_number = $request->socialNumber;
             $employee->personal_number = $request->personalNumber;

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateDesignationsTable extends Migration
+class CreateTasksTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,12 @@ class CreateDesignationsTable extends Migration
      */
     public function up()
     {
-        Schema::create('designations', function (Blueprint $table) {
+        Schema::create('tasks', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('depart_id');
-            $table->string('design_title');
-            $table->string('design_note')->nullable();
+            $table->integer('pro_id');
+            $table->string('task_title');
+            $table->integer('task_status');
+            $table->binary('task_assign');
         });
     }
 
@@ -28,6 +29,6 @@ class CreateDesignationsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('designations');
+        Schema::dropIfExists('tasks');
     }
 }

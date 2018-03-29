@@ -35,6 +35,7 @@
         'email' => 'Email',
         'password' => 'Password',
         'client_id' => 'Client Id',
+        'action' => 'Action',
         'check_client_id' => 'Client Id',
         'dashboard' => 'Dashboard',
         'employee' => 'Employee',
@@ -46,6 +47,7 @@
         'title' => 'Title',
         'required' => 'Required',
         'note' => 'Note',
+        'user_role' => 'User role',
         'profile' => [
             'my_profile' => 'My Profile',
             'users_profile' => ':name Profile',

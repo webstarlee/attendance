@@ -50,37 +50,25 @@ var DatatableAutoColumnHideDemo = function() {
           selector: {class: 'm-checkbox--solid m-checkbox--brand'}
         }, {
           field: 'username',
-          title: 'UnserName',
-          width: 150,
-          template: '<a href="/admin/profile/employee/{{unique_id}}" target="_blank">{{username}}</a>'
-        }, {
-          field: 'client_id',
-          title: 'Client Id',
-          width: 150,
-        }, {
-          field: 'first_name',
-          title: 'Full Name',
-          width: 150,
-          responsive: {visible: 'lg'},
-        }, {
-          field: 'last_name',
-          title: 'SurName',
-          width: 150,
-          responsive: {visible: 'lg'},
-        }, {
-          field: 'birth',
-          title: 'Birthday',
-          width: 150,
-          responsive: {visible: 'lg'},
+          title: i18n.language.username,
+          width: 300,
+          template: function (row, index, datatable) {
+              return '\
+              <a class="employee-manage-unsername-select" href="/admin/profile/employee/'+row.unique_id+'" target="_blank" title="'+row.username+'">\
+              <img src="/uploads/avatars/'+row.unique_id+'/'+row.avatar+'">\
+              <div style="padding-left:10px;"><p class="username-text">'+row.first_name+' '+row.last_name+' ('+row.client_id+')</p><p class="role-text">'+row.design_title+'</p></div>\
+              </a>\
+              ';
+          }
         }, {
           field: 'contract_type',
-          title: 'ContractType',
-          width: 150,
+          title: i18n.language.contract_type,
+          width: 300,
           responsive: {visible: 'lg'},
         }, {
             field: "Actions",
             width: 80,
-            title: "Actions",
+            title: i18n.language.action,
             sortable: false,
             overflow: 'visible',
             template: function (row, index, datatable) {

@@ -21,6 +21,8 @@ class CreateUsersTable extends Migration
             $table->string('unique_id')->unique();
             $table->string('name_title')->nullable();
             $table->integer('client_id')->unique();
+            $table->integer('role_id');
+            $table->date('join_date')->nullable();
             $table->string('avatar')->default('default.jpg');
             $table->string('cover')->default('default.jpg');
             $table->string('birth')->nullable();

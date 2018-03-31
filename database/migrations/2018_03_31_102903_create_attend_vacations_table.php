@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateAttendanceRequestsTable extends Migration
+class CreateAttendVacationsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,13 @@ class CreateAttendanceRequestsTable extends Migration
      */
     public function up()
     {
-        Schema::create('attendance_requests', function (Blueprint $table) {
+        Schema::create('attend_vacations', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('req_employee_id');
-            $table->integer('req_attend_type')->default(1);//default 1 (attendance) , 0(absence), 2(business trip), 3(vacation), 4(sickness)
-            $table->timestamps();
+            $table->integer('attend_id');
+            $table->date('start_date');
+            $table->date('end_date');
+            $table->time('start_time');
+            $table->time('end_time');
         });
     }
 
@@ -28,6 +30,6 @@ class CreateAttendanceRequestsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('attendance_requests');
+        Schema::dropIfExists('attend_vacations');
     }
 }

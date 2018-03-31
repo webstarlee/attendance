@@ -2,6 +2,7 @@
 
 namespace App;
 
+use DateTime;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
@@ -41,4 +42,11 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function encode_date_format($date)
+    {
+        $selectedDate = DateTime::createFromFormat('Y-m-d', $date);
+        $finalDate = $selectedDate->format('m/d/Y');
+        return $finalDate;
+    }
 }

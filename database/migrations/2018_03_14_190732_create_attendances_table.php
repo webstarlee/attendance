@@ -16,17 +16,9 @@ class CreateAttendancesTable extends Migration
         Schema::create('attendances', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('employee_id');
-            $table->date('attendance_date');
-            $table->integer('status')->default(1);//default 1 (attendance) , 0(absence), 2(business trip), 3(vacation), 4(sickness)
-            $table->time('arrival_time')->nullable();
-            $table->time('departure_time')->nullable();
-            $table->time('break1_start')->nullable();
-            $table->time('break1_end')->nullable();
-            $table->time('break2_start')->nullable();
-            $table->time('break2_end')->nullable();
-            $table->binary('smoking')->nullable();
-            $table->integer('total_min')->nullable();
-            $table->boolean('approval')->default(0);
+            $table->integer('attend_type')->default(1);//default 1 (attendance) , 0(absence), 2(business trip), 3(vacation), 4(sickness)
+            $table->integer('attend_work_time');
+            $table->integer('isrequest')->default(0);
         });
     }
 

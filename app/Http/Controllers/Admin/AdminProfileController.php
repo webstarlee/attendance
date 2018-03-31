@@ -6,6 +6,7 @@ use Auth;
 use App\Slim;
 use App\User;
 use App\Admin;
+use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
@@ -319,13 +320,29 @@ class AdminProfileController extends Controller
         return back();
     }
 
+    public function encode_date_format($date)
+    {
+        $selectedDate = DateTime::createFromFormat('m/d/Y', $date);
+        $finalDate = $selectedDate->format('Y-m-d');
+        return $finalDate;
+    }
+
     public function updateEmployeeInfo($unique, Request $request)
     {
         $employee = User::where('unique_id', $unique)->first();
         if ($employee) {
             $employee->first_name = $request->firstName;
             $employee->last_name = $request->lastName;
-            $employee->birth = $request->birth;
+            if ($request->joinDate != "" || $request->joinDate != null) {
+                $employee->join_date = $this->encode_date_format($request->joinDate);
+            } else {
+                $employee->join_date = null;
+            }
+            if ($request->birth != "" || $request->birth != null) {
+                $employee->birth = $this->encode_date_format($request->birth);
+            } else {
+                $employee->birth = "";
+            }
             $employee->role_id = $request->user_role;
             $employee->contract_type = $request->contract_type;
             $employee->social_number = $request->socialNumber;

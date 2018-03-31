@@ -81,15 +81,24 @@
     						<div class="row m-row--no-padding align-items-center">
     							<div class="col">
     								<h3 class="m-widget1__title">
-    									Orders
+    									@lang('language.join_date')
     								</h3>
     								<span class="m-widget1__desc">
-    									Weekly Customer Orders
+                                        <?php
+                                            $join_day = "";
+                                            if ($employee->join_date != null || $employee->join_date != "") {
+                                                $selectedDate = DateTime::createFromFormat('Y-m-d', $employee->join_date);
+                                                $join_day = $selectedDate->format('m/d/Y');
+                                            } else {
+                                                $join_day = "Not joined yet";
+                                            }
+                                        ?>
+    									{{$join_day}}
     								</span>
     							</div>
     							<div class="col m--align-right">
     								<span class="m-widget1__number m--font-danger">
-    									+1,800
+    									{{$join_day}}
     								</span>
     							</div>
     						</div>
@@ -198,7 +207,7 @@
             								</div>
             							</div>
                                         <div class="form-group m-form__group row">
-            								<label for="example-text-input" class="col-lg-2 col-md-2 col-sm-3 col-xs-12col-form-label">
+            								<label for="example-text-input" class="col-lg-2 col-md-2 col-sm-3 col-xs-12 col-form-label">
             									@lang('language.fullname')
             								</label>
             								<div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
@@ -207,10 +216,30 @@
             							</div>
                                         <div class="form-group m-form__group row">
             								<label for="example-text-input" class="col-lg-2 col-md-2 col-sm-3 col-xs-12 col-form-label">
+            									@lang('language.join_date')
+            								</label>
+            								<div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
+                                                <?php
+                                                    $join_Date = "";
+                                                    if ($employee->join_date != "" || $employee->join_date != null) {
+                                                        $join_Date = $employee->encode_date_format($employee->join_date);
+                                                    }
+                                                ?>
+            									<input class="form-control m-input input_mask_date" type="text" name="joinDate" placeholder="@lang('language.join_date')" value="{{$join_Date}}" />
+            								</div>
+            							</div>
+                                        <div class="form-group m-form__group row">
+            								<label for="example-text-input" class="col-lg-2 col-md-2 col-sm-3 col-xs-12 col-form-label">
             									@lang('language.profile.birthday')
             								</label>
             								<div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
-            									<input class="form-control m-input input_mask_date" id="m_profile_birth" placeholder="@lang('language.profile.birthday')" type="text" name="birth" value="{{$employee->birth}}" />
+                                                <?php
+                                                    $employee_birth = "";
+                                                    if ($employee->birth != "" || $employee->birth != null) {
+                                                        $employee_birth = $employee->encode_date_format($employee->birth);
+                                                    }
+                                                ?>
+            									<input class="form-control m-input input_mask_date" id="m_profile_birth" placeholder="@lang('language.profile.birthday')" type="text" name="birth" value="{{$employee_birth}}" />
             								</div>
             							</div>
                                         <div class="form-group m-form__group row">
@@ -421,7 +450,7 @@
             statusImageTooSmall:'Image too small. Min Size is $0 pixel. Try again',
         });
 
-        $('#m_profile_birth').datepicker({
+        $('.input_mask_date').datepicker({
             todayHighlight: true,
             orientation: "bottom left",
             autoclose: true,

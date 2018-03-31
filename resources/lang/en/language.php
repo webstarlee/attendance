@@ -66,6 +66,7 @@
         'are_you_sure' => 'Are you sure ?',
         'do_you_want_to_delete' => 'Do you want to delete ?',
         'client' => 'Client',
+        'join_date' => 'Join Date',
         'profile' => [
             'my_profile' => 'My Profile',
             'users_profile' => ':name Profile',

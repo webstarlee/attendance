@@ -215,6 +215,9 @@
     color:#acacac;
     font-size:12px;
 }
+a.text-hover-decoration:hover {
+    text-decoration: none;
+}
 @media(max-width: 767px) {
     .m-dropdown__wrapper.m-masked-dropdown {
         padding-top: 20px!important;

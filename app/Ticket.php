@@ -4,11 +4,9 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Project extends Model
+class Ticket extends Model
 {
-    protected $table = 'projects';
-
-    public $timestamps = false;
+    protected $table = 'tickets';
 
     /**
     * The attributes that are mass assignable.
@@ -16,14 +14,12 @@ class Project extends Model
     * @var array
     */
     protected $fillable = [
-      'pro_name',
-      'pro_client',
-      'pro_start_date',
-      'pro_end_date',
-      'pro_priority',
-      'pro_status',
-      'pro_leader',
-      'pro_member',
+      'ticket_subject',
+      'ticket_client',
+      'ticket_staff',
+      'ticket_priority',
+      'ticket_follower',
+      'ticket_status',
     ];
 
     /**

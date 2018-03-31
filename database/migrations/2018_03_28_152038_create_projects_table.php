@@ -16,15 +16,16 @@ class CreateProjectsTable extends Migration
         Schema::create('projects', function (Blueprint $table) {
             $table->increments('id');
             $table->string('pro_name');
-            $table->string('pro_unid');
+            $table->string('pro_client');
+            $table->string('pro_unid')->nullable();
             $table->date('pro_start_date');
             $table->date('pro_end_date');
             $table->integer('pro_rate')->nullable();
             $table->integer('pro_rate_type')->nullable();
             $table->integer('pro_priority');
             $table->integer('pro_status');
-            $table->binary('pro_leader');
-            $table->binary('pro_member');
+            $table->string('pro_leader');
+            $table->binary('pro_members');
             $table->text('pro_note')->nullable();
         });
     }

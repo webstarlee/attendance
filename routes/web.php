@@ -130,12 +130,34 @@ Route::prefix('admin')->group(function () {
         Route::get('manage/contract/delete/{id}', 'Admin\AdminManageController@destroySingleContract');
         //end
         //manage holiday
-        Route::get('manage/holiday', 'Admin\adminController@viewHoliday')->name('admin.manage.holiday');
-        Route::get('manage/holiday/getAlldays', 'Admin\adminController@getAllHoliday');
-        Route::get('manage/holiday/checkDate/{date}', 'Admin\adminController@checkholiday');
-        Route::post('manage/holiday/store', 'Admin\adminController@storeHoliday')->name('admin.manage.holiday.store');
-        Route::post('manage/holiday/update', 'Admin\adminController@updateHoliday')->name('admin.manage.holiday.update');
-        Route::get('manage/holiday/destroy/{id}', 'Admin\adminController@destroyHoliday');
+        Route::prefix('manage/holiday')->group(function () {
+            Route::get('/', 'Admin\AdminController@viewHoliday')->name('admin.manage.holiday');
+            Route::get('/getAlldays', 'Admin\AdminController@getAllHoliday');
+            Route::get('/checkDate/{date}', 'Admin\AdminController@checkholiday');
+            Route::post('/store', 'Admin\AdminController@storeHoliday')->name('admin.manage.holiday.store');
+            Route::post('/update', 'Admin\AdminController@updateHoliday')->name('admin.manage.holiday.update');
+            Route::get('/destroy/{id}', 'Admin\AdminController@destroyHoliday');
+        });
+        //end
+        //manage event
+        Route::prefix('manage/event')->group(function () {
+            Route::get('/', 'Admin\AdminController@viewEvent')->name('admin.manage.event');
+            Route::post('/store', 'Admin\AdminController@event_store')->name('admin.manage.event.store');
+            Route::post('/update', 'Admin\AdminController@event_update')->name('admin.manage.event.update');
+            Route::get('/get_table_data', 'Admin\AdminController@getEventTableData');
+            Route::get('/changeDate/{id}/{date}', 'Admin\AdminController@eventDateChange');
+            Route::get('/destroy/{id}', 'Admin\AdminController@eventDestroy');
+        });
+        //end
+        //manage ticket
+        Route::prefix('manage/ticket')->group(function () {
+            Route::get('/', 'Admin\AdminController@viewTicket')->name('admin.manage.ticket');
+            Route::post('/store', 'Admin\AdminController@ticket_store')->name('admin.manage.ticket.store');
+            Route::post('/update', 'Admin\AdminController@ticket_update')->name('admin.manage.ticket.update');
+            Route::get('/get_table_data', 'Admin\AdminController@getTicketTableData');
+            Route::get('/get_specify_ticket/{id}', 'Admin\AdminController@getSignleTicket');
+            Route::get('/set_status/{ticket_id}/{ticket_status}', 'Admin\AdminController@updateTicketStatus');
+        });
         //end
         //manage attendance
         Route::prefix('manage/attendance')->group(function () {
@@ -173,6 +195,28 @@ Route::prefix('admin')->group(function () {
             Route::post('/store', 'Admin\adminController@designation_store')->name('admin.manage.designation.store');
             Route::get('/get_specify_designation/{designation_id}', 'Admin\adminController@getSignleDesignation');
             Route::post('/update', 'Admin\adminController@designation_update')->name('admin.manage.designation.update');
+        });
+        //end
+        //manage project
+        Route::prefix('manage/project')->group(function () {
+            Route::get('/', 'Admin\ProjectController@view_project')->name('admin.manage.project');
+            Route::get('/get_table_date', 'Admin\ProjectController@getProjectTableData');
+            Route::post('/store', 'Admin\ProjectController@project_store')->name('admin.manage.project.store');
+            Route::post('/update', 'Admin\ProjectController@project_update')->name('admin.manage.project.update');
+            Route::get('/get_specify_project/{project_id}', 'Admin\ProjectController@getSignleProject');
+            Route::get('/set_status/{project_id}/{project_status}', 'Admin\ProjectController@updateProjectStatus');
+            Route::get('/view_project/{project_id}', 'Admin\ProjectController@viewSingleProject')->name('admin.manage.project.singleview');
+            Route::get('/task', 'Admin\ProjectController@view_task')->name('admin.manage.project.task');
+            Route::get('/task/get_table_date', 'Admin\ProjectController@getTaskTableData');
+            Route::post('/task/store', 'Admin\ProjectController@task_store')->name('admin.manage.project.task.store');
+            Route::get('/task/get_specify_project/{task_id}', 'Admin\ProjectController@getSignleTask');
+            Route::post('/task/update', 'Admin\ProjectController@task_update')->name('admin.manage.project.task.update');
+            Route::get('/task/set_status/{task_id}/{task_status}', 'Admin\ProjectController@updateTaskStatus');
+            Route::get('/timing-sheet', 'Admin\ProjectController@view_timingsheet')->name('admin.manage.project.sheet');
+            Route::post('/timing-sheet/store', 'Admin\ProjectController@timingsheet_store')->name('admin.manage.project.sheet.store');
+            Route::post('/timing-sheet/update', 'Admin\ProjectController@timingsheet_update')->name('admin.manage.project.sheet.update');
+            Route::get('/timing-sheet/get_table_date', 'Admin\ProjectController@getSheetTableData');
+            Route::get('/timing-sheet/get_specify_project/{id}', 'Admin\ProjectController@getSignleSheet');
         });
         //end
         //setting

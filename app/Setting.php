@@ -61,5 +61,28 @@ class Setting extends Model
             }
             return false;
         }
+        if ($menu == "project") {
+            if (Route::currentRouteName()=='admin.manage.project'
+            || Route::currentRouteName()=='admin.manage.project.task'
+            || Route::currentRouteName()=='admin.manage.project.sheet') {
+                return true;
+            }
+            return false;
+        }
+        if ($menu == 'setting') {
+            if (Route::currentRouteName()=='admin.setting.appearance'
+            || Route::currentRouteName()=='admin.manage.contract'
+            || Route::currentRouteName()=='admin.manage.event') {
+                return true;
+            }
+            return false;
+        }
+
+        if ($menu == 'ticket') {
+            if (Route::currentRouteName()=='admin.manage.ticket') {
+                return true;
+            }
+            return false;
+        }
     }
 }

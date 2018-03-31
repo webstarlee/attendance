@@ -506,7 +506,7 @@
 									<ul class="m-menu__nav  m-menu__nav--submenu-arrow ">
 										<li class="m-menu__item @if($setting->menuActiveCheck('dashboard')) m-menu__item--active @endif"  aria-haspopup="true">
 											<a  href="{{route('admin.dashboard')}}" class="m-menu__link ">
-												<span class="m-menu__item-here"></span>
+												<span class="m-menu__item- here"></span>
 												<span class="m-menu__link-text">
 													@lang('language.dashboard')
 												</span>
@@ -587,7 +587,58 @@
 												</ul>
 											</div>
 										</li>
-										<li class="@if(Route::currentRouteName()=='admin.setting.appearance' || Route::currentRouteName()=='admin.manage.contract') m-menu__item--active @endif m-menu__item  m-menu__item--submenu m-menu__item--rel"  data-menu-submenu-toggle="click" aria-haspopup="true">
+										<li class="@if($setting->menuActiveCheck('project')) m-menu__item--active @endif m-menu__item  m-menu__item--submenu m-menu__item--rel"  data-menu-submenu-toggle="click" aria-haspopup="true">
+											<a  href="javascript:;" class="m-menu__link m-menu__toggle">
+												<span class="m-menu__item-here"></span>
+												<span class="m-menu__link-text">
+													@lang('language.project.projects')
+												</span>
+												<i class="m-menu__hor-arrow la la-angle-down"></i>
+												<i class="m-menu__ver-arrow la la-angle-right"></i>
+											</a>
+											<div class="m-menu__submenu m-menu__submenu--classic m-menu__submenu--left">
+												<span class="m-menu__arrow m-menu__arrow--adjust"></span>
+												<ul class="m-menu__subnav">
+													<li class="m-menu__item" aria-haspopup="true">
+														<a  href="{{route('admin.manage.project')}}" class="m-menu__link ">
+															<i class="m-menu__link-icon la la-users"></i>
+															<span class="m-menu__link-title">
+																<span class="m-menu__link-wrap">
+																	<span class="m-menu__link-text">
+																		@lang('language.all') @lang('language.project.projects')
+																	</span>
+																</span>
+															</span>
+														</a>
+													</li>
+													<li class="m-menu__item" aria-haspopup="true">
+														<a  href="{{route('admin.manage.project.task')}}" class="m-menu__link ">
+															<i class="m-menu__link-icon la la-users"></i>
+															<span class="m-menu__link-title">
+																<span class="m-menu__link-wrap">
+																	<span class="m-menu__link-text">
+																		@lang('language.all') @lang('language.project.task')
+																	</span>
+																</span>
+															</span>
+														</a>
+													</li>
+													<li class="m-menu__item" aria-haspopup="true">
+														<a  href="{{route('admin.manage.project.sheet')}}" class="m-menu__link ">
+															<i class="m-menu__link-icon la la-users"></i>
+															<span class="m-menu__link-title">
+																<span class="m-menu__link-wrap">
+																	<span class="m-menu__link-text">
+																		@lang('language.project.timing_sheet')
+																	</span>
+																</span>
+															</span>
+														</a>
+													</li>
+												</ul>
+											</div>
+										</li>
+										<li class="@if($setting->menuActiveCheck('setting')) m-menu__item--active @endif m-menu__item  m-menu__item--submenu m-menu__item--rel"  data-menu-submenu-toggle="click" aria-haspopup="true">
 											<a  href="javascript:;" class="m-menu__link m-menu__toggle">
 												<span class="m-menu__item-here"></span>
 												<span class="m-menu__link-text">
@@ -599,7 +650,7 @@
 											<div class="m-menu__submenu m-menu__submenu--classic m-menu__submenu--left">
 												<span class="m-menu__arrow m-menu__arrow--adjust"></span>
 												<ul class="m-menu__subnav">
-													<li class="m-menu__item "  aria-haspopup="true">
+													<li class="m-menu__item" aria-haspopup="true">
 														<a  href="{{route('admin.setting.appearance')}}" class="m-menu__link ">
 															<i class="m-menu__link-icon flaticon-confetti"></i>
 															<span class="m-menu__link-title">
@@ -611,7 +662,7 @@
 															</span>
 														</a>
 													</li>
-													<li class="m-menu__item "  aria-haspopup="true">
+													<li class="m-menu__item" aria-haspopup="true">
 														<a  href="{{route('admin.manage.contract')}}" class="m-menu__link ">
 															<i class="m-menu__link-icon flaticon-tool-1"></i>
 															<span class="m-menu__link-title">
@@ -623,266 +674,28 @@
 															</span>
 														</a>
 													</li>
+													<li class="m-menu__item" aria-haspopup="true">
+														<a  href="{{route('admin.manage.event')}}" class="m-menu__link ">
+															<i class="m-menu__link-icon la la-calendar"></i>
+															<span class="m-menu__link-title">
+																<span class="m-menu__link-wrap">
+																	<span class="m-menu__link-text">
+																		@lang('language.event.event')
+																	</span>
+																</span>
+															</span>
+														</a>
+													</li>
 												</ul>
 											</div>
 										</li>
-										<li class="m-menu__item  m-menu__item--submenu"  data-menu-submenu-toggle="click" data-redirect="true" aria-haspopup="true">
-											<a  href="#" class="m-menu__link m-menu__toggle">
+										<li class="m-menu__item @if($setting->menuActiveCheck('ticket')) m-menu__item--active @endif"  aria-haspopup="true">
+											<a  href="{{route('admin.manage.ticket')}}" class="m-menu__link ">
 												<span class="m-menu__item-here"></span>
 												<span class="m-menu__link-text">
-													Orders
+													@lang('language.ticket.ticket')
 												</span>
-												<i class="m-menu__hor-arrow la la-angle-down"></i>
-												<i class="m-menu__ver-arrow la la-angle-right"></i>
 											</a>
-											<div class="m-menu__submenu  m-menu__submenu--fixed-xl m-menu__submenu--center" >
-												<span class="m-menu__arrow m-menu__arrow--adjust"></span>
-												<div class="m-menu__subnav">
-													<ul class="m-menu__content">
-														<li class="m-menu__item">
-															<h3 class="m-menu__heading m-menu__toggle">
-																<span class="m-menu__link-text">
-																	Finance Reports
-																</span>
-																<i class="m-menu__ver-arrow la la-angle-right"></i>
-															</h3>
-															<ul class="m-menu__inner">
-																<li class="m-menu__item "  data-redirect="true" aria-haspopup="true">
-																	<a  href="inner.html" class="m-menu__link ">
-																		<i class="m-menu__link-icon flaticon-map"></i>
-																		<span class="m-menu__link-text">
-																			Annual Reports
-																		</span>
-																	</a>
-																</li>
-																<li class="m-menu__item "  data-redirect="true" aria-haspopup="true">
-																	<a  href="inner.html" class="m-menu__link ">
-																		<i class="m-menu__link-icon flaticon-user"></i>
-																		<span class="m-menu__link-text">
-																			HR Reports
-																		</span>
-																	</a>
-																</li>
-															</ul>
-														</li>
-														<li class="m-menu__item">
-															<h3 class="m-menu__heading m-menu__toggle">
-																<span class="m-menu__link-text">
-																	Project Reports
-																</span>
-																<i class="m-menu__ver-arrow la la-angle-right"></i>
-															</h3>
-															<ul class="m-menu__inner">
-																<li class="m-menu__item "  data-redirect="true" aria-haspopup="true">
-																	<a  href="inner.html" class="m-menu__link ">
-																		<i class="m-menu__link-bullet m-menu__link-bullet--line">
-																			<span></span>
-																		</i>
-																		<span class="m-menu__link-text">
-																			Coca Cola CRM
-																		</span>
-																	</a>
-																</li>
-																<li class="m-menu__item "  data-redirect="true" aria-haspopup="true">
-																	<a  href="inner.html" class="m-menu__link ">
-																		<i class="m-menu__link-bullet m-menu__link-bullet--line">
-																			<span></span>
-																		</i>
-																		<span class="m-menu__link-text">
-																			Delta Airlines Booking Site
-																		</span>
-																	</a>
-																</li>
-															</ul>
-														</li>
-														<li class="m-menu__item">
-															<h3 class="m-menu__heading m-menu__toggle">
-																<span class="m-menu__link-text">
-																	HR Reports
-																</span>
-																<i class="m-menu__ver-arrow la la-angle-right"></i>
-															</h3>
-															<ul class="m-menu__inner">
-																<li class="m-menu__item "  data-redirect="true" aria-haspopup="true">
-																	<a  href="inner.html" class="m-menu__link ">
-																		<i class="m-menu__link-bullet m-menu__link-bullet--dot">
-																			<span></span>
-																		</i>
-																		<span class="m-menu__link-text">
-																			Staff Directory
-																		</span>
-																	</a>
-																</li>
-																<li class="m-menu__item "  data-redirect="true" aria-haspopup="true">
-																	<a  href="inner.html" class="m-menu__link ">
-																		<i class="m-menu__link-bullet m-menu__link-bullet--dot">
-																			<span></span>
-																		</i>
-																		<span class="m-menu__link-text">
-																			Client Directory
-																		</span>
-																	</a>
-																</li>
-															</ul>
-														</li>
-														<li class="m-menu__item">
-															<h3 class="m-menu__heading m-menu__toggle">
-																<span class="m-menu__link-text">
-																	Reporting Apps
-																</span>
-																<i class="m-menu__ver-arrow la la-angle-right"></i>
-															</h3>
-															<ul class="m-menu__inner">
-																<li class="m-menu__item "  data-redirect="true" aria-haspopup="true">
-																	<a  href="inner.html" class="m-menu__link ">
-																		<span class="m-menu__link-text">
-																			Report Adjusments
-																		</span>
-																	</a>
-																</li>
-																<li class="m-menu__item "  data-redirect="true" aria-haspopup="true">
-																	<a  href="inner.html" class="m-menu__link ">
-																		<span class="m-menu__link-text">
-																			Sources & Mediums
-																		</span>
-																	</a>
-																</li>
-															</ul>
-														</li>
-													</ul>
-												</div>
-											</div>
-										</li>
-										<li class="m-menu__item  m-menu__item--submenu m-menu__item--rel m-menu__item--more m-menu__item--icon-only"  data-menu-submenu-toggle="click" data-redirect="true" aria-haspopup="true">
-											<a  href="#" class="m-menu__link m-menu__toggle">
-												<span class="m-menu__item-here"></span>
-												<i class="m-menu__link-icon flaticon-more-v3"></i>
-												<span class="m-menu__link-text"></span>
-											</a>
-											<div class="m-menu__submenu m-menu__submenu--classic m-menu__submenu--left m-menu__submenu--pull">
-												<span class="m-menu__arrow m-menu__arrow--adjust"></span>
-												<ul class="m-menu__subnav">
-													<li class="m-menu__item "  data-redirect="true" aria-haspopup="true">
-														<a  href="inner.html" class="m-menu__link ">
-															<i class="m-menu__link-icon flaticon-business"></i>
-															<span class="m-menu__link-text">
-																eCommerce
-															</span>
-														</a>
-													</li>
-													<li class="m-menu__item  m-menu__item--submenu"  data-menu-submenu-toggle="hover" data-redirect="true" aria-haspopup="true">
-														<a  href="crud/datatable_v1.html" class="m-menu__link m-menu__toggle">
-															<i class="m-menu__link-icon flaticon-computer"></i>
-															<span class="m-menu__link-text">
-																Audience
-															</span>
-															<i class="m-menu__hor-arrow la la-angle-right"></i>
-															<i class="m-menu__ver-arrow la la-angle-right"></i>
-														</a>
-														<div class="m-menu__submenu m-menu__submenu--classic m-menu__submenu--right">
-															<span class="m-menu__arrow "></span>
-															<ul class="m-menu__subnav">
-																<li class="m-menu__item "  data-redirect="true" aria-haspopup="true">
-																	<a  href="inner.html" class="m-menu__link ">
-																		<i class="m-menu__link-icon flaticon-users"></i>
-																		<span class="m-menu__link-text">
-																			Active Users
-																		</span>
-																	</a>
-																</li>
-																<li class="m-menu__item "  data-redirect="true" aria-haspopup="true">
-																	<a  href="inner.html" class="m-menu__link ">
-																		<i class="m-menu__link-icon flaticon-interface-1"></i>
-																		<span class="m-menu__link-text">
-																			User Explorer
-																		</span>
-																	</a>
-																</li>
-																<li class="m-menu__item "  data-redirect="true" aria-haspopup="true">
-																	<a  href="inner.html" class="m-menu__link ">
-																		<i class="m-menu__link-icon flaticon-lifebuoy"></i>
-																		<span class="m-menu__link-text">
-																			Users Flows
-																		</span>
-																	</a>
-																</li>
-																<li class="m-menu__item "  data-redirect="true" aria-haspopup="true">
-																	<a  href="inner.html" class="m-menu__link ">
-																		<i class="m-menu__link-icon flaticon-graphic-1"></i>
-																		<span class="m-menu__link-text">
-																			Market Segments
-																		</span>
-																	</a>
-																</li>
-																<li class="m-menu__item "  data-redirect="true" aria-haspopup="true">
-																	<a  href="inner.html" class="m-menu__link ">
-																		<i class="m-menu__link-icon flaticon-graphic"></i>
-																		<span class="m-menu__link-text">
-																			User Reports
-																		</span>
-																	</a>
-																</li>
-															</ul>
-														</div>
-													</li>
-													<li class="m-menu__item  m-menu__item--submenu"  data-menu-submenu-toggle="hover" data-redirect="true" aria-haspopup="true">
-														<a  href="#" class="m-menu__link m-menu__toggle">
-															<i class="m-menu__link-icon flaticon-infinity"></i>
-															<span class="m-menu__link-text">
-																Cloud Manager
-															</span>
-															<i class="m-menu__hor-arrow la la-angle-right"></i>
-															<i class="m-menu__ver-arrow la la-angle-right"></i>
-														</a>
-														<div class="m-menu__submenu m-menu__submenu--classic m-menu__submenu--left">
-															<span class="m-menu__arrow "></span>
-															<ul class="m-menu__subnav">
-																<li class="m-menu__item "  data-redirect="true" aria-haspopup="true">
-																	<a  href="inner.html" class="m-menu__link ">
-																		<i class="m-menu__link-icon flaticon-add"></i>
-																		<span class="m-menu__link-title">
-																			<span class="m-menu__link-wrap">
-																				<span class="m-menu__link-text">
-																					File Upload
-																				</span>
-																				<span class="m-menu__link-badge">
-																					<span class="m-badge m-badge--danger">
-																						3
-																					</span>
-																				</span>
-																			</span>
-																		</span>
-																	</a>
-																</li>
-																<li class="m-menu__item "  data-redirect="true" aria-haspopup="true">
-																	<a  href="inner.html" class="m-menu__link ">
-																		<i class="m-menu__link-icon flaticon-signs-1"></i>
-																		<span class="m-menu__link-text">
-																			File Attributes
-																		</span>
-																	</a>
-																</li>
-																<li class="m-menu__item "  data-redirect="true" aria-haspopup="true">
-																	<a  href="inner.html" class="m-menu__link ">
-																		<i class="m-menu__link-icon flaticon-folder"></i>
-																		<span class="m-menu__link-text">
-																			Folders
-																		</span>
-																	</a>
-																</li>
-																<li class="m-menu__item "  data-redirect="true" aria-haspopup="true">
-																	<a  href="inner.html" class="m-menu__link ">
-																		<i class="m-menu__link-icon flaticon-cogwheel-2"></i>
-																		<span class="m-menu__link-text">
-																			System Settings
-																		</span>
-																	</a>
-																</li>
-															</ul>
-														</div>
-													</li>
-												</ul>
-											</div>
 										</li>
 									</ul>
 								</div>

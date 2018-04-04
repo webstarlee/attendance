@@ -53,7 +53,14 @@ var DatatableAutoColumnHideDemo = function() {
           field: 'username',
           title: 'UnserName',
           width: 150,
-          template: '<a href="/admin/manage/attendance/{{unique_id}}/view" target="_blank">{{username}}</a>'
+          template: function (row) {
+              return '\
+              <a class="employee-manage-unsername-select" href="/admin/manage/attendance/'+row.unique_id+'/view" target="_blank" title="'+row.username+'">\
+              <img src="'+row.avatar+'">\
+              <div style="padding-left:10px;"><p class="username-text">'+row.first_name+' '+row.last_name+' ('+row.client_id+')</p></div>\
+              </a>\
+              ';
+          }
         }, {
           field: 'first_name',
           title: 'Full Name',

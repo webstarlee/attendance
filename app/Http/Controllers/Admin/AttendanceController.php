@@ -26,7 +26,26 @@ class AttendanceController extends Controller
     public function getAllEmployee()
     {
         $employees = User::all();
-        return $employees;
+        $employee_array = array();
+        foreach ($employees as $employee) {
+            $employee_avatar = "";
+            if (file_exists('uploads/avatars/'.$employee->unique_id.'/'.$employee->avatar)) {
+                $employee_avatar = asset('/uploads/avatars/'.$employee->unique_id.'/'.$employee->avatar);
+            } else {
+                $employee_avatar = asset('/uploads/avatars/default.png');
+            }
+            $employee_array[] = array(
+                'id' => $employee->id,
+                'username' => $employee->username,
+                'unique_id' => $employee->unique_id,
+                'first_name' => $employee->first_name,
+                'last_name' => $employee->last_name,
+                'birth' => $employee->birth,
+                'avatar' => $employee_avatar,
+                'client_id' => $employee->client_id,
+            );
+        }
+        return $employee_array;
     }
 
     public function viewSingleAttendance($unique_id)

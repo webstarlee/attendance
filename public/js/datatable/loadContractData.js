@@ -199,6 +199,11 @@ var DatatableAutoColumnHideDemo = function() {
                     var hours = (result.working_time - minutes)/60;
                     $('#m-admin-edit_contract-type-form #contract_id_for_edit').val(result.id);
                     $('#m-admin-edit_contract-type-form #_contract_title').val(result.title);
+                    if (result.isvacation == 1) {
+                        $('#m-admin-edit_contract-type-form #_contract_vacation').attr('checked', true);
+                    } else {
+                        $('#m-admin-edit_contract-type-form #_contract_vacation').attr('checked', false);
+                    }
                     $('#m-admin-edit_contract-type-form #_contract_time_hour').val(hours);
                     $('#m-admin-edit_contract-type-form #_contract_time_min').val(minutes);
                     $('#m-admin-edit_contract-type-form #_contract_description').val(result.description);

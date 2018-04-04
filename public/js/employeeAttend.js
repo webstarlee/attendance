@@ -158,7 +158,7 @@ var AttendBasic = function() {
                 }
             });
 
-            $('.add-smoke-time-btn').on('click', function(e) {
+            $(document).on('click', '.add-smoke-time-btn', function(e) {
                 e.preventDefault();
                 var form = $(this).parents('form')[0];
                 var smoke_container = $(form).find('.smoke-time-container');

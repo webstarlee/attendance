@@ -4,9 +4,9 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class AttendVacation extends Model
+class EmployeeVacation extends Model
 {
-    protected $table = 'attend_vacations';
+    protected $table = 'employee_vacations';
 
     public $timestamps = false;
 
@@ -16,11 +16,9 @@ class AttendVacation extends Model
     * @var array
     */
     protected $fillable = [
-      'attend_id',
-      'start_date',
-      'end_date',
-      'start_time',
-      'end_time',
+      'employee_id',
+      'vacation_year',
+      'vacation_minutes',
     ];
 
     /**

@@ -33,13 +33,26 @@ class ProjectController extends Controller
             } elseif ($leader_employee) {
                 $leader = $leader_employee;
             }
+            $leader_avatar = "";
+
+            if (file_exists('uploads/avatars/'.$leader->unique_id.'/'.$leader->avatar)) {
+                $leader_avatar = asset('/uploads/avatars/'.$leader->unique_id.'/'.$leader->avatar);
+            } else {
+                $leader_avatar = asset('/uploads/avatars/default.png');
+            }
 
             $members = array();
             if ($project->pro_members != null || $project->pro_members != "") {
                 $serial_members = unserialize($project->pro_members);
                 foreach ($serial_members as $unique_id) {
                     $member = User::where('unique_id', $unique_id)->first();
-                    $members[] = array('member_username' => $member->first_name." ".$member->last_name, 'member_avatar' => $member->avatar, 'member_unique' => $member->unique_id);
+                    $member_avatar = "";
+                    if (file_exists('uploads/avatars/'.$member->unique_id.'/'.$member->avatar)) {
+                        $member_avatar = asset('/uploads/avatars/'.$member->unique_id.'/'.$member->avatar);
+                    } else {
+                        $member_avatar = asset('/uploads/avatars/default.png');
+                    }
+                    $members[] = array('member_username' => $member->first_name." ".$member->last_name, 'member_avatar' => $member_avatar, 'member_unique' => $member->unique_id);
                 }
             }
 
@@ -50,7 +63,7 @@ class ProjectController extends Controller
                 'pro_start_date' => $this->decode_date_format($project->pro_start_date),
                 'pro_end_date' => $this->decode_date_format($project->pro_end_date),
                 'leader_name' => $leader->first_name." ".$leader->last_name,
-                'leader_photo' => $leader->avatar,
+                'leader_photo' => $leader_avatar,
                 'leader_unique' => $leader->unique_id,
                 'members' => $members,
                 'pro_priority' => $project->pro_priority,
@@ -169,7 +182,13 @@ class ProjectController extends Controller
                 $serial_members = unserialize($task->task_assign);
                 foreach ($serial_members as $unique_id) {
                     $member = User::where('unique_id', $unique_id)->first();
-                    $members[] = array('member_username' => $member->first_name." ".$member->last_name, 'member_avatar' => $member->avatar, 'member_unique' => $member->unique_id);
+                    $member_avatar = "";
+                    if (file_exists('uploads/avatars/'.$member->unique_id.'/'.$member->avatar)) {
+                        $member_avatar = asset('/uploads/avatars/'.$member->unique_id.'/'.$member->avatar);
+                    } else {
+                        $member_avatar = asset('/uploads/avatars/default.png');
+                    }
+                    $members[] = array('member_username' => $member->first_name." ".$member->last_name, 'member_avatar' => $member_avatar, 'member_unique' => $member->unique_id);
                 }
             }
 

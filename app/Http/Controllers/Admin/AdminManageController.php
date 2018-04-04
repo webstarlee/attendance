@@ -20,11 +20,6 @@ class AdminManageController extends Controller
         $this->middleware('auth:admin');
     }
 
-    /**
-    * Show the application dashboard.
-    *
-    * @return \Illuminate\Http\Response
-    */
     public function index()
     {
         return view('admin.manageAdmins');
@@ -239,6 +234,11 @@ class AdminManageController extends Controller
             }
             $contract = new ContractType;
             $contract->title = $contract_title;
+            if ($request->contract_vacation) {
+                $contract->isvacation = 1;
+            } else {
+                $contract->isvacation = 0;
+            }
             $contract->description = $request->contract_description;
             $contract->working_time = $total_min;
             $contract->save();
@@ -261,6 +261,11 @@ class AdminManageController extends Controller
                 $total_min = $total_min + $request->_contract_time_min;
             }
             $contract->title = $request->_contract_title;
+            if ($request->_contract_vacation) {
+                $contract->isvacation = 1;
+            } else {
+                $contract->isvacation = 0;
+            }
             $contract->description = $request->_contract_description;
             $contract->working_time = $total_min;
             $contract->save();
@@ -297,8 +302,8 @@ class AdminManageController extends Controller
     public function getEmployeeData(Request $request)
     {
         $employees = User::join('contract_types', 'contract_types.id', '=', 'users.contract_type')
-        ->join('designations', 'designations.id', '=', 'users.role_id')
-        ->select('users.*', 'contract_types.title as contract_type', 'designations.design_title')->get();
+            ->join('designations', 'designations.id', '=', 'users.role_id')
+            ->select('users.*', 'contract_types.title as contract_type', 'designations.design_title')->get();
         $metaData = array(
             "page" => 1,
             "pages" => 1,
@@ -307,8 +312,28 @@ class AdminManageController extends Controller
             "sort" => "asc",
             "field" => "id"
         );
+        $employee_array = array();
+        foreach ($employees as $employee) {
+            $photo_url = "";
+            if (file_exists('uploads/avatars/'.$employee->unique_id.'/'.$employee->avatar)) {
+                $photo_url = asset('/uploads/avatars/'.$employee->unique_id.'/'.$employee->avatar);
+            } else {
+                $photo_url = asset('/uploads/avatars/default.png');
+            }
+            $employee_array[] = array(
+                'id' => $employee->id,
+                'username' => $employee->username,
+                'unique_id' => $employee->unique_id,
+                'avatar' => $photo_url,
+                'first_name' => $employee->first_name,
+                'last_name' => $employee->last_name,
+                'client_id' => $employee->client_id,
+                'design_title' => $employee->design_title,
+                'contract_type' => $employee->contract_type,
+            );
+        }
 
-        $final_datas = array('meta' => $metaData, 'data' => $employees);
+        $final_datas = array('meta' => $metaData, 'data' => $employee_array);
 
         return response()->json($final_datas);
     }

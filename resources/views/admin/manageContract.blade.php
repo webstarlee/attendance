@@ -209,12 +209,23 @@ Contract type Management
                         </div>
                         <div class="row ">
                             <div class="col-sm-12">
+                                <span class="m-switch m-switch--outline m-switch--icon m-switch--accent">
+                                    <label>
+                                        <input type="checkbox" checked="checked" id="contract_vacation" name="contract_vacation">
+                                        <span></span>
+                                        <label style="height:30px;margin:2px 0;padding-top:3px;font-size:15px;">&nbsp;Can have vacation</label>
+                                    </label>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="row ">
+                            <div class="col-sm-12">
                                 <div class="m-form__content"></div>
                                 <div class="form-group m-form__group">
 									<label for="contract_description">
 										Description (optional)
 									</label>
-									<textarea class="form-control m-input" name="contract_description" id="contract_description" placeholder="Enter contract description (optional)" rows="5"></textarea>
+									<textarea class="form-control m-input m-input--air" name="contract_description" id="contract_description" placeholder="Enter contract description (optional)" rows="5"></textarea>
 								</div>
                             </div>
                         </div>
@@ -299,6 +310,17 @@ Contract type Management
                                     </div>
                                 </div>
                                 <div class="m-form__content"></div>
+                            </div>
+                        </div>
+                        <div class="row ">
+                            <div class="col-sm-12">
+                                <span class="m-switch m-switch--outline m-switch--icon m-switch--accent">
+                                    <label>
+                                        <input type="checkbox" id="_contract_vacation" name="_contract_vacation">
+                                        <span></span>
+                                        <label style="height:30px;margin:2px 0;padding-top:3px;font-size:15px;">&nbsp;Can have vacation</label>
+                                    </label>
+                                </span>
                             </div>
                         </div>
                         <div class="row ">

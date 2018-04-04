@@ -55,7 +55,7 @@ var DatatableAutoColumnHideDemo = function() {
           template: function (row, index, datatable) {
               return '\
               <a class="employee-manage-unsername-select" href="/admin/profile/employee/'+row.unique_id+'" target="_blank" title="'+row.username+'">\
-              <img src="/uploads/avatars/'+row.unique_id+'/'+row.avatar+'">\
+              <img src="'+row.avatar+'">\
               <div style="padding-left:10px;"><p class="username-text">'+row.first_name+' '+row.last_name+' ('+row.client_id+')</p><p class="role-text">'+row.design_title+'</p></div>\
               </a>\
               ';

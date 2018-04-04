@@ -96,7 +96,7 @@ var DatatableAutoColumnHideDemo = function() {
           template: function (row) {
               return '\
               <a href="/admin/profile/employee/'+row.leader_unique+'" target="_blank" title="'+row.leader_name+'" style="display:inline-block;">\
-                <img src="/uploads/avatars/'+row.leader_unique+'/'+row.leader_photo+'" style="width:35px;height:35px;border-radius:50%;">\
+                <img src="'+row.leader_photo+'" style="width:35px;height:35px;border-radius:50%;">\
               </a>\
               ';
           }
@@ -112,7 +112,7 @@ var DatatableAutoColumnHideDemo = function() {
                   member_count ++;
                   if (member_count < 4) {
                       $final_members += '<a href="/admin/profile/employee/'+member.member_unique+'" target="_blank" title="'+member.member_username+'" style="display:inline-block;">'+
-                                        '<img src="/uploads/avatars/'+member.member_unique+'/'+member.member_avatar+'" style="width:35px;height:35px;border-radius:50%;"></a>';
+                                        '<img src="'+member.member_avatar+'" style="width:35px;height:35px;border-radius:50%;"></a>';
                   }
               });
               if (member_count > 3) {

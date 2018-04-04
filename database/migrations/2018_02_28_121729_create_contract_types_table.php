@@ -16,6 +16,7 @@ class CreateContractTypesTable extends Migration
         Schema::create('contract_types', function (Blueprint $table) {
             $table->increments('id');
             $table->string('title');
+            $table->boolean('isvacation');
             $table->integer('working_time');
             $table->text('description')->nullable();
         });

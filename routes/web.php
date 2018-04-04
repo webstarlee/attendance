@@ -166,8 +166,6 @@ Route::prefix('admin')->group(function () {
             Route::post('/update', 'Admin\AttendanceController@update')->name('admin.manage.attendance.update');
             Route::get('/getEmployee', 'Admin\AttendanceController@getAllEmployee');
             Route::get('/{unique}/view', 'Admin\AttendanceController@viewSingleAttendance')->name('admin.manage.attendance.single');
-            Route::get('/{unique}/view/calendar', 'Admin\AttendanceController@viewSingleAttendance')->name('admin.manage.attendance.single.calendar');
-            Route::get('/{unique}/view/datatable', 'Admin\AttendanceController@viewSingleAttendance')->name('admin.manage.attendance.single.datatable');
             Route::get('/{unique}/view/request', 'Admin\AttendanceController@viewSingleAttendance')->name('admin.manage.attendance.single.request');
             Route::get('/getSingleData/{id}', 'Admin\AttendanceController@getSinlgeUserAttendance');
             Route::get('/request/getSingleData/{id}', 'Admin\AttendanceController@getSinlgeUserAttendanceRequest');

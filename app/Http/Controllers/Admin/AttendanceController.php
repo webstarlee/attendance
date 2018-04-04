@@ -303,7 +303,9 @@ class AttendanceController extends Controller
         $daterange = $this->createDateRange($request->attend_date_from, $request->attend_date_to);
         foreach ($daterange as $date) {
 
-            $check_attendance = Attendance::where('attendance_date', $date)->where('employee_id', $request->employee_id)->count();
+            $current_attend_type = $request->attendance_type;
+
+            // $check_attendance = Attendance::where('attendance_date', $date)->where('employee_id', $request->employee_id)->where('')->count();
 
             $boolean_check = true;
             $is_weekend = $this->isWeekend($date);

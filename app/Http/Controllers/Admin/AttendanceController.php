@@ -6,7 +6,9 @@ use DateTime;
 use DatePeriod;
 use DateInterval;
 use App\User;
+use App\Holiday;
 use App\Attendance;
+use App\ContractType;
 use App\AttedanceRequest;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -317,22 +319,60 @@ class AttendanceController extends Controller
         return ($weekDay == 0 || $weekDay == 6);
     }
 
+    public function isHoliday($date) {
+        $holiday_count = Holiday::where('date', $date)->count()
+        return ($holiday_count > 0);
+    }
+
+    public function calculate_time_minute($time)
+    {
+        $result_time_array = explode(':', $time);
+        $result_time_hour = $result_time_array[0];
+        $result_time_min = $result_time_array[1];
+        $total_result_min = $result_time_hour*60 + $result_time_min;
+
+        return $total_result_min;
+    }
+
     public function store(Request $request)
     {
+        $employee = User::find($request->employee_id);
+        $contract_type = ContractType::find($employee->contract_type);
+
+        $time1 = $this->decode_time_format($request->attend_start_time);
+        $time2 = $this->decode_time_format($request->attend_end_time);
+
+        $cal_min = $this->calculate_time_minute($time1) - $this->calculate_time_minute($time2);
+
+        if ($request->attend_fix_time && $cal_min > $contract_type->working_time) {
+            return "fail_3";
+        }
+
         $daterange = $this->createDateRange($request->attend_date_from, $request->attend_date_to);
+
         foreach ($daterange as $date) {
 
             $current_attend_type = $request->attendance_type;
 
-            // $check_attendance = Attendance::where('attendance_date', $date)->where('employee_id', $request->employee_id)->where('')->count();
+            $check_attendance = Attendance::where('attend_date', $date)->where('employee_id', $request->employee_id)->where('attend_type', $current_attend_type)->count();
 
             $boolean_check = true;
-            $is_weekend = $this->isWeekend($date);
-            if ($request->attendance_type != 1 && $is_weekend) {
+
+            if ($check_attendance > 0) {
                 $boolean_check = false;
             }
 
-            if ($check_attendance == 0 && $boolean_check) {
+            $is_weekend = $this->isWeekend($date);
+            if ($request->attend_weekend && $is_weekend) {
+                $boolean_check = false;
+            }
+
+            $is_holiday = $this->isHoliday($date);
+            if ($request->attend_holiday && $is_holiday) {
+                $boolean_check = false;
+            }
+
+            if ($boolean_check) {
                 $attendance = new Attendance;
                 $attendance->employee_id = $request->employee_id;
                 $attendance->attendance_date = $date;
@@ -367,6 +407,7 @@ class AttendanceController extends Controller
                 }
             }
         }
+
         return "success";
     }
 

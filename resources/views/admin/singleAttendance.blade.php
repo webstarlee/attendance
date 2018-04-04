@@ -141,7 +141,7 @@ m-aside-left--enabled m-aside-left--offcanvas
                                                 <span class="input-group-addon">
                                                     <i class="la la-clock-o"></i>
                                                 </span>
-                                                <input type="text" class="form-control m-input input-time-picker" name="attend_arrive_time" value="8:00 AM" placeholder="Enter time" required>
+                                                <input type="text" class="form-control m-input input-time-picker" name="attend_start_time" value="8:00 AM" placeholder="Enter time" required>
                                             </div>
                                         </div>
                                     </div>
@@ -170,7 +170,7 @@ m-aside-left--enabled m-aside-left--offcanvas
                                                 <span class="input-group-addon">
                                                     <i class="la la-clock-o"></i>
                                                 </span>
-                                                <input type="text" class="form-control m-input input-time-picker" name="attend_arrive_time" value="{{$employee->getContractEndtime()}}" placeholder="Enter time" required>
+                                                <input type="text" class="form-control m-input input-time-picker" name="attend_end_time" value="{{$employee->getContractEndtime()}}" placeholder="Enter time" required>
                                             </div>
                                         </div>
                                     </div>
@@ -181,7 +181,7 @@ m-aside-left--enabled m-aside-left--offcanvas
                         <div class="row ">
                             <div class="col-sm-12">
                                 <label class="m-checkbox m-checkbox--air m-checkbox--state-success">
-									<input type="checkbox" checked>
+									<input type="checkbox" name="attend_weekend" checked>
 									Don't insert in Weekend
 									<span></span>
 								</label>
@@ -190,7 +190,7 @@ m-aside-left--enabled m-aside-left--offcanvas
                         <div class="row ">
                             <div class="col-sm-12">
                                 <label class="m-checkbox m-checkbox--air m-checkbox--state-success">
-									<input type="checkbox" checked>
+									<input type="checkbox" name="attend_holiday" checked>
 									Don't insert in Holiday
 									<span></span>
 								</label>
@@ -199,7 +199,7 @@ m-aside-left--enabled m-aside-left--offcanvas
                         <div class="row ">
                             <div class="col-sm-12">
                                 <label class="m-checkbox m-checkbox--air m-checkbox--state-success">
-									<input type="checkbox" checked>
+									<input type="checkbox" name="attend_fix_time" checked>
 									Don't insert outside of person employment
 									<span></span>
 								</label>

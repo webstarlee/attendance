@@ -17,7 +17,7 @@ class Attendance extends Model
     */
     protected $fillable = [
       'employee_id',
-      'attendance_date',
+      'attend_date',
     ];
 
     /**

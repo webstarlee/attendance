@@ -22,7 +22,7 @@ class CreateAttendancesTable extends Migration
             $table->time('end_time');
             $table->binary('breaks')->nullable();
             $table->binary('smokes')->nullable();
-            $table->integer('attend_work_time');
+            $table->integer('attend_work_time')->nullable();
             $table->integer('isrequest')->default(0);
         });
     }

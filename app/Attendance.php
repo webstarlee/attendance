@@ -29,22 +29,30 @@ class Attendance extends Model
 
     public function generate_total_time()
     {
-        $labor_time = $this->get_between_min($this->arrival_time, $this->departure_time);
+        if ($this->attend_type == 0) {
+            return 0;
+        }
+        
+        $labor_time = $this->get_between_min($this->start_time, $this->end_time);
 
-        $break1_time = $this->get_between_min($this->break1_start, $this->break1_end);
+        $smoke_time = 0;
+        $break_time = 0;
 
-        $break2_time = $this->get_between_min($this->break2_start, $this->break2_end);
-
-        $smoking_time = 0;
-
-        if ($this->smoking != null || $this->smoking != "") {
-            $smokings = unserialize($this->smoking);
-            foreach ($smokings as $smoking) {
-                $smoking_time += $this->get_between_min($smoking['start_time'], $smoking['end_time']);
+        if ($this->breaks != null || $this->breaks != "") {
+            $breaks = unserialize($this->breaks);
+            foreach ($breaks as $break) {
+                $break_time += $this->get_between_min($break['start_time'], $break['end_time']);
             }
         }
 
-        $real_working_minutes = $labor_time - $break1_time - $break2_time - $smoking_time;
+        if ($this->smokes != null || $this->smokes != "") {
+            $smokings = unserialize($this->smokes);
+            foreach ($smokings as $smoking) {
+                $smoke_time += $this->get_between_min($smoking['start_time'], $smoking['end_time']);
+            }
+        }
+
+        $real_working_minutes = $labor_time - $break_time - $smoke_time;
 
         return $real_working_minutes;
     }

@@ -61,39 +61,78 @@ class AttendanceController extends Controller
 
     public function getSinlgeUserAttendance($id)
     {
-        $attendance_count = Attendance::where('employee_id', $id)->count();
+        $attendance_count = Attendance::where('employee_id', $id)->where('isrequest', 0)->count();
         $myArray = array();
+
+        $holidays = Holiday::all();
+
+        foreach ($holidays as $holiday) {
+            $myArray[] = array(
+                'start' => $holiday->date,
+                'color' => '#ec3fd1',
+                'title' => 'holiday',
+                'rendering' => 'background',
+                'description' => $holiday->title,
+                'className' => 'm-fc-event--light m-fc-event--solid-primary'
+            );
+        }
+
         if ($attendance_count > 0) {
-            $attendances = Attendance::where('employee_id', $id)->get();
+            $attendances = Attendance::where('employee_id', $id)->where('isrequest', 0)->orderBy('attend_type', 'asc')->get();
             foreach ($attendances as $attendance) {
-                $attendance_color = "#52eadd";
-                if ($attendance->status == 0) {
-                    $attendance_color = "#e4433b";
-                } elseif ($attendance->status == 2) {
-                    $attendance_color = "#bd55ff";
-                } elseif ($attendance->status == 3) {
-                    $attendance_color = "#6ee260";
-                } elseif ($attendance->status == 4) {
-                    $attendance_color = "#4854ea";
+                $attendance_color = "#3fe8da";
+                $title = "work";
+                $isbackground = true;
+                if ($attendance->attend_type == 0) {
+                    $attendance_color = "#4b4b4b";//absence
+                    $title = "absence";
+                } elseif ($attendance->attend_type == 2) {
+                    $attendance_color = "#922dd1";//business trip
+                    $title = "business trip";
+                } elseif ($attendance->attend_type == 3 || $attendance->attend_type == 4) {
+                    $attendance_color = "#ed4184";//vacation, short vacation
+                    if ($attendance->attend_type == 3) {
+                        $title = "vacation";
+                    } else {
+                        $isbackground = false;
+                        $title = "short vacation";
+                    }
+                } elseif ($attendance->attend_type == 5) {
+                    $attendance_color = "#4e4ff2";//doctor
+                    $title = "doctor";
+                    $isbackground = false;
+                } elseif ($attendance->attend_type == 6) {
+                    $attendance_color = "#f2b732";//paragraph
+                    $title = "paragraph";
+                    $isbackground = false;
+                } elseif ($attendance->attend_type == 7) {
+                    $attendance_color = "#17aa5f";//parental leave
+                    $title = "parental leave";
                 }
-                $start_day = $attendance->attendance_date;
-                $start_time = $attendance->attendance_date." ".$attendance->arrival_time;
-                $end_time = $attendance->attendance_date." ".$attendance->departure_time;
+                $start_day = $attendance->attend_date;
+                $start_time = $attendance->attend_date." ".$attendance->start_time;
+                $end_time = $attendance->attend_date." ".$attendance->end_time;
+                if ($isbackground) {
+                    $myArray[] = array(
+                        'event_id' => $attendance->id,
+                        'start' => $start_day,
+                        'color' => $attendance_color,
+                        'title' => $title,
+                        'rendering' => 'background',
+                        'className' => 'm-fc-event--light m-fc-event--solid-primary'
+                    );
+                }
                 $myArray[] = array(
-                    'start' => $start_day,
-                    'rendering' => 'background',
-                    'color' => $attendance_color,
-                    'className' => 'm-fc-event--light m-fc-event--solid-primary'
-                );
-                $myArray[] = array(
+                    'event_id' => $attendance->id,
                     'start' => $start_time,
                     'end' => $end_time,
                     'color' => $attendance_color,
-                    'title' => $attendance->total_min,
+                    'title' => $title,
                     'className' => 'm-fc-event--light m-fc-event--solid-primary'
                 );
             }
         }
+
         return $myArray;
     }
 
@@ -320,7 +359,7 @@ class AttendanceController extends Controller
     }
 
     public function isHoliday($date) {
-        $holiday_count = Holiday::where('date', $date)->count()
+        $holiday_count = Holiday::where('date', $date)->count();
         return ($holiday_count > 0);
     }
 
@@ -344,7 +383,9 @@ class AttendanceController extends Controller
 
         $cal_min = $this->calculate_time_minute($time1) - $this->calculate_time_minute($time2);
 
-        if ($request->attend_fix_time && $cal_min > $contract_type->working_time) {
+        $selected_min = abs($cal_min);
+
+        if ($request->attend_fix_time && $selected_min > $contract_type->working_time) {
             return "fail_3";
         }
 
@@ -354,11 +395,19 @@ class AttendanceController extends Controller
 
             $current_attend_type = $request->attendance_type;
 
-            $check_attendance = Attendance::where('attend_date', $date)->where('employee_id', $request->employee_id)->where('attend_type', $current_attend_type)->count();
+            $check_attendances = Attendance::where('attend_date', $date)->where('employee_id', $request->employee_id)->get();
+
+            $attend_type_array = array(0,1,2,3,7);
+            $type_count = 0;
+            foreach ($check_attendances as $check_attendance) {
+                if (in_array($check_attendance->attend_type, $attend_type_array)) {
+                    $type_count ++;
+                }
+            }
 
             $boolean_check = true;
 
-            if ($check_attendance > 0) {
+            if (in_array($current_attend_type, $attend_type_array) && $type_count > 0) {
                 $boolean_check = false;
             }
 
@@ -375,19 +424,26 @@ class AttendanceController extends Controller
             if ($boolean_check) {
                 $attendance = new Attendance;
                 $attendance->employee_id = $request->employee_id;
-                $attendance->attendance_date = $date;
-                $attendance->status = $request->attendance_type;
-                $attendance->approval = 1;
+                $attendance->attend_date = $date;
+                $attendance->attend_type = $request->attendance_type;
+                $attendance->start_time = $this->decode_time_format($request->attend_start_time);
+                $attendance->end_time = $this->decode_time_format($request->attend_end_time);
                 $attendance->save();
 
                 if ($request->attendance_type == 1) {
-                    $attendance->arrival_time = $this->decode_time_format($request->attend_arrive_time);
-                    $attendance->departure_time = $this->decode_time_format($request->attend_departure_time);
-                    $attendance->break1_start = $this->decode_time_format($request->break_start_1);
-                    $attendance->break1_end = $this->decode_time_format($request->break_end_1);
-                    $attendance->break2_start = $this->decode_time_format($request->break_start_2);
-                    $attendance->break2_end = $this->decode_time_format($request->break_end_2);
-                    $attendance->save();
+
+                    if ($request->attend_break_start) {
+                        $break_starts = $request->attend_break_start;
+                        $break_ends = $request->attend_break_end;
+                        $array_index = 0;
+                        $break_times = array();
+                        foreach ($break_starts as $break_start) {
+                            $break_times[] = array('start_time' => $this->decode_time_format($break_start), 'end_time' => $this->decode_time_format($break_ends[$array_index]));
+                            $array_index++;
+                        }
+                        $attendance->breaks = serialize($break_times);
+                        $attendance->save();
+                    }
 
                     if ($request->attend_smoking_start) {
                         $smokeing_starts = $request->attend_smoking_start;
@@ -398,13 +454,13 @@ class AttendanceController extends Controller
                             $smoking_times[] = array('start_time' => $this->decode_time_format($smokeing_start), 'end_time' => $this->decode_time_format($smokeing_ends[$array_index]));
                             $array_index++;
                         }
-                        $attendance->smoking = serialize($smoking_times);
+                        $attendance->smokes = serialize($smoking_times);
                         $attendance->save();
                     }
-
-                    $attendance->total_min = $attendance->generate_total_time();
-                    $attendance->save();
                 }
+
+                $attendance->attend_work_time = $attendance->generate_total_time();
+                $attendance->save();
             }
         }
 

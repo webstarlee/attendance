@@ -22,42 +22,7 @@ var CalendardBasic = function() {
             selectable: true,
             events: '/admin/manage/attendance/getSingleData/'+golbalEmployeeId,
 
-            // eventRender: function(event, element) {
-            //     var bgEventTitle = document.createElement('div');
-            //     bgEventTitle.style.position = 'absolute';
-            //     bgEventTitle.style.bottom = '0';
-            //     bgEventTitle.classList.add('fc-event');
-            //     bgEventTitle.classList.add('holiday-calendar-title-div');
-            //     var approval_status_string = '<p style="margin-bottom: 0;font-size: 11px;color:#ffffff;">(Approved)</p>';
-            //     if (event.approval == 0) {
-            //         approval_status_string = '<p style="margin-bottom: 0;font-size: 11px;color:#000000;">(Pending)</p>';;
-            //     }
-            //     if (event.status == 1) {
-            //         var minutes = event.total_work%60;
-            //         var hours = (event.total_work - minutes)/60;
-            //         var string_working = "";
-            //         if (hours == 0) {
-            //             string_working = '<p style="margin-bottom: 0;">'+minutes+' minutes </p>';
-            //         } else if(minutes == 0) {
-            //             string_working = '<p style="margin-bottom: 0;">'+hours+' hours </p>';
-            //         } else {
-            //             string_working = '<p style="margin-bottom: 0;">'+hours+' hours </p><p style="margin-bottom: 0;">'+minutes+' minutes </p>';
-            //         }
-            //         bgEventTitle.innerHTML = '<h3 class="fc-title holiday-calendar-custom-h3">'+string_working+approval_status_string+'</h3>' ;
-            //     } else if (event.status == 0) {
-            //         bgEventTitle.innerHTML = '<h3 class="fc-title holiday-calendar-custom-h3">Absence'+approval_status_string+'</h3>' ;
-            //     } else if (event.status == 2) {
-            //         bgEventTitle.innerHTML = '<h3 class="fc-title holiday-calendar-custom-h3">Business Trip'+approval_status_string+'</h3>' ;
-            //     } else if (event.status == 3) {
-            //         bgEventTitle.innerHTML = '<h3 class="fc-title holiday-calendar-custom-h3">Vacation'+approval_status_string+'</h3>' ;
-            //     } else if (event.status == 4) {
-            //         bgEventTitle.innerHTML = '<h3 class="fc-title holiday-calendar-custom-h3">Sickness'+approval_status_string+'</h3>' ;
-            //     }
-            //     element.css('position', 'relative').html(bgEventTitle);
-            // },
-
-
-             select: function(start, end, jsEvent, view) {
+            select: function(start, end, jsEvent, view) {
                 var eventDate = start.format('YYYY-MM-DD');
                 var dataFormat = start.format('MM/DD/YYYY');
                 var dateString = end.format('YYYY-MM-DD'); // date string
@@ -82,6 +47,10 @@ var CalendardBasic = function() {
                 $(form).find('#attend_date_from').datepicker('destroy');
                 setJsplugin();
 
+            },
+
+            eventClick: function(calEvent, jsEvent, view) {
+                console.log(calEvent.event_id);
             },
 
             // dayClick: function(date, jsEvent, view) {
@@ -175,6 +144,20 @@ var CalendardBasic = function() {
             //             console.log(result);
             //         }
             //     });
+            // }
+            eventRender: function(event, element) {
+                if (element.hasClass('fc-day-grid-event')) {
+                    element.find('.fc-content').html('<span class="fc-title">' + event.title + '</span>');
+                }
+
+                if (event.title == "holiday") {
+                    var holiday_html = '<div style="width:100%;height:100%;display:flex;flex-direction:column;justify-content:center;text-align:center;"><span style="color:#fff;">Holiday</span><span style="color:#fff;font-size:11px;">( '+event.description+' )</span></div>'
+                    element.html(holiday_html);
+                }
+            }
+            // eventRender: function(event, element) {
+            //     // var text_title = '<span>'+event.title+'</span>';
+            //     // element.html(text_title);
             // }
         });
         }

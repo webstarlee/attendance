@@ -176,11 +176,12 @@ var AttendBasic = function() {
                     type: 'POST',
                     data: formData,
                     success: function (data) {
-                        // console.log(data);
-                        if (data == "fail") {
+                        console.log(data);
+                        submit_btn.removeClass('m-loader m-loader--success m-loader--right').attr('disabled', false);
+                        if (data == "fail_3") {
                             swal({
                                 title: 'Failed?',
-                                text: "Already Exist attendance",
+                                text: "Inserted to outside of person employment",
                                 type: 'error',
                                 showCancelButton: false,
                                 confirmButtonText: "Ok!",
@@ -193,9 +194,8 @@ var AttendBasic = function() {
                             if (typeof attendanceTable !== 'undefined') {
                                 attendanceTable.reload();
                             }
+                            $('#m-admin-new_attendance-modal').modal('hide');
                         }
-                        submit_btn.removeClass('m-loader m-loader--success m-loader--right').attr('disabled', false);
-                        $('#m-admin-new_attendance-modal').modal('hide');
                     },
                     processData: false,
                     contentType: false,

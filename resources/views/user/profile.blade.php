@@ -76,51 +76,31 @@
                         <div class="m-widget1__item">
                             <div class="row m-row--no-padding align-items-center">
                                 <div class="col">
+                                    <?php
+                                        $join_day = "";
+                                        if (Auth::user()->join_date != null || Auth::user()->join_date != "") {
+                                            $selectedDate = DateTime::createFromFormat('Y-m-d', Auth::user()->join_date);
+                                            $join_day = $selectedDate->format('m/d/Y');
+                                        } else {
+                                            $join_day = "Not joined yet";
+                                        }
+                                    ?>
                                     <h3 class="m-widget1__title">
-                                        Member Profit
+                                        @lang('language.join_date'): <span style="color:#df4964;float: right;">{{$join_day}}</span>
                                     </h3>
-                                    <span class="m-widget1__desc">
-                                        Awerage Weekly Profit
-                                    </span>
-                                </div>
-                                <div class="col m--align-right">
-                                    <span class="m-widget1__number m--font-brand">
-                                        +$17,800
-                                    </span>
                                 </div>
                             </div>
                         </div>
                         <div class="m-widget1__item">
                             <div class="row m-row--no-padding align-items-center">
                                 <div class="col">
+                                    <?php
+                                        $join_day = "";
+                                        $mycontract = \App\ContractType::find(Auth::user()->contract_type);
+                                    ?>
                                     <h3 class="m-widget1__title">
-                                        Orders
+                                        ContractType: <span style="color:#31e3e3;float: right;">{{$mycontract->title}}</span>
                                     </h3>
-                                    <span class="m-widget1__desc">
-                                        Weekly Customer Orders
-                                    </span>
-                                </div>
-                                <div class="col m--align-right">
-                                    <span class="m-widget1__number m--font-danger">
-                                        +1,800
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="m-widget1__item">
-                            <div class="row m-row--no-padding align-items-center">
-                                <div class="col">
-                                    <h3 class="m-widget1__title">
-                                        Issue Reports
-                                    </h3>
-                                    <span class="m-widget1__desc">
-                                        System bugs and issues
-                                    </span>
-                                </div>
-                                <div class="col m--align-right">
-                                    <span class="m-widget1__number m--font-success">
-                                        -27,49%
-                                    </span>
                                 </div>
                             </div>
                         </div>
@@ -230,21 +210,6 @@
                                                 <input class="form-control m-input input_mask_date" id="m_profile_birth" placeholder="Birthday" type="text" name="birth" value="{{Auth::user()->birth}}" />
                                             </div>
                                         </div>
-                                        <div class="form-group m-form__group row">
-            								<label for="example-text-input" class="col-lg-2 col-md-2 col-sm-3 col-xs-12 col-form-label">
-            									Contract Type
-            								</label>
-            								<div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
-                                                <?php
-                                                    $contract_types = \App\ContractType::all();
-                                                ?>
-                                                <select class="form-control m-bootstrap-select m_selectpicker" name="contract_type">
-                                                    @foreach ($contract_types as $contract_type)
-                                                        <option value="{{$contract_type->id}}" @if ($contract_type->id == Auth::user()->contract_type) selected @endif>{{$contract_type->title}}</option>
-                                                    @endforeach
-                                                </select>
-            								</div>
-            							</div>
                                         <div class="form-group m-form__group row">
                                             <label for="example-text-input" class="col-lg-2 col-md-2 col-sm-3 col-xs-12 col-form-label">
                                                 Social Number

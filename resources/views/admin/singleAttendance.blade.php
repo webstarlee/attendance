@@ -8,6 +8,10 @@
 @section('plugin_style')
 <link href="/assets/plugins/fullcalendar/fullcalendar.bundle.css" rel="stylesheet" type="text/css" />
 @endsection
+@section('customStyle')
+<link href="/css/customProfile.css" rel="stylesheet" type="text/css" />
+<link href="/css/customAttend.css" rel="stylesheet" type="text/css" />
+@endsection
 @section('body_class')
 m-aside-left--enabled m-aside-left--offcanvas
 @endsection
@@ -453,6 +457,7 @@ m-aside-left--enabled m-aside-left--offcanvas
 @endsection
 @section('plugin_script')
 <script src="/assets/plugins/fullcalendar/fullcalendar.bundle.js" type="text/javascript"></script>
+<script src="/assets/plugins/circle-progress.min.js" type="text/javascript"></script>
 @endsection
 @section('customScript')
     <script type="text/javascript">

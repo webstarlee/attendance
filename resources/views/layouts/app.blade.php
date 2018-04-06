@@ -523,13 +523,44 @@
 												</span>
 											</a>
 										</li>
-										<li class="m-menu__item @if(Route::currentRouteName()=='attendance') m-menu__item--active @endif"  aria-haspopup="true">
-											<a  href="{{route('attendance')}}" class="m-menu__link ">
+										<li class="@if(Route::currentRouteName()=='attendance') m-menu__item--active @endif m-menu__item  m-menu__item--submenu m-menu__item--rel"  data-menu-submenu-toggle="click" aria-haspopup="true">
+											<a  href="javascript:;" class="m-menu__link m-menu__toggle">
 												<span class="m-menu__item-here"></span>
 												<span class="m-menu__link-text">
-													Attendance
+													@lang('language.attendance.attendance')
 												</span>
+												<i class="m-menu__hor-arrow la la-angle-down"></i>
+												<i class="m-menu__ver-arrow la la-angle-right"></i>
 											</a>
+											<div class="m-menu__submenu m-menu__submenu--classic m-menu__submenu--left">
+												<span class="m-menu__arrow m-menu__arrow--adjust"></span>
+												<ul class="m-menu__subnav">
+													<li class="m-menu__item" aria-haspopup="true">
+														<a  href="{{route('attendance')}}" class="m-menu__link ">
+															<i class="m-menu__link-icon la la-users"></i>
+															<span class="m-menu__link-title">
+																<span class="m-menu__link-wrap">
+																	<span class="m-menu__link-text">
+																		@lang('language.attendance.attendance')
+																	</span>
+																</span>
+															</span>
+														</a>
+													</li>
+													<li class="m-menu__item" aria-haspopup="true">
+														<a  href="{{route('admin.manage.project.task')}}" class="m-menu__link ">
+															<i class="m-menu__link-icon la la-users"></i>
+															<span class="m-menu__link-title">
+																<span class="m-menu__link-wrap">
+																	<span class="m-menu__link-text">
+																		Request
+																	</span>
+																</span>
+															</span>
+														</a>
+													</li>
+												</ul>
+											</div>
 										</li>
 										<li class="m-menu__item  m-menu__item--submenu m-menu__item--rel"  data-menu-submenu-toggle="click" data-redirect="true" aria-haspopup="true">
 											<a  href="#" class="m-menu__link m-menu__toggle">

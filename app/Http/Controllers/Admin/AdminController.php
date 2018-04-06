@@ -420,4 +420,37 @@ class adminController extends Controller
         return "fail";
     }
     //end
+
+    public function getDashboardEvent()
+    {
+        $myArray = array();
+
+        $holidays = Holiday::all();
+
+        foreach ($holidays as $holiday) {
+            $myArray[] = array(
+                'start' => $holiday->date,
+                'color' => '#21dfbd',
+                'title' => 'holiday',
+                'rendering' => 'background',
+                'description' => $holiday->title,
+                'className' => 'm-fc-event--light m-fc-event--solid-primary'
+            );
+        }
+
+        $events = Event::all();
+
+        foreach ($events as $event) {
+            $myArray[] = array(
+                'start' => $event->event_date." ".$event->event_start,
+                'description' => $event->event_note,
+                'end' => $event->event_date." ".$event->event_end,
+                'title' => $event->event_title,
+                'color' => '#7636f3',
+                'className' => "m-fc-event--light m-fc-event--solid-primary",
+            );
+        }
+
+        return $myArray;
+    }
 }

@@ -87,6 +87,7 @@ Route::middleware(['auth'])->group(function () {
 Route::prefix('admin')->group(function () {
     Route::middleware(['auth:admin'])->group(function () {
         Route::get('/', 'Admin\AdminController@index')->name('admin.dashboard');
+        Route::get('/dashboard/calendarEvent', 'Admin\AdminController@getDashboardEvent');
 
         // profile section
         Route::get('profile/admin/{unique}', 'Admin\AdminProfileController@showProfileAdmin');
@@ -175,6 +176,7 @@ Route::prefix('admin')->group(function () {
             Route::get('/destroy/{id}', 'Admin\AttendanceController@destroy');
             Route::get('/request/destroy/{id}', 'Admin\AttendanceController@destroyRequest');
             Route::get('/request/approve/{id}', 'Admin\AttendanceController@approveRequest');
+            Route::get('/getPercentVacation/{id}', 'Admin\AttendanceController@getVacationPercent');
         });
         //end
         //manage deparment

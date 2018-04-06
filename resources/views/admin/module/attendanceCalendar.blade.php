@@ -1,3 +1,6 @@
+<div class="row" id="employee-attend-dashboard-detail">
+</div>
+
 <div class="m-portlet" id="m_portlet">
     <div class="m-portlet__head">
         <div class="m-portlet__head-caption">

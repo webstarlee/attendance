@@ -9,6 +9,7 @@ use App\User;
 use App\Holiday;
 use App\Attendance;
 use App\ContractType;
+use App\EmployeeVacation;
 use App\AttedanceRequest;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -54,6 +55,7 @@ class AttendanceController extends Controller
     {
         $employee = User::where('unique_id', $unique_id)->join('contract_types', 'contract_types.id', '=', 'users.contract_type')->select('users.*', 'contract_types.title as contract_title')->first();
         if ($employee) {
+            $employee->mVacation();
             return view('admin.singleAttendance', ['employee' => $employee]);
         }
         return back();
@@ -421,6 +423,16 @@ class AttendanceController extends Controller
                 $boolean_check = false;
             }
 
+            if ($current_attend_type == 3 || $current_attend_type == 4) {
+                $start_time = $this->decode_time_format($request->attend_start_time);
+                $end_time = $this->decode_time_format($request->attend_end_time);
+                $mvacation_check = $employee->checkVacation($start_time, $end_time);
+                if (!$mvacation_check) {
+                    $boolean_check = false;
+                    return "fail_vac_limit";
+                }
+            }
+
             if ($boolean_check) {
                 $attendance = new Attendance;
                 $attendance->employee_id = $request->employee_id;
@@ -461,6 +473,13 @@ class AttendanceController extends Controller
 
                 $attendance->attend_work_time = $attendance->generate_total_time();
                 $attendance->save();
+
+                if ($attendance->attend_type == 3 || $attendance->attend_type == 4) {
+                    $current_year = date("Y");
+                    $mvacation = EmployeeVacation::where('vac_year', $current_year)->where('employee_id', $employee->unique_id)->first();
+                    $mvacation->vac_spend_min = $mvacation->vac_spend_min + $attendance->attend_work_time;
+                    $mvacation->save();
+                }
             }
         }
 
@@ -588,5 +607,24 @@ class AttendanceController extends Controller
         }
 
         return $migration_result;
+    }
+
+    public function getVacationPercent($id)
+    {
+        $employee = User::find($id);
+        if ($employee) {
+            $current_year = date("Y");
+            $mvacation = EmployeeVacation::where('vac_year', $current_year)->where('employee_id', $employee->unique_id)->first();
+            $percent_vac = 0;
+            if ($mvacation->vac_total_min > 0) {
+                $total_vac = $mvacation->vac_total_min + $mvacation->vac_extra_min;
+                $spent_vac = $mvacation->vac_spend_min;
+                $percent_vac = $spent_vac/$total_vac*100;
+            }
+            $detail_view = view('admin.module.vacDetailInfo', compact('employee'))->render();
+            $result_array = array('result' => 'success', 'percent' => intval($percent_vac), 'html' => $detail_view);
+            return $result_array;
+        }
+        return array('result' => 'fail');
     }
 }

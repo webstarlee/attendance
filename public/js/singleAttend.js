@@ -187,13 +187,23 @@ var AttendBasic = function() {
                                 confirmButtonText: "Ok!",
                                 confirmButtonClass: "btn m-btn--air btn-outline-accent",
                             });
+                        } else if (data == "fail_vac_limit") {
+                            if (typeof attendanceCalendar !== 'undefined') {
+                                attendanceCalendar.fullCalendar('refetchEvents');
+                            }
+                            swal({
+                                title: 'Failed?',
+                                text: "There is not available vacation",
+                                type: 'error',
+                                showCancelButton: false,
+                                confirmButtonText: "Ok!",
+                                confirmButtonClass: "btn m-btn--air btn-outline-accent",
+                            });
                         } else {
                             if (typeof attendanceCalendar !== 'undefined') {
                                 attendanceCalendar.fullCalendar('refetchEvents');
                             }
-                            if (typeof attendanceTable !== 'undefined') {
-                                attendanceTable.reload();
-                            }
+                            vac_circle_calc();
                             $('#m-admin-new_attendance-modal').modal('hide');
                         }
                     },

@@ -17,8 +17,10 @@ class EmployeeVacation extends Model
     */
     protected $fillable = [
       'employee_id',
-      'vacation_year',
-      'vacation_minutes',
+      'vac_year',
+      'vac_total_min',
+      'vac_extra_min',
+      'vac_spend_min',
     ];
 
     /**

@@ -35,16 +35,6 @@ m-aside-left--enabled m-aside-left--offcanvas
 						</span>
 					</a>
 				</li>
-				<li class="m-menu__item " aria-haspopup="true"  data-redirect="true">
-					<a  href="{{route('attendance.datatable')}}" class="m-menu__link ">
-						<i class="m-menu__link-bullet m-menu__link-bullet--dot">
-							<span></span>
-						</i>
-						<span class="m-menu__link-text">
-							List View
-						</span>
-					</a>
-				</li>
                 <li class="m-menu__item " aria-haspopup="true"  data-redirect="true">
 					<a  href="{{route('attendance.request')}}" class="m-menu__link ">
 						<i class="m-menu__link-bullet m-menu__link-bullet--dot">
@@ -68,8 +58,6 @@ m-aside-left--enabled m-aside-left--offcanvas
     <input type="hidden" name="golobal_employee_id" id="golobal_employee_id" value="{{Auth::user()->id}}">
     @if(Route::currentRouteName()=='attendance')
         @include('user.module.attendanceCalendar', ['setting'=>$setting, 'employee'=>$employee])
-    @elseif(Route::currentRouteName()=='attendance.datatable')
-        @include('user.module.attendanceDatatable', ['setting'=>$setting, 'employee'=>$employee])
     @elseif(Route::currentRouteName()=='attendance.request')
         @include('user.module.attendanceRequestDatatable', ['setting'=>$setting, 'employee'=>$employee])
     @endif

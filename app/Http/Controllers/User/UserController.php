@@ -215,7 +215,6 @@ class UserController extends Controller
             $employee->first_name = $request->firstName;
             $employee->last_name = $request->lastName;
             $employee->birth = $request->birth;
-            $employee->contract_type = $request->contract_type;
             $employee->social_number = $request->socialNumber;
             $employee->personal_number = $request->personalNumber;
             $employee->emergency_contact = $request->emergencyContact;

@@ -364,7 +364,7 @@ var DatatableBasic = function() {
                         console.log(result);
                     }
                 });
-            })
+            });
 
             $(document).on('click', '.m-request-delete-btn', function(e) {
                 e.preventDefault();

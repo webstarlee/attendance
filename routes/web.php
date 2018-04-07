@@ -167,6 +167,7 @@ Route::prefix('admin')->group(function () {
             Route::get('/getEmployee', 'Admin\AttendanceController@getAllEmployee');
             Route::get('/{unique}/view', 'Admin\AttendanceController@viewSingleAttendance')->name('admin.manage.attendance.single');
             Route::get('/{unique}/view/request', 'Admin\AttendanceController@viewSingleAttendance')->name('admin.manage.attendance.single.request');
+            Route::post('/request/accept/', 'Admin\AttendanceController@acceptRequest')->name('admin.manage.attendance.request.accept');
             Route::get('/getSingleData/{id}', 'Admin\AttendanceController@getSinlgeUserAttendance');
             Route::get('/request/getSingleData/{id}', 'Admin\AttendanceController@getSinlgeUserAttendanceRequest');
             Route::get('/getAttendance/{id}', 'Admin\AttendanceController@getAttendance');
@@ -174,7 +175,6 @@ Route::prefix('admin')->group(function () {
             Route::get('/checkSingleData/{id}/{date}', 'Admin\AttendanceController@checkSinlgeAttendance');
             Route::get('/destroy/{id}', 'Admin\AttendanceController@destroy');
             Route::get('/request/destroy/{id}', 'Admin\AttendanceController@destroyRequest');
-            Route::get('/request/approve/{id}', 'Admin\AttendanceController@approveRequest');
             Route::get('/getPercentVacation/{id}', 'Admin\AttendanceController@getVacationPercent');
             Route::get('/getSingleAttend/{id}', 'Admin\AttendanceController@getAttendSingle');
         });

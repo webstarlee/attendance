@@ -389,7 +389,7 @@ m-aside-left--enabled m-aside-left--offcanvas
 						</span>
 					</button>
 				</div>
-                <form id="m-admin-view_attendance_request-form" action="" role="form" method="post" accept-charset="UTF-8" enctype="multipart/form-data">
+                <form id="m-admin-view_attendance_request-form" action="{{route('admin.manage.attendance.request.accept')}}" role="form" method="post" accept-charset="UTF-8" enctype="multipart/form-data">
                     {{ csrf_field() }}
                     <input type="hidden" name="attendance_request_id" id="attendance_request_id" value="">
     				<div class="modal-body" style="padding-bottom: 10px;">
@@ -397,39 +397,7 @@ m-aside-left--enabled m-aside-left--offcanvas
                             <div class="col-sm-6">
                                 <div class="m-form__content"></div>
                                 <div class="form-group m-form__group">
-                                    <label for="exampleInputEmail1">
-                                        Date From:
-                                    </label>
-                                    <div class="input-group m-input-group m-input-group--air">
-                                        <span class="input-group-addon">
-                                            <i class="la la-calendar"></i>
-                                        </span>
-                                        <input type="text" class="form-control m-input" id="attend_request_date_from" name="attend_request_date_from" placeholder="Enter date" required>
-                                    </div>
-                                </div>
-                                <div class="m-form__content"></div>
-                            </div>
-                            <div class="col-sm-6">
-                                <div class="m-form__content"></div>
-                                <div class="form-group m-form__group">
-                                    <label for="exampleInputEmail1">
-                                        To Date:
-                                    </label>
-                                    <div class="input-group m-input-group m-input-group--air">
-                                        <span class="input-group-addon">
-                                            <i class="la la-calendar"></i>
-                                        </span>
-                                        <input type="text" class="form-control m-input" id="attend_request_date_to" name="attend_request_date_to" placeholder="Enter date" required>
-                                    </div>
-                                </div>
-                                <div class="m-form__content"></div>
-                            </div>
-                        </div>
-                        <div class="row ">
-                            <div class="col-sm-12">
-                                <div class="m-form__content"></div>
-                                <div class="form-group m-form__group">
-                                    <label for="exampleInputEmail1">
+                                    <label>
                                         Contract Type:
                                     </label>
                                     <div class="input-group m-input-group m-input-group--air">
@@ -441,9 +409,7 @@ m-aside-left--enabled m-aside-left--offcanvas
                                 </div>
                                 <div class="m-form__content"></div>
                             </div>
-                        </div>
-                        <div class="row ">
-                            <div class="col-sm-12">
+                            <div class="col-sm-6">
                                 <div class="m-form__content"></div>
                                 <div class="form-group m-form__group">
                                     <label for="exampleInputEmail1">
@@ -453,16 +419,104 @@ m-aside-left--enabled m-aside-left--offcanvas
                                         <span class="input-group-addon">
                                             <i class="la la-info"></i>
                                         </span>
-                                        <select class="form-control m-bootstrap-select m_selectpicker" id="attend_request_type" name="attend_request_type">
+                                        <select class="form-control m-bootstrap-select m_selectpicker" id="_request_attendance_type" name="_request_attendance_type">
+                                            <option value="1" selected>Work</option>
                                             <option value="0">Absence</option>
-                                            <option value="1">Attendance</option>
                                             <option value="2">Business Trip</option>
                                             <option value="3">Vacation</option>
-                                            <option value="4">Sickness</option>
+                                            <option value="4">Short Vacation</option>
+                                            <option value="5">Doctor</option>
+                                            <option value="6">Paragraph</option>
+                                            <option value="7">Parental Leave</option>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="m-form__content"></div>
+                            </div>
+                        </div>
+                        <div class="row ">
+                            <div class="col-sm-12">
+                                <div class="m-form__content"></div>
+                                <div class="form-group m-form__group">
+                                    <label for="_attend_date_from">
+                                        From:
+                                    </label>
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <div class="input-group m-input-group m-input-group--air">
+                                                <span class="input-group-addon">
+                                                    <i class="la la-calendar"></i>
+                                                </span>
+                                                <input type="text" class="form-control m-input m-input-datepicker" id="_request_attend_date_from" name="_request_attend_date_from" placeholder="Enter date" required>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="input-group m-input-group m-input-group--air">
+                                                <span class="input-group-addon">
+                                                    <i class="la la-clock-o"></i>
+                                                </span>
+                                                <input type="text" class="form-control m-input input-time-picker" id="_request_attend_start_time" name="_request_attend_start_time" value="8:00 AM" placeholder="Enter time" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="m-form__content"></div>
+                            </div>
+                        </div>
+                        <div class="row ">
+                            <div class="col-sm-12">
+                                <div class="m-form__content"></div>
+                                <div class="form-group m-form__group">
+                                    <label for="_attend_date_to">
+                                        To:
+                                    </label>
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <div class="input-group m-input-group m-input-group--air">
+                                                <span class="input-group-addon">
+                                                    <i class="la la-calendar"></i>
+                                                </span>
+                                                <input type="text" class="form-control m-input m-input-datepicker" id="_request_attend_date_to" name="_request_attend_date_to" placeholder="Enter date" required>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="input-group m-input-group m-input-group--air">
+                                                <span class="input-group-addon">
+                                                    <i class="la la-clock-o"></i>
+                                                </span>
+                                                <input type="text" class="form-control m-input input-time-picker" id="_request_attend_end_time" name="_request_attend_end_time" value="{{$employee->getContractEndtime()}}" placeholder="Enter time" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="m-form__content"></div>
+                            </div>
+                        </div>
+                        <div class="row ">
+                            <div class="col-sm-12">
+                                <label class="m-checkbox m-checkbox--air m-checkbox--state-success">
+									<input type="checkbox" id="_request_attend_weekend" name="_request_attend_weekend" checked>
+									Don't insert in Weekend
+									<span></span>
+								</label>
+                            </div>
+                        </div>
+                        <div class="row ">
+                            <div class="col-sm-12">
+                                <label class="m-checkbox m-checkbox--air m-checkbox--state-success">
+									<input type="checkbox" id="_request_attend_holiday" name="_request_attend_holiday" checked>
+									Don't insert in Holiday
+									<span></span>
+								</label>
+                            </div>
+                        </div>
+                        <div class="row ">
+                            <div class="col-sm-12">
+                                <label class="m-checkbox m-checkbox--air m-checkbox--state-success">
+									<input type="checkbox" id="_request_attend_fix_time" name="_request_attend_fix_time" checked>
+									Don't insert outside of person employment
+									<span></span>
+								</label>
                             </div>
                         </div>
                         <div class="attendance_status_input_container"></div>

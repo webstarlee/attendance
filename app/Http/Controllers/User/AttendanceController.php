@@ -794,4 +794,22 @@ class AttendanceController extends Controller
 
         return "fail";
     }
+
+    public function getVacationPercent()
+    {
+        $employee = Auth::user();
+        if ($employee) {
+            $current_year = date("Y");
+            $mvacation = EmployeeVacation::where('vac_year', $current_year)->where('employee_id', $employee->unique_id)->first();
+            $percent_vac = 0;
+            if ($mvacation->vac_total_min > 0) {
+                $total_vac = $mvacation->vac_total_min + $mvacation->vac_extra_min;
+                $spent_vac = $mvacation->vac_spend_min;
+                $percent_vac = $spent_vac/$total_vac*100;
+            }
+            $result_array = array('result' => 'success', 'percent' => intval($percent_vac));
+            return $result_array;
+        }
+        return array('result' => 'fail');
+    }
 }

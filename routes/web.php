@@ -54,6 +54,7 @@ Route::get('check-client-id/{id}', 'User\Auth\LoginController@checkClientId');
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', 'User\UserController@index')->name('dashboard');
+    Route::get('/dashboard/calendarEvent', 'User\UserController@getDashboardEvent');
     Route::get('/profile', 'User\UserController@profile')->name('profile');
     Route::post('/profile/update/avatar', 'User\UserController@profileUpdateAvatar')->name('profile.update.avatar');
     Route::post('/profile/update/cover', 'User\UserController@profileUpdateCover')->name('profile.update.avatar');
@@ -76,6 +77,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/attendance/checkSingleData/{date}', 'User\AttendanceController@checkSinlgeAttendance');
     Route::get('/attendance/destroy/{id}', 'User\AttendanceController@attendanceDestroy');
     Route::get('/attendance/request/destroy/{id}', 'User\AttendanceController@attendanceRequestDestroy');
+    Route::get('/attendance/getVacationPercent', 'User\AttendanceController@getVacationPercent');
     //end
 });
 

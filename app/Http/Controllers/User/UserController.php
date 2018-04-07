@@ -7,6 +7,8 @@ use DateTime;
 use App\Slim;
 use App\User;
 use App\Admin;
+use App\Event;
+use App\Holiday;
 use App\Attendance;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -33,7 +35,41 @@ class UserController extends Controller
      */
     public function index()
     {
-        return view('user.home');
+        $employee = Auth::user();
+        return view('user.home', ['employee' => $employee]);
+    }
+
+    public function getDashboardEvent()
+    {
+        $myArray = array();
+
+        $holidays = Holiday::all();
+
+        foreach ($holidays as $holiday) {
+            $myArray[] = array(
+                'start' => $holiday->date,
+                'color' => '#21dfbd',
+                'title' => 'holiday',
+                'rendering' => 'background',
+                'description' => $holiday->title,
+                'className' => 'm-fc-event--light m-fc-event--solid-primary'
+            );
+        }
+
+        $events = Event::all();
+
+        foreach ($events as $event) {
+            $myArray[] = array(
+                'start' => $event->event_date." ".$event->event_start,
+                'description' => $event->event_note,
+                'end' => $event->event_date." ".$event->event_end,
+                'title' => $event->event_title,
+                'color' => '#7636f3',
+                'className' => "m-fc-event--light m-fc-event--solid-primary",
+            );
+        }
+
+        return $myArray;
     }
 
     public function profile()

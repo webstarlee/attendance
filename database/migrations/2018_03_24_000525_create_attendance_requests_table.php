@@ -15,9 +15,15 @@ class CreateAttendanceRequestsTable extends Migration
     {
         Schema::create('attendance_requests', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('req_employee_id');
-            $table->integer('req_attend_type')->default(1);//default 1 (attendance) , 0(absence), 2(business trip), 3(vacation), 4(sickness)
-            $table->timestamps();
+            $table->integer('employee_id');
+            $table->integer('attend_type')->default(1);//default 1 (work) , 0(absence), 2(business trip), 3(vacation), 4(shortvacation), 5(doctor), 6(paragraph), 7(parental leave)
+            $table->date('attend_date_from');
+            $table->date('attend_date_to');
+            $table->time('start_time');
+            $table->time('end_time');
+            $table->binary('breaks')->nullable();
+            $table->binary('smokes')->nullable();
+            $table->integer('attend_work_time')->nullable();
         });
     }
 

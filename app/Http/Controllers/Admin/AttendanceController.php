@@ -63,7 +63,7 @@ class AttendanceController extends Controller
 
     public function getSinlgeUserAttendance($id)
     {
-        $attendance_count = Attendance::where('employee_id', $id)->where('isrequest', 0)->count();
+        $attendance_count = Attendance::where('employee_id', $id)->count();
         $myArray = array();
 
         $holidays = Holiday::all();
@@ -526,8 +526,22 @@ class AttendanceController extends Controller
     {
         $attendance = Attendance::find($request->attendance_id);
         if ($attendance) {
-            $boolean_check = true;
+
             $employee = User::find($attendance->employee_id);
+            $contract_type = ContractType::find($employee->contract_type);
+
+            $time1 = $this->decode_time_format($request->_attend_start_time);
+            $time2 = $this->decode_time_format($request->_attend_end_time);
+
+            $cal_min = $this->calculate_time_minute($time1) - $this->calculate_time_minute($time2);
+
+            $selected_min = abs($cal_min);
+
+            if ($request->_attend_fix_time && $selected_min > $contract_type->working_time) {
+                return "fail_3";
+            }
+
+            $boolean_check = true;
             $current_attend_type = $request->_attendance_type;
             if ($current_attend_type == 3 || $current_attend_type == 4) {
                 $start_time = $this->decode_time_format($request->_attend_start_time);

@@ -548,7 +548,7 @@
 														</a>
 													</li>
 													<li class="m-menu__item" aria-haspopup="true">
-														<a  href="{{route('admin.manage.project.task')}}" class="m-menu__link ">
+														<a  href="{{route('attendance.request')}}" class="m-menu__link ">
 															<i class="m-menu__link-icon la la-users"></i>
 															<span class="m-menu__link-title">
 																<span class="m-menu__link-wrap">

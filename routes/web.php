@@ -64,10 +64,9 @@ Route::middleware(['auth'])->group(function () {
     Route::post('profile/update/password', 'User\UserController@updateEmployeePassOwn');
     //attendance manage
     Route::get('/attendance', 'User\AttendanceController@attendance')->name('attendance');
-    Route::get('/attendance/listView', 'User\AttendanceController@attendance')->name('attendance.datatable');
-    Route::get('/attendance/request', 'User\AttendanceController@attendance')->name('attendance.request');
+    Route::get('/attendance/request', 'User\AttendanceController@viewAttendanceRequest')->name('attendance.request');
     Route::post('/attendance/store', 'User\AttendanceController@attendanceStore')->name('attendance.store');
-    Route::post('/attendance/update', 'User\AttendanceController@attendanceRequest')->name('attendance.update');
+    Route::post('/attendance/update', 'User\AttendanceController@attendanceUpdate')->name('attendance.update');
     Route::post('/attendance/new/request', 'User\AttendanceController@storeAttendanceRequest')->name('attendance.store.request');
     Route::post('/attendance/update/request', 'User\AttendanceController@updateAttendanceRequest')->name('attendance.update.request');
     Route::get('/attendance/getAttendance', 'User\AttendanceController@getAttendance');

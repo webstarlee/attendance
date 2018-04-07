@@ -146,4 +146,15 @@ class User extends Authenticatable
 
         return $total_result_min;
     }
+
+    public function compareTotalMin($minutes)
+    {
+        $current_year = date("Y");
+        $mvacation = EmployeeVacation::where('vac_year', $current_year)->where('employee_id', $this->unique_id)->first();
+        $left_vac_min = $mvacation->vac_total_min + $mvacation->vac_extra_min - $mvacation->vac_spend_min;
+        if ($left_vac_min < $minutes) {
+            return false;
+        }
+        return true;
+    }
 }

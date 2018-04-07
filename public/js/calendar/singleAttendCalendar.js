@@ -83,7 +83,7 @@ var CalendardBasic = function() {
                         url: getData,
                         type: 'get',
                         success: function(result){
-                            console.log(result);
+
                             var form = $('#m-admin-edit_attendance-form')[0];
                             form.reset();
                             $(form).find('#attendance_id').val(result.id);
@@ -147,7 +147,7 @@ var CalendardBasic = function() {
                                                                         '<label for="exampleInputEmail1">Start:</label>'+
                                                                         '<div class="input-group m-input-group m-input-group--air">'+
                                                                             '<span class="input-group-addon"><i class="la la-clock-o"></i></span>'+
-                                                                            '<input type="text" class="form-control m-input input-smoke-timepicker" name="attend_smoking_start[]" value="'+breaking.br_start+'" placeholder="Enter time" required>'+
+                                                                            '<input type="text" class="form-control m-input input-smoke-timepicker" name="attend_break_start[]" value="'+breaking.br_start+'" placeholder="Enter time" required>'+
                                                                         '</div>'+
                                                                     '</div>'+
                                                                     '<div class="m-form__content"></div>'+
@@ -158,7 +158,7 @@ var CalendardBasic = function() {
                                                                         '<label for="exampleInputEmail1">End:</label>'+
                                                                         '<div class="input-group m-input-group m-input-group--air">'+
                                                                             '<span class="input-group-addon"><i class="la la-clock-o"></i></span>'+
-                                                                            '<input type="text" class="form-control m-input input-smoke-timepicker" name="attend_smoking_end[]" value="'+breaking.br_end+'" placeholder="Enter time" required>'+
+                                                                            '<input type="text" class="form-control m-input input-smoke-timepicker" name="attend_break_end[]" value="'+breaking.br_end+'" placeholder="Enter time" required>'+
                                                                         '</div>'+
                                                                     '</div>'+
                                                                     '<div class="m-form__content"></div>'+

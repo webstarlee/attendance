@@ -235,13 +235,34 @@ var AttendBasic = function() {
                     data: formData,
                     success: function (data) {
                         submit_btn.removeClass('m-loader m-loader--success m-loader--right').attr('disabled', false);
-                        if (typeof attendanceCalendar !== 'undefined') {
-                            attendanceCalendar.fullCalendar('refetchEvents');
+                        if (data == "fail_3") {
+                            swal({
+                                title: 'Failed?',
+                                text: "Inserted to outside of person employment",
+                                type: 'error',
+                                showCancelButton: false,
+                                confirmButtonText: "Ok!",
+                                confirmButtonClass: "btn m-btn--air btn-outline-accent",
+                            });
+                        } else if (data == "fail_vac_limit") {
+                            if (typeof attendanceCalendar !== 'undefined') {
+                                attendanceCalendar.fullCalendar('refetchEvents');
+                            }
+                            swal({
+                                title: 'Failed?',
+                                text: "There is not available vacation",
+                                type: 'error',
+                                showCancelButton: false,
+                                confirmButtonText: "Ok!",
+                                confirmButtonClass: "btn m-btn--air btn-outline-accent",
+                            });
+                        } else {
+                            if (typeof attendanceCalendar !== 'undefined') {
+                                attendanceCalendar.fullCalendar('refetchEvents');
+                            }
+                            vac_circle_calc();
+                            $('#m-admin-edit_attendance-modal').modal('hide');
                         }
-                        if (typeof attendanceTable !== 'undefined') {
-                            attendanceTable.reload();
-                        }
-                        $('#m-admin-edit_attendance-modal').modal('hide');
                     },
                     processData: false,
                     contentType: false,

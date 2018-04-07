@@ -239,27 +239,10 @@ m-aside-left--enabled m-aside-left--offcanvas
                     <input type="hidden" name="attendance_id" id="attendance_id" value="">
     				<div class="modal-body" style="padding-bottom: 10px;">
                         <div class="row ">
-                            <div class="col-sm-12">
+                            <div class="col-sm-6">
                                 <div class="m-form__content"></div>
                                 <div class="form-group m-form__group">
-                                    <label for="exampleInputEmail1">
-                                        Date:
-                                    </label>
-                                    <div class="input-group m-input-group m-input-group--air">
-                                        <span class="input-group-addon">
-                                            <i class="la la-calendar"></i>
-                                        </span>
-                                        <input type="text" class="form-control m-input" id="_attend_date" name="_attend_date" placeholder="Enter Attendance date" required>
-                                    </div>
-                                </div>
-                                <div class="m-form__content"></div>
-                            </div>
-                        </div>
-                        <div class="row ">
-                            <div class="col-sm-12">
-                                <div class="m-form__content"></div>
-                                <div class="form-group m-form__group">
-                                    <label for="exampleInputEmail1">
+                                    <label>
                                         Contract Type:
                                     </label>
                                     <div class="input-group m-input-group m-input-group--air">
@@ -271,9 +254,7 @@ m-aside-left--enabled m-aside-left--offcanvas
                                 </div>
                                 <div class="m-form__content"></div>
                             </div>
-                        </div>
-                        <div class="row ">
-                            <div class="col-sm-12">
+                            <div class="col-sm-6">
                                 <div class="m-form__content"></div>
                                 <div class="form-group m-form__group">
                                     <label for="exampleInputEmail1">
@@ -284,32 +265,109 @@ m-aside-left--enabled m-aside-left--offcanvas
                                             <i class="la la-info"></i>
                                         </span>
                                         <select class="form-control m-bootstrap-select m_selectpicker" id="_attendance_type" name="_attendance_type">
+                                            <option value="1" selected>Work</option>
                                             <option value="0">Absence</option>
-                                            <option value="1">Attendance</option>
                                             <option value="2">Business Trip</option>
                                             <option value="3">Vacation</option>
-                                            <option value="4">Sickness</option>
+                                            <option value="4">Short Vacation</option>
+                                            <option value="5">Doctor</option>
+                                            <option value="6">Paragraph</option>
+                                            <option value="7">Parental Leave</option>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="m-form__content"></div>
                             </div>
                         </div>
+                        <div class="row ">
+                            <div class="col-sm-12">
+                                <div class="m-form__content"></div>
+                                <div class="form-group m-form__group">
+                                    <label for="_attend_date_from">
+                                        From:
+                                    </label>
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <div class="input-group m-input-group m-input-group--air">
+                                                <span class="input-group-addon">
+                                                    <i class="la la-calendar"></i>
+                                                </span>
+                                                <input type="text" class="form-control m-input m-input-datepicker" id="_attend_date_from" name="_attend_date_from" placeholder="Enter date" required>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="input-group m-input-group m-input-group--air">
+                                                <span class="input-group-addon">
+                                                    <i class="la la-clock-o"></i>
+                                                </span>
+                                                <input type="text" class="form-control m-input input-time-picker" id="_attend_start_time" name="_attend_start_time" value="8:00 AM" placeholder="Enter time" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="m-form__content"></div>
+                            </div>
+                        </div>
+                        <div class="row ">
+                            <div class="col-sm-12">
+                                <div class="m-form__content"></div>
+                                <div class="form-group m-form__group">
+                                    <label for="_attend_date_to">
+                                        To:
+                                    </label>
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <div class="input-group m-input-group m-input-group--air">
+                                                <span class="input-group-addon">
+                                                    <i class="la la-calendar"></i>
+                                                </span>
+                                                <input type="text" class="form-control m-input m-input-datepicker" id="_attend_date_to" name="_attend_date_to" placeholder="Enter date" required>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="input-group m-input-group m-input-group--air">
+                                                <span class="input-group-addon">
+                                                    <i class="la la-clock-o"></i>
+                                                </span>
+                                                <input type="text" class="form-control m-input input-time-picker" id="_attend_end_time" name="_attend_end_time" value="{{$employee->getContractEndtime()}}" placeholder="Enter time" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="m-form__content"></div>
+                            </div>
+                        </div>
+                        <div class="row ">
+                            <div class="col-sm-12">
+                                <label class="m-checkbox m-checkbox--air m-checkbox--state-success">
+									<input type="checkbox" id="_attend_weekend" name="_attend_weekend" checked>
+									Don't insert in Weekend
+									<span></span>
+								</label>
+                            </div>
+                        </div>
+                        <div class="row ">
+                            <div class="col-sm-12">
+                                <label class="m-checkbox m-checkbox--air m-checkbox--state-success">
+									<input type="checkbox" id="_attend_holiday" name="_attend_holiday" checked>
+									Don't insert in Holiday
+									<span></span>
+								</label>
+                            </div>
+                        </div>
+                        <div class="row ">
+                            <div class="col-sm-12">
+                                <label class="m-checkbox m-checkbox--air m-checkbox--state-success">
+									<input type="checkbox" id="_attend_fix_time" name="_attend_fix_time" checked>
+									Don't insert outside of person employment
+									<span></span>
+								</label>
+                            </div>
+                        </div>
                         <div class="attendance_status_input_container"></div>
     				</div>
     				<div class="modal-footer">
-                        <button type="button" class="btn m-btn--air btn-outline-success add-smoke-time-btn">
-    						<svg aria-hidden="true" data-prefix="far" data-icon="smoking" role="img" style="width: 17px;" viewBox="0 0 640 512" class="svg-inline--fa fa-smoking fa-w-20 fa-lg">
-                                <path fill="currentColor" d="M503.7 141.6C479.8 125 464 99.3 464 70.3V8c0-4.4-3.6-8-8-8h-32c-4.4 0-8 3.6-8 8v66.4c0 43.7 24.6 81.6 60.3 106.7 22.4 15.7 35.7 41.2 35.7 68.6V280c0 4.4 3.6 8 8 8h32c4.4 0 8-3.6 8-8v-30.3c0-43.3-21-83.4-56.3-108.1zm49.6-54.5c-5.7-3.8-9.3-10-9.3-16.8V8c0-4.4-3.6-8-8-8h-32c-4.4 0-8 3.6-8 8v62.3c0 22 10.2 43.4 28.6 55.4 42.2 27.3 67.4 73.8 67.4 124V280c0 4.4 3.6 8 8 8h32c4.4 0 8-3.6 8-8v-30.3c0-65.5-32.4-126.2-86.7-162.6zM632 352h-32c-4.4 0-8 3.6-8 8v144c0 4.4 3.6 8 8 8h32c4.4 0 8-3.6 8-8V360c0-4.4-3.6-8-8-8zm-80 0h-32c-4.4 0-8 3.6-8 8v144c0 4.4 3.6 8 8 8h32c4.4 0 8-3.6 8-8V360c0-4.4-3.6-8-8-8zm-96 0H48c-26.5 0-48 21.5-48 48v64c0 26.5 21.5 48 48 48h408c13.2 0 24-10.8 24-24V376c0-13.2-10.8-24-24-24zm-24 112H224v-64h208v64z" class="">
-                                </path>
-                            </svg>
-                            <span style="display: none;">Add smoke time</span>
-    					</button>
-                        <button type="button" class="btn m-btn--air btn-outline-danger" id="attendance_delete_btn">
-                            <i class="la la-trash"></i>
-    						<span style="display: none;">Delete</span>
-    					</button>
-    					<button type="submit" class="btn m-btn--air btn-outline-accent form-submit-btn">
+                        <button type="submit" class="btn m-btn--air btn-outline-accent form-submit-btn">
     						Update
     					</button>
     				</div>

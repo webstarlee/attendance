@@ -177,6 +177,7 @@ Route::prefix('admin')->group(function () {
             Route::get('/request/destroy/{id}', 'Admin\AttendanceController@destroyRequest');
             Route::get('/request/approve/{id}', 'Admin\AttendanceController@approveRequest');
             Route::get('/getPercentVacation/{id}', 'Admin\AttendanceController@getVacationPercent');
+            Route::get('/getSingleAttend/{id}', 'Admin\AttendanceController@getAttendSingle');
         });
         //end
         //manage deparment

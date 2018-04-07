@@ -124,6 +124,7 @@ class AttendanceController extends Controller
                         'className' => 'm-fc-event--light m-fc-event--solid-primary'
                     );
                 }
+
                 $myArray[] = array(
                     'event_id' => $attendance->id,
                     'start' => $start_time,
@@ -132,6 +133,36 @@ class AttendanceController extends Controller
                     'title' => $title,
                     'className' => 'm-fc-event--light m-fc-event--solid-primary'
                 );
+
+                if ($attendance->attend_type == 1) {
+                    if ($attendance->smokes != null || $attendance->smokes != "") {
+                        $smokings = unserialize($attendance->smokes);
+                        foreach ($smokings as $smoking) {
+                            $myArray[] = array(
+                                'event_id' => $attendance->id,
+                                'start' => $start_day.' '.$smoking['start_time'],
+                                'end' => $start_day.' '.$smoking['end_time'],
+                                'color' => '#9c620c',
+                                'title' => "smoke",
+                                'className' => 'm-fc-event--light m-fc-event--solid-primary'
+                            );
+                        }
+                    }
+
+                    if ($attendance->breaks != null || $attendance->breaks != "") {
+                        $breaks = unserialize($attendance->breaks);
+                        foreach ($breaks as $break) {
+                            $myArray[] = array(
+                                'event_id' => $attendance->id,
+                                'start' => $start_day.' '.$break['start_time'],
+                                'end' => $start_day.' '.$break['end_time'],
+                                'color' => '#df3f1c',
+                                'title' => "break",
+                                'className' => 'm-fc-event--light m-fc-event--solid-primary'
+                            );
+                        }
+                    }
+                }
             }
         }
 
@@ -477,7 +508,12 @@ class AttendanceController extends Controller
                 if ($attendance->attend_type == 3 || $attendance->attend_type == 4) {
                     $current_year = date("Y");
                     $mvacation = EmployeeVacation::where('vac_year', $current_year)->where('employee_id', $employee->unique_id)->first();
-                    $mvacation->vac_spend_min = $mvacation->vac_spend_min + $attendance->attend_work_time;
+                    $total_vacations = Attendance::where('attend_date','like', $current_year.'%')->where('employee_id', $employee->id)->whereIn('attend_type', [3,4])->get();
+                    $total_vac_minutes = 0;
+                    foreach ($total_vacations as $total_vacation) {
+                        $total_vac_minutes = $total_vac_minutes + $total_vacation->attend_work_time;
+                    }
+                    $mvacation->vac_spend_min = $total_vac_minutes;
                     $mvacation->save();
                 }
             }
@@ -490,34 +526,67 @@ class AttendanceController extends Controller
     {
         $attendance = Attendance::find($request->attendance_id);
         if ($attendance) {
-            $attendance->status = $request->_attendance_type;
-            $attendance->approval = 1;
-            $attendance->save();
-
-            if ($request->_attendance_type == 1) {
-                $attendance->arrival_time = $this->decode_time_format($request->attend_arrive_time);
-                $attendance->departure_time = $this->decode_time_format($request->attend_departure_time);
-                $attendance->break1_start = $this->decode_time_format($request->break_start_1);
-                $attendance->break1_end = $this->decode_time_format($request->break_end_1);
-                $attendance->break2_start = $this->decode_time_format($request->break_start_2);
-                $attendance->break2_end = $this->decode_time_format($request->break_end_2);
+            $boolean_check = true;
+            $employee = User::find($attendance->employee_id);
+            $current_attend_type = $request->_attendance_type;
+            if ($current_attend_type == 3 || $current_attend_type == 4) {
+                $start_time = $this->decode_time_format($request->_attend_start_time);
+                $end_time = $this->decode_time_format($request->_attend_end_time);
+                $mvacation_check = $employee->checkVacation($start_time, $end_time);
+                if (!$mvacation_check) {
+                    $boolean_check = false;
+                    return "fail_vac_limit";
+                }
+            }
+            if ($boolean_check) {
+                $attendance->attend_type = $request->_attendance_type;
+                $attendance->start_time = $this->decode_time_format($request->_attend_start_time);
+                $attendance->end_time = $this->decode_time_format($request->_attend_end_time);
+                $attendance->breaks = "";
+                $attendance->smokes = "";
                 $attendance->save();
 
-                if ($request->attend_smoking_start) {
-                    $smokeing_starts = $request->attend_smoking_start;
-                    $smokeing_ends = $request->attend_smoking_end;
-                    $array_index = 0;
-                    $smoking_times = array();
-                    foreach ($smokeing_starts as $smokeing_start) {
-                        $smoking_times[] = array('start_time' => $this->decode_time_format($smokeing_start), 'end_time' => $this->decode_time_format($smokeing_ends[$array_index]));
-                        $array_index++;
+                if ($current_attend_type == 1) {
+
+                    if ($request->attend_break_start) {
+                        $break_starts = $request->attend_break_start;
+                        $break_ends = $request->attend_break_end;
+                        $array_index = 0;
+                        $break_times = array();
+                        foreach ($break_starts as $break_start) {
+                            $break_times[] = array('start_time' => $this->decode_time_format($break_start), 'end_time' => $this->decode_time_format($break_ends[$array_index]));
+                            $array_index++;
+                        }
+                        $attendance->breaks = serialize($break_times);
+                        $attendance->save();
                     }
-                    $attendance->smoking = serialize($smoking_times);
-                    $attendance->save();
+
+                    if ($request->attend_smoking_start) {
+                        $smokeing_starts = $request->attend_smoking_start;
+                        $smokeing_ends = $request->attend_smoking_end;
+                        $array_index = 0;
+                        $smoking_times = array();
+                        foreach ($smokeing_starts as $smokeing_start) {
+                            $smoking_times[] = array('start_time' => $this->decode_time_format($smokeing_start), 'end_time' => $this->decode_time_format($smokeing_ends[$array_index]));
+                            $array_index++;
+                        }
+                        $attendance->smokes = serialize($smoking_times);
+                        $attendance->save();
+                    }
                 }
 
-                $attendance->total_min = $attendance->generate_total_time();
+                $attendance->attend_work_time = $attendance->generate_total_time();
                 $attendance->save();
+
+                $current_year = date("Y");
+                $mvacation = EmployeeVacation::where('vac_year', $current_year)->where('employee_id', $employee->unique_id)->first();
+                $total_vacations = Attendance::where('attend_date','like', $current_year.'%')->where('employee_id', $employee->id)->whereIn('attend_type', [3,4])->get();
+                $total_vac_minutes = 0;
+                foreach ($total_vacations as $total_vacation) {
+                    $total_vac_minutes = $total_vac_minutes + $total_vacation->attend_work_time;
+                }
+                $mvacation->vac_spend_min = $total_vac_minutes;
+                $mvacation->save();
             }
 
             return "success";
@@ -626,5 +695,52 @@ class AttendanceController extends Controller
             return $result_array;
         }
         return array('result' => 'fail');
+    }
+
+    public function getAttendSingle($id)
+    {
+        $attendance = Attendance::find($id);
+        if ($attendance) {
+            $m_attend_array = array();
+            if ($attendance->attend_type == 1) {
+                $smoke_array = array();
+                $break_array = array();
+                if ($attendance->smokes != null || $attendance->smokes != "") {
+                    $smokings = unserialize($attendance->smokes);
+                    foreach ($smokings as $smoking) {
+                        $smoke_array[] = array('sm_start' => $this->encode_time_format($smoking['start_time']), 'sm_end' =>$this->encode_time_format($smoking['end_time']));
+                    }
+                }
+
+                if ($attendance->breaks != null || $attendance->breaks != "") {
+                    $breaks = unserialize($attendance->breaks);
+                    foreach ($breaks as $break) {
+                        $break_array[] = array('br_start' => $this->encode_time_format($break['start_time']), 'br_end' =>$this->encode_time_format($break['end_time']));
+                    }
+                }
+
+                $m_attend_array = array(
+                    'id' => $attendance->id,
+                    'attend_date' => $this->decode_date_format($attendance->attend_date),
+                    'attend_type' => $attendance->attend_type,
+                    'start_time' => $attendance->start_time,
+                    'end_time' => $attendance->end_time,
+                    'breaks' => $break_array,
+                    'smokes' => $smoke_array,
+                );
+            } else {
+                $m_attend_array = array(
+                    'id' => $attendance->id,
+                    'attend_date' => $this->decode_date_format($attendance->attend_date),
+                    'attend_type' => $attendance->attend_type,
+                    'start_time' => $attendance->start_time,
+                    'end_time' => $attendance->end_time,
+                );
+            }
+
+            return $m_attend_array;
+        }
+
+        return "fail";
     }
 }

@@ -28,13 +28,13 @@ var DatatableAutoColumnHideDemo = function() {
 
       init_plugins();
 
-    var datatable = $('#m_project_datatable').mDatatable({
+    var datatable = $('#m_ticket_datatable').mDatatable({
       // datasource definition
       data: {
         type: 'remote',
         source: {
 			read: {
-				url: '/admin/manage/project/get_table_date',
+				url: '/ticket/getData',
                 method: 'GET',
 			},
 		},
@@ -72,54 +72,55 @@ var DatatableAutoColumnHideDemo = function() {
           selector: {class: 'm-checkbox--solid m-checkbox--brand'}
         },
         {
-          field: 'pro_name',
-          title: i18n.language.title,
+          field: 'ticket_unique_id',
+          title: i18n.language.ticket.ticket_id,
           width: 100,
         }, {
-          field: 'pro_id',
-          title: i18n.language.project.project_id,
-          width: 100,
-          responsive: {visible: 'lg'},
+          field: 'ticket_subject',
+          title: i18n.language.ticket.ticket+" "+i18n.language.ticket.subject,
+          width: 200,
         }, {
-          field: 'pro_leader',
-          title: i18n.language.leader,
+          field: 'ticket_staff_name',
+          title: i18n.language.ticket.assign_staff,
           width: 100,
           responsive: {visible: 'lg'},
           template: function (row) {
               return '\
-              <a href="/admin/profile/employee/'+row.leader_unique+'" target="_blank" title="'+row.leader_name+'" style="display:inline-block;">\
-                <img src="'+row.leader_photo+'" style="width:35px;height:35px;border-radius:50%;">\
+              <a href="/admin/profile/employee/'+row.ticket_staff_id+'" target="_blank" title="'+row.ticket_staff_name+'" style="display:inline-block;">\
+                <img src="'+row.ticket_staff_avatar+'" style="width:35px;height:35px;border-radius:50%;">\
               </a>\
               ';
           }
         },{
-          field: 'members',
-          title: i18n.language.member,
+          field: 'ticket_followers',
+          title: i18n.language.ticket.follower,
           width: 150,
           responsive: {visible: 'lg'},
           template: function (row, index, datatable) {
               var $final_members = "";
               var member_count = 0;
-              row.members.forEach(function(member) {
-                  member_count ++;
-                  if (member_count < 4) {
-                      $final_members += '<a href="/admin/profile/employee/'+member.member_unique+'" target="_blank" title="'+member.member_username+'" style="display:inline-block;">'+
-                                        '<img src="'+member.member_avatar+'" style="width:35px;height:35px;border-radius:50%;"></a>';
+              if (row.ticket_followers != "" || row.ticket_followers != null) {
+                  row.ticket_followers.forEach(function(member) {
+                      member_count ++;
+                      if (member_count < 4) {
+                          $final_members += '<a href="/admin/profile/employee/'+member.follower_unique+'" target="_blank" title="'+member.follower_username+'" style="display:inline-block;">'+
+                                            '<img src="'+member.follower_avatar+'" style="width:35px;height:35px;border-radius:50%;"></a>';
+                      }
+                  });
+                  if (member_count > 3) {
+                      var left_member = member_count - 3;
+                      $final_members += '<a href="#" style="display:flex;width:35px;height:35px;background-color:#ddd;border-radius:50%;text-align:center;justify-content:center;flex-direction:column;">+'+left_member+'</a>';
                   }
-              });
-              if (member_count > 3) {
-                  var left_member = member_count - 3;
-                  $final_members += '<a href="#" style="display:flex;width:35px;height:35px;background-color:#ddd;border-radius:50%;text-align:center;justify-content:center;flex-direction:column;">+'+left_member+'</a>';
               }
               return '<div style="display: flex;">'+$final_members+'</div>';
           }
         }, {
-          field: 'pro_end_date',
-          title: i18n.language.deadline,
+          field: 'ticket_create_date',
+          title: i18n.language.ticket.created_date,
           width: 100,
           responsive: {visible: 'lg'},
         }, {
-          field: 'pro_priority',
+          field: 'ticket_priority',
           title: i18n.language.priority,
           width: 100,
           responsive: {visible: 'lg'},
@@ -129,10 +130,10 @@ var DatatableAutoColumnHideDemo = function() {
                 1: {'title': 'Medium', 'class': ' m-badge--accent'},
                 2: {'title': 'Low', 'class': ' m-badge--primary'},
             };
-             return '<span class="m-badge ' + status[row.pro_priority].class + ' m-badge--wide" style="width:70px;">' + status[row.pro_priority].title + '</span>';
+             return '<span class="m-badge ' + status[row.ticket_priority].class + ' m-badge--wide" style="width:70px;">' + status[row.ticket_priority].title + '</span>';
           }
         }, {
-          field: 'pro_status',
+          field: 'ticket_status',
           title: i18n.language.status,
           width: 100,
           overflow: 'visible',
@@ -140,52 +141,28 @@ var DatatableAutoColumnHideDemo = function() {
           template: function (row, index, datatable) {
               var dropup = (datatable.getPageSize() - index) <= 4 ? 'dropup' : '';
               var status = {
-                0: {'title': 'Inactive', 'state': 'danger'},
-                1: {'title': 'Active', 'state': 'primary'},
-                2: {'title': 'Complete', 'state': 'accent'},
+                0: {'title': 'New', 'state': 'danger'},
+                1: {'title': 'Open', 'state': 'primary'},
+                2: {'title': 'Onhold', 'state': 'danger'},
+                3: {'title': 'Closed', 'state': 'accent'},
+                4: {'title': 'Inprogress', 'state': 'primary'},
+                5: {'title': 'Cancelled', 'state': 'danger'},
               };
 
               return '\
 						<div class="dropdown ' + dropup + '">\
-							<a href="#" class="btn m-btn--hover-metal" data-toggle="dropdown">\
-                            <span class="m-badge m-badge--' + status[row.pro_status].state + ' m-badge--dot"></span>\
-                            &nbsp;<span class="m--font-bold m--font-' + status[row.pro_status].state + '"> \
-                                '+status[row.pro_status].title+' </span>\
+							<a href="#" class="btn">\
+                            <span class="m-badge m-badge--' + status[row.ticket_status].state + ' m-badge--dot"></span>\
+                            &nbsp;<span class="m--font-bold m--font-' + status[row.ticket_status].state + '"> \
+                                '+status[row.ticket_status].title+' </span>\
                             </a>\
-						  	<div class="dropdown-menu dropdown-menu-right">\
-                                <a class="dropdown-item project-status-change-btn" data-project_id="'+row.id+'" data-project_status="0" href="javascript:;">\
-                                    <span class="m-badge m-badge--' + status[0].state + ' m-badge--dot"></span>\
-                                    &nbsp;<span class="m--font-bold m--font-' + status[0].state + '">'+status[0].title+'</span></a>\
-                                <a class="dropdown-item project-status-change-btn" data-project_id="'+row.id+'" data-project_status="1" href="javascript:;">\
-                                    <span class="m-badge m-badge--' + status[1].state + ' m-badge--dot"></span>\
-                                    &nbsp;<span class="m--font-bold m--font-' + status[1].state + '">'+status[1].title+'</span></a>\
-                                <a class="dropdown-item project-status-change-btn" data-project_id="'+row.id+'" data-project_status="2" href="javascript:;">\
-                                    <span class="m-badge m-badge--' + status[2].state + ' m-badge--dot"></span>\
-                                    &nbsp;<span class="m--font-bold m--font-' + status[2].state + '">'+status[2].title+'</span></a>\
-						  	</div>\
 						</div>\
                         ';
           }
-        }, {
-            field: "Actions",
-            width: 80,
-            title: "Actions",
-            sortable: false,
-            overflow: 'visible',
-            template: function (row, index, datatable) {
-                return '\
-                <a href="javascript:;" data-project_id="'+row.id+'" class="m-project-edit_btn m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" title="View ">\
-                <i class="la la-edit"></i>\
-                </a>\
-                <a href="javascript:;" data-project_id="'+row.id+'" class="m-project-delete_btn m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill" title="View ">\
-                <i class="la la-trash"></i>\
-                </a>\
-                ';
-            }
         }],
     });
 
-    $('#m-admin-new_project-form').on('submit', function(e) {
+    $('#m-admin-new_ticket-form').on('submit', function(e) {
         e.preventDefault();
         var form = $(this)[0];
         $.ajaxSetup({
@@ -208,7 +185,7 @@ var DatatableAutoColumnHideDemo = function() {
                 form.reset();
                 $('.m_selectpicker').selectpicker('destroy');
                 init_plugins();
-                $('#m-admin-new_project-modal').modal('hide');
+                $('#m-admin-new_ticket-modal').modal('hide');
             },
             processData: false,
             contentType: false,
@@ -219,7 +196,7 @@ var DatatableAutoColumnHideDemo = function() {
         });
     });
 
-    $('#m-admin-edit_project-form').on('submit', function(e) {
+    $('#m-admin-edit_ticket-form').on('submit', function(e) {
         e.preventDefault();
         var form = $(this)[0];
         $.ajaxSetup({
@@ -242,7 +219,7 @@ var DatatableAutoColumnHideDemo = function() {
                 form.reset();
                 $('.m_selectpicker').selectpicker('destroy');
                 init_plugins();
-                $('#m-admin-edit_project-modal').modal('hide');
+                $('#m-admin-edit_ticket-modal').modal('hide');
             },
             processData: false,
             contentType: false,
@@ -253,29 +230,25 @@ var DatatableAutoColumnHideDemo = function() {
         });
     });
 
-    $(document).on('click', '.m-project-edit_btn', function(){
+    $(document).on('click', '.m-ticket-edit_btn', function(){
         var $this = $(this);
-        var project_id = $this.data('project_id');
+        var ticket_id = $this.data('ticket_id');
         $.ajax({
-            url: '/admin/manage/project/get_specify_project/'+project_id,
+            url: '/admin/manage/ticket/get_specify_ticket/'+ticket_id,
             type: 'get',
             success: function(result){
                 console.log(result);
                 if (result != "fail") {
-                    $('#m-admin-edit_project-form #project_id_for_edit').val(result.id);
-                    $('#m-admin-edit_project-form #_project_title').val(result.pro_name);
-                    $('#m-admin-edit_project-form #_project_client').val(result.pro_client);
-                    $('#m-admin-edit_project-form #_project_start_date').attr('value', result.pro_start_date);
-                    $('#m-admin-edit_project-form #_project_end_date').attr('value', result.pro_end_date);
-                    $('#m-admin-edit_project-form #_project_rate').val(result.pro_rate);
-                    $('#m-admin-edit_project-form #_project_rate_type').val(result.pro_rate_type);
-                    $('#m-admin-edit_project-form #_project_priority').val(result.pro_priority);
-                    $('#m-admin-edit_project-form #_project_leader').val(result.pro_leader);
-                    $('#m-admin-edit_project-form #_project_members').val(result.pro_members);
-                    $('#m-admin-edit_project-form #_project_note').val(result.pro_note);
+                    $('#m-admin-edit_ticket-form #ticket_id_for_edit').val(result.id);
+                    $('#m-admin-edit_ticket-form #_ticket_subject').val(result.ticket_subject);
+                    $('#m-admin-edit_ticket-form #_ticket_client').val(result.ticket_client);
+                    $('#m-admin-edit_ticket-form #_ticket_priority').val(result.ticket_priority);
+                    $('#m-admin-edit_ticket-form #_ticket_staff').val(result.ticket_staff);
+                    $('#m-admin-edit_ticket-form #_ticket_follower').val(result.ticket_followers);
+                    $('#m-admin-edit_ticket-form #_ticket_note').val(result.ticket_note);
                     $('.m_selectpicker').selectpicker('destroy');
                     init_plugins();
-                    $('#m-admin-edit_project-modal').modal('show');
+                    $('#m-admin-edit_ticket-modal').modal('show');
                 }
             },
             error: function(error){
@@ -284,12 +257,12 @@ var DatatableAutoColumnHideDemo = function() {
         });
     });
 
-    $(document).on('click', '.project-status-change-btn', function(){
+    $(document).on('click', '.ticket-status-change-btn', function(){
         var $this = $(this);
-        var current_project_id = $this.data('project_id');
-        var current_project_status = $this.data('project_status');
+        var current_ticket_id = $this.data('ticket_id');
+        var current_ticket_status = $this.data('ticket_status');
         $.ajax({
-            url: '/admin/manage/project/set_status/'+current_project_id+'/'+current_project_status,
+            url: '/admin/manage/ticket/set_status/'+current_ticket_id+'/'+current_ticket_status,
             type: 'get',
             success: function(result){
                 console.log(result);

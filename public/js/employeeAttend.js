@@ -8,7 +8,8 @@ var AttendBasic = function() {
                 e.preventDefault();
                 var form = $('#m-admin-new_attendance-form')[0];
                 form.reset();
-                $(form).find('#attend_date').attr('readonly', false);
+                $(form).find('#attend_date_from').attr('readonly', false);
+                $(form).find('#attend_date_to').attr('readonly', false);
                 $(form).find('#attendance_type').selectpicker('destroy');
                 $(form).find('#attendance_type').selectpicker();
                 var input_boxs = $('#hidden_attendance_input_box_container').html();
@@ -16,6 +17,8 @@ var AttendBasic = function() {
                 $(form).find('button.add-smoke-time-btn').css({'display':'block'});
                 $('#m-admin-new_attendance-modal').modal('show');
                 setJsplugin();
+                $(form).find('#attend_date_from').datepicker('destroy');
+                $(form).find('#attend_date_to').datepicker('destroy');
             });
 
             $('#m-admin-new_attendance-form select[name=attendance_type]').on('change', function(e) {

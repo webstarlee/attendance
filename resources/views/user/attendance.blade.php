@@ -106,6 +106,7 @@ My Attendance
                                 <div class="m-form__content"></div>
                             </div>
                         </div>
+                        <?php $today_date = date('m/d/Y'); ?>
                         <div class="row ">
                             <div class="col-sm-12">
                                 <div class="m-form__content"></div>
@@ -119,7 +120,7 @@ My Attendance
                                                 <span class="input-group-addon">
                                                     <i class="la la-calendar"></i>
                                                 </span>
-                                                <input type="text" class="form-control m-input m-input-datepicker" id="attend_date_from" name="attend_date_from" placeholder="Enter date" required>
+                                                <input type="text" class="form-control m-input m-input-datepicker" id="attend_date_from" name="attend_date_from" placeholder="Enter date" value="{{$today_date}}" required>
                                             </div>
                                         </div>
                                         <div class="col-sm-6">
@@ -148,7 +149,7 @@ My Attendance
                                                 <span class="input-group-addon">
                                                     <i class="la la-calendar"></i>
                                                 </span>
-                                                <input type="text" class="form-control m-input m-input-datepicker" id="attend_date_to" name="attend_date_to" placeholder="Enter date" required>
+                                                <input type="text" class="form-control m-input m-input-datepicker" id="attend_date_to" name="attend_date_to" placeholder="Enter date" value="{{$today_date}}" required>
                                             </div>
                                         </div>
                                         <div class="col-sm-6">

@@ -79,6 +79,16 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/attendance/request/destroy/{id}', 'User\AttendanceController@attendanceRequestDestroy');
     Route::get('/attendance/getVacationPercent', 'User\AttendanceController@getVacationPercent');
     //end
+    //project
+    Route::get('/myproject', 'User\UserController@myproject')->name('myproject');
+    Route::get('/project/getData', 'User\UserController@getMyproject');
+    Route::get('/mytask', 'User\UserController@mytask')->name('mytask');
+    Route::get('/task/getData', 'User\UserController@getTaskTableData');
+    Route::get('/mytimingsheet', 'User\UserController@mytimingsheet')->name('mytimingsheet');
+    Route::get('/timingsheet/getData', 'User\UserController@getSheetTableData');
+    Route::get('/ticket', 'User\UserController@ticket')->name('ticket');
+    Route::get('/ticket/getData', 'User\UserController@getTicketTableData');
+    //end
 });
 
 Route::middleware(['auth'])->group(function () {
